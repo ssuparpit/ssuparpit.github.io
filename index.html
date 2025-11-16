@@ -7,11 +7,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#FBF7F2;            /* warm cream */
+    --bg:#FBF7F2;
     --card:#FFFFFF;
     --muted:#7a7a80;
     --ink:#0f1720;
-    --accent:#E28B2A;        /* golden */
+    --accent:#E28B2A;
     --accent-2:#FFB86B;
     --glass: rgba(14,18,22,0.04);
     --radius:14px;
@@ -32,54 +32,48 @@
   .top-actions{display:flex;gap:10px;align-items:center}
   .btn{padding:10px 14px;border-radius:12px;border:1px solid var(--glass);background:transparent;font-weight:700;cursor:pointer}
   .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:none;box-shadow:var(--soft-shadow)}
-  /* layout */
-  .layout{display:grid;grid-template-columns:340px 1fr;gap:24px;margin-top:22px}
+  .layout{display:grid;grid-template-columns:360px 1fr;gap:24px;margin-top:22px}
   @media (max-width:980px){.layout{grid-template-columns:1fr}}
-  /* left column (profile + skills) */
   .panel{background:var(--card);border-radius:var(--radius);padding:18px;border:1px solid var(--glass);box-shadow:var(--soft-shadow)}
   .profile-hero{display:flex;gap:14px;align-items:center}
   .meta h3{margin:0;font-family:Montserrat;font-size:16px}
   .meta p{margin:4px 0 0 0;color:var(--muted);font-size:13px}
   .about{margin-top:12px;color:var(--muted);font-size:14px;line-height:1.45}
-  .skills-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
-  .skill-pill{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:10px;border:1px dashed rgba(0,0,0,0.04);background:linear-gradient(180deg, #fff, #fbfbfb);font-weight:700}
-  .skill-pill small{color:var(--muted);font-weight:600;font-size:12px}
-  .molecule-legend{margin-top:12px;color:var(--muted);font-size:12px}
-  .shuffle-row{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:12px}
-  /* right column (projects + contact) */
+  /* ---- Molecule area (left) ---- */
+  .molecule-wrap{position:relative;height:720px;border-radius:12px;overflow:hidden;border:1px solid rgba(0,0,0,0.02);background:linear-gradient(180deg,rgba(255,255,255,0.92),transparent)}
+  canvas#moleculeCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0}
+  #moleculeNodes{position:absolute;inset:0;z-index:2;pointer-events:auto}
+  .node-pill{position:absolute;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.98);border:1px solid rgba(0,0,0,0.05);font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;transition:transform .18s,box-shadow .18s}
+  .node-pill .lvl{font-size:11px;color:var(--muted);font-weight:600}
+  .node-pill:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(0,0,0,0.06)}
+  /* ---- Right column ---- */
   .hero-banner{background:linear-gradient(90deg, rgba(226,139,42,0.06), rgba(255,184,107,0.03));padding:18px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid rgba(226,139,42,0.06)}
-  .hero-left h2{margin:0;font-family:Montserrat;font-weight:800}
-  .hero-left p{margin:6px 0 0 0;color:var(--muted)}
   .filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
   .chip{padding:8px 12px;border-radius:999px;border:1px solid var(--glass);background:transparent;font-weight:700;color:var(--muted);cursor:pointer}
   .chip.active{background:var(--accent);color:#fff;border:none;box-shadow:0 8px 24px rgba(226,139,42,0.12)}
   .grid-projects{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-top:14px}
   .proj-card{background:var(--card);border-radius:12px;padding:14px;border:1px solid var(--glass);box-shadow:0 8px 30px rgba(12,15,20,0.03);transition:transform .22s,box-shadow .22s;cursor:pointer;overflow:hidden}
   .proj-card:hover{transform:translateY(-8px);box-shadow:0 28px 90px rgba(12,15,20,0.08)}
-  .proj-thumb{height:140px;border-radius:10px;background:#f6f6f6;overflow:hidden}
+  .proj-thumb{height:160px;border-radius:10px;background:#f6f6f6;overflow:hidden}
   .proj-thumb img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1);transition:transform .6s}
   .proj-card:hover .proj-thumb img{transform:scale(1.04)}
   .proj-info h4{margin:10px 0 0 0;font-family:Montserrat}
   .proj-meta{color:var(--muted);font-size:13px;margin-top:6px;display:flex;justify-content:space-between;align-items:center}
   .proj-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   .tag{padding:6px 8px;border-radius:8px;border:1px solid var(--glass);color:var(--muted);font-weight:700;font-size:12px}
-  /* contact */
-  .contact-panel{margin-top:14px}
-  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
   .input,textarea{padding:12px;border-radius:10px;border:1px solid var(--glass);font-size:14px}
   textarea{min-height:110px;resize:vertical}
   .contact-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
-  /* modal */
   .backdrop{position:fixed;inset:0;background:rgba(12,15,20,0.5);display:none;align-items:center;justify-content:center;z-index:999}
   .modal{width:min(880px,94%);background:var(--card);padding:18px;border-radius:12px;border:1px solid var(--glass);max-height:90vh;overflow:auto}
   .modal .media-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
   .modal img, .modal video{width:100%;border-radius:8px}
-  /* footer */
   footer{margin-top:26px;color:var(--muted);font-size:13px;text-align:center}
-  /* small screens tweaks */
   @media (max-width:720px){
     .grid-projects{grid-template-columns:1fr}
     .contact-grid{grid-template-columns:1fr}
+    .molecule-wrap{height:520px}
   }
 </style>
 </head>
@@ -95,7 +89,7 @@
       </div>
 
       <div class="top-actions">
-        <a href="Me Resume.pdf" class="btn" target="_blank" rel="noopener noreferrer">Resume</a>
+        <a id="resumeLink" href="Me Resume.pdf" class="btn" target="_blank" rel="noopener noreferrer">Resume</a>
         <label class="btn" style="cursor:pointer">
           <input id="resumeUploader" type="file" accept=".pdf,.doc,.docx" style="display:none" />
           Upload
@@ -105,51 +99,72 @@
     </header>
 
     <div class="layout">
-      <!-- LEFT: profile + skills -->
-      <aside class="panel" aria-labelledby="profileTitle">
-        <div class="profile-hero">
-          <div style="flex:1">
-            <div class="meta">
-              <h3 id="profileTitle">About</h3>
-              <p>Data Analyst focused on automating reporting, building dashboards, and deriving actionable insights.</p>
+      <!-- LEFT: Molecules -->
+      <aside class="panel" aria-labelledby="skillsTitle">
+        <h3 id="skillsTitle" style="margin:0 0 8px 0">Skills Molecules</h3>
+        <p style="margin:0 0 12px 0;color:var(--muted)">Interactive skill map grouped by clusters — click a node to filter projects. Drag the space to pan.</p>
+
+        <div class="molecule-wrap">
+          <canvas id="moleculeCanvas" aria-hidden="true"></canvas>
+          <div id="moleculeNodes" aria-hidden="false"></div>
+
+          <div style="position:absolute;left:12px;right:12px;bottom:12px;display:flex;justify-content:space-between;align-items:center;z-index:3">
+            <div style="color:var(--muted);font-size:13px">Tip: click a node to filter projects. Drag to pan.</div>
+            <div style="display:flex;gap:8px">
+              <button class="btn" id="shuffleNodes">Shuffle</button>
+              <button class="btn" id="resetNodes">Reset</button>
             </div>
-            <div class="about">I turn messy data into clear narratives — automation, dashboards, and cross-functional impact. Experience across retail, logistics, and operations.</div>
           </div>
         </div>
 
-        <div class="skills-grid" id="skillsList" aria-label="skills">
-          <!-- skill pills injected -->
-        </div>
-
-        <div class="molecule-legend">Tip: Click a skill to filter projects. Shuffle repositions items for variety.</div>
-        <div class="shuffle-row">
-          <div></div>
-          <div style="display:flex;gap:8px">
-            <button class="btn" id="shuffle">Shuffle</button>
-            <button class="btn" id="reset">Reset</button>
-          </div>
+        <div style="margin-top:12px">
+          <strong>Selected Skill</strong>
+          <div id="skillDetails" style="margin-top:8px;color:var(--muted);font-size:13px">Click a node to see details.</div>
         </div>
       </aside>
 
-      <!-- RIGHT: projects + contact -->
+      <!-- RIGHT: Projects + Contact -->
       <main>
-        <section class="panel hero-banner" aria-labelledby="projectsTitle">
-          <div class="hero-left">
-            <h2 id="projectsTitle">Project Gallery</h2>
-            <p>A focused set of case studies — click any card for full details.</p>
-          </div>
-          <div style="text-align:right">
-            <div style="font-size:12px;color:var(--muted)">Futuristic • Aesthetic • Lightweight</div>
-          </div>
-        </section>
+        <!-- Featured Video Card -->
+<section class="panel" style="margin-top:12px;">
+  <h3 style="margin:0 0 10px 0">Featured Walkthrough</h3>
+  <p style="margin:0 0 12px 0;color:var(--muted)">
+    Short demo of the Retail & Logistics Intelligence Hub (click play).
+  </p>
+
+  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+    <div style="flex:1;min-width:320px;max-width:760px;border-radius:12px;overflow:hidden;border:1px solid var(--glass);box-shadow:var(--soft-shadow);background:#fff">
+      <video id="featuredVideo" controls playsinline style="width:100%;height:auto;display:block">
+        <source src="canva-R7YS5xjlsvA.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <div style="flex-basis:260px;min-width:220px">
+      <h4 style="margin:0 0 8px 0">Retail & Logistics — walkthrough</h4>
+      <p style="margin:0;color:var(--muted);font-size:14px">
+        Short demo showcasing dashboards, routing optimization, and analytics from the project.
+      </p>
+      <div style="margin-top:10px;display:flex;gap:8px">
+        <button class="btn"
+          onclick="openCaseStudy(PROJECTS.find(p=>p.id==='retail'))">
+          Open case study
+        </button>
+        <button class="btn"
+          onclick="document.getElementById('featuredVideo').play()">
+          Play
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
 
         <section class="panel" style="margin-top:14px">
           <div class="filters" id="filters"></div>
-
           <div class="grid-projects" id="gallery"></div>
         </section>
 
-        <section class="panel contact-panel">
+        <section class="panel contact-panel" style="margin-top:14px">
           <h3 style="margin:0">Contact</h3>
           <p style="margin:6px 0 12px 0;color:var(--muted)">Shoot a short note — demo submit only (replace with webhook in JS).</p>
           <form id="contactForm" onsubmit="return false;">
@@ -166,11 +181,10 @@
             <div id="contactResult" style="margin-top:10px;color:var(--muted)"></div>
           </form>
         </section>
-
       </main>
     </div>
 
-    <footer>Built with care — portfolio UI refreshed.</footer>
+    <footer>Built with care — interactive portfolio.</footer>
   </div>
 
   <!-- Modal -->
@@ -186,22 +200,22 @@
   </div>
 
 <script>
-/* ========= DATA (update here if you add projects) ========= */
+/* ===== DATA: skills & projects ===== */
 const SKILLS = [
-  {id:'sql',label:'SQL',lvl:'Expert'},
-  {id:'python',label:'Python',lvl:'Expert'},
-  {id:'pandas',label:'Pandas',lvl:'Expert'},
-  {id:'powerbi',label:'Power BI',lvl:'Advanced'},
-  {id:'tableau',label:'Tableau',lvl:'Advanced'},
-  {id:'excel',label:'Advanced Excel',lvl:'Advanced'},
-  {id:'pivot',label:'Pivot Tables',lvl:'Advanced'},
-  {id:'dataclean',label:'Data Cleaning',lvl:'Expert'},
-  {id:'dataviz',label:'Data Visualization',lvl:'Advanced'},
-  {id:'spss',label:'SPSS',lvl:'Advanced'},
-  {id:'brd',label:'BRD/FRD/SRS',lvl:'Intermediate'},
-  {id:'datainterp',label:'Data Interpretation',lvl:'Advanced'},
-  {id:'azure',label:'Azure',lvl:'Intermediate'},
-  {id:'git',label:'Git / GitHub',lvl:'Intermediate'}
+  {id:'sql',label:'SQL',lvl:'Expert',desc:'Relational queries, window functions, MySQL Workbench'},
+  {id:'python',label:'Python',lvl:'Expert',desc:'Pandas, NumPy, scripting, ETL'},
+  {id:'pandas',label:'Pandas',lvl:'Expert',desc:'Dataframes, joins, cleaning'},
+  {id:'powerbi',label:'Power BI',lvl:'Advanced',desc:'Dashboards & measures'},
+  {id:'tableau',label:'Tableau',lvl:'Advanced',desc:'Viz & dashboards'},
+  {id:'excel',label:'Advanced Excel',lvl:'Advanced',desc:'Pivot tables and modeling'},
+  {id:'pivot',label:'Pivot Tables',lvl:'Advanced',desc:'Slicing & analysis'},
+  {id:'dataclean',label:'Data Cleaning',lvl:'Expert',desc:'Missing values, normalization'},
+  {id:'dataviz',label:'Data Visualization',lvl:'Advanced',desc:'Story-driven visuals'},
+  {id:'spss',label:'SPSS',lvl:'Advanced',desc:'Stat tests & regressions'},
+  {id:'brd',label:'BRD/FRD/SRS',lvl:'Intermediate',desc:'Requirements docs'},
+  {id:'datainterp',label:'Data Interpretation',lvl:'Advanced',desc:'Insights & recommendations'},
+  {id:'azure',label:'Azure',lvl:'Intermediate',desc:'Cloud & Databricks'},
+  {id:'git',label:'Git / GitHub',lvl:'Intermediate',desc:'Version control'}
 ];
 
 const PROJECTS = [
@@ -210,7 +224,7 @@ const PROJECTS = [
     title:'Smart Promotion Profitability Tracker',
     tags:['ETL','SQL','Power BI'],
     blurb:'Promo uplift modelling & profitability command center',
-    long:'Built ETL pipelines in Python, A/B tests, uplift modeling and a Power BI command center to track promotion ROI.',
+    long:'Built ETL pipelines in Python, A/B tests and uplift modeling, and created a Power BI command center to track promotion ROI.',
     thumb:'SmartPromotionProfitabilityTracker.jpg',
     media:[ {type:'img', src:'SmartPromotionProfitabilityTracker.jpg', caption:'Command center snapshot'} ]
   },
@@ -243,30 +257,17 @@ const PROJECTS = [
   }
 ];
 
-/* ====== DOM refs ====== */
-const skillsList = document.getElementById('skillsList');
+/* ===== DOM refs ===== */
 const galleryEl = document.getElementById('gallery');
 const filtersEl = document.getElementById('filters');
 const backdrop = document.getElementById('backdrop');
 const modalTitle = document.getElementById('modalTitle');
 const modalBlurb = document.getElementById('modalBlurb');
 const modalBody = document.getElementById('modalBody');
+const skillDetailsEl = document.getElementById('skillDetails');
+const resumeLink = document.getElementById('resumeLink');
 
-/* ====== render skills ====== */
-function renderSkills(){
-  skillsList.innerHTML = '';
-  SKILLS.forEach(s=>{
-    const el = document.createElement('div');
-    el.className = 'skill-pill';
-    el.innerHTML = `<div>${s.label}</div><small>${s.lvl}</small>`;
-    el.tabIndex = 0;
-    el.addEventListener('click', ()=>{ selectSkill(s.id); });
-    el.addEventListener('keydown', (e)=>{ if(e.key==='Enter') selectSkill(s.id) });
-    skillsList.appendChild(el);
-  });
-}
-
-/* ====== render filters ====== */
+/* ===== gallery & filters ===== */
 function setupFilters(){
   const tags = Array.from(new Set(PROJECTS.flatMap(p=>p.tags)));
   filtersEl.innerHTML = '';
@@ -280,14 +281,13 @@ function setupFilters(){
   });
 }
 
-/* ====== render gallery ====== */
 function renderGallery(list){
   galleryEl.innerHTML = '';
   list.forEach(p=>{
     const card = document.createElement('article');
     card.className = 'proj-card';
     card.tabIndex = 0;
-    const thumbHtml = p.thumb ? `<div class="proj-thumb"><img src="${p.thumb}" alt="${p.title}"/></div>` : `<div class="proj-thumb">${p.tags.join(' • ')}</div>`;
+    const thumbHtml = p.thumb ? `<div class="proj-thumb"><img src="${p.thumb}" alt="${p.title}"></div>` : `<div class="proj-thumb">${p.tags.join(' • ')}</div>`;
     card.innerHTML = thumbHtml + `<div class="proj-info"><h4>${p.title}</h4><div class="proj-meta"><div style="max-width:68%">${p.blurb}</div><div style="color:var(--muted);font-weight:700">${p.tags[0]||''}</div></div><div class="proj-tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div>`;
     card.addEventListener('click', ()=> openCaseStudy(p));
     card.addEventListener('keydown',(e)=>{ if(e.key==='Enter') openCaseStudy(p) });
@@ -295,7 +295,7 @@ function renderGallery(list){
   });
 }
 
-/* ====== modal case study ====== */
+/* ===== modal ===== */
 function openCaseStudy(p){
   modalTitle.textContent = p.title;
   modalBlurb.textContent = p.blurb;
@@ -305,7 +305,7 @@ function openCaseStudy(p){
     p.media.forEach(m=>{
       const box = document.createElement('div');
       if(m.type === 'img') box.innerHTML = `<img src="${m.src}" alt="${m.caption||p.title}"><div style="color:var(--muted);font-size:13px;margin-top:6px">${m.caption||''}</div>`;
-      else if(m.type === 'video') box.innerHTML = `<video controls><source src="${m.src}" type="video/mp4">Your browser doesn\\'t support video.</video><div style="color:var(--muted);font-size:13px;margin-top:6px">${m.caption||''}</div>`;
+      else if(m.type === 'video') box.innerHTML = `<video controls><source src="${m.src}" type="video/mp4">Your browser doesn't support video.</video><div style="color:var(--muted);font-size:13px;margin-top:6px">${m.caption||''}</div>`;
       grid.appendChild(box);
     });
     modalBody.appendChild(grid);
@@ -318,31 +318,7 @@ document.getElementById('closeModal').addEventListener('click', closeModal);
 backdrop.addEventListener('click',(e)=>{ if(e.target === backdrop) closeModal();});
 function closeModal(){ backdrop.style.display='none'; backdrop.setAttribute('aria-hidden','true'); document.body.style.overflow='auto'; }
 
-/* ====== skills -> filter mapping (strict) ====== */
-/* map projects to skills by keyword matching, simple approach */
-function selectSkill(skillId){
-  // normalize
-  const keyword = skillId.toLowerCase();
-  const filtered = PROJECTS.filter(p=>{
-    const hay = (p.title + ' ' + p.tags.join(' ') + ' ' + p.long).toLowerCase();
-    return hay.includes(keyword);
-  });
-  if(filtered.length) {
-    renderGallery(filtered);
-    document.getElementById('skillDetails')?.scrollIntoView({behavior:'smooth'});
-  } else {
-    // fallback: show all projects but highlight chips
-    renderGallery(PROJECTS);
-  }
-  // visual feedback: tint skill pills
-  document.querySelectorAll('.skill-pill').forEach(el=>{ el.style.opacity = (el.textContent.toLowerCase().includes(skillId)? '1' : '0.5'); });
-}
-
-/* ====== shuffle/resets ====== */
-document.getElementById('shuffle').addEventListener('click', ()=>{ document.querySelectorAll('.skill-pill').forEach((el,i)=>{ el.style.transform = `translate(${(Math.random()-0.5)*24}px, ${(Math.random()-0.5)*30}px)`; }); });
-document.getElementById('reset').addEventListener('click', ()=>{ document.querySelectorAll('.skill-pill').forEach(el=>{ el.style.transform = 'none'; el.style.opacity = '1'; }); renderGallery(PROJECTS); document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); document.querySelector('.chip')?.classList.add('active'); });
-
-/* ====== contact form demo ====== */
+/* ===== contact (demo) ===== */
 document.getElementById('sendBtn').addEventListener('click', ()=>{
   const n = document.getElementById('c_name').value.trim();
   const e = document.getElementById('c_email').value.trim();
@@ -353,20 +329,164 @@ document.getElementById('sendBtn').addEventListener('click', ()=>{
 });
 document.getElementById('clearBtn').addEventListener('click', ()=>{ document.getElementById('contactForm').reset(); });
 
-/* ====== resume uploader (client-only preview) ====== */
+/* ===== resume uploader (client-only preview) ===== */
 document.getElementById('resumeUploader').addEventListener('change',(e)=>{
   const f = e.target.files[0]; if(!f) return;
   const url = URL.createObjectURL(f);
-  document.querySelector('a[href="Me Resume.pdf"]').href = url;
+  resumeLink.href = url;
   alert('Local resume link updated in browser (client-only). Commit to repo if you want it persistent.');
 });
 
-/* ====== init ====== */
-renderSkills();
-setupFilters();
-renderGallery(PROJECTS);
+/* ===== Molecule engine (canvas + DOM pills) ===== */
+const mcanvas = document.getElementById('moleculeCanvas');
+const mnodes = document.getElementById('moleculeNodes');
+const ctx = mcanvas.getContext('2d');
+let W = 0, H = 0, DPR = window.devicePixelRatio || 1;
+let atoms = [];
 
-document.getElementById('contactBtn').addEventListener('click', ()=>{ document.getElementById('c_name').focus(); window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'}); });
+function resizeM(){
+  DPR = window.devicePixelRatio || 1;
+  W = mcanvas.clientWidth;
+  H = mcanvas.clientHeight;
+  mcanvas.width = Math.max(1, Math.floor(W * DPR));
+  mcanvas.height = Math.max(1, Math.floor(H * DPR));
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+window.addEventListener('resize', ()=>{ resizeM(); placeAtoms(); });
+
+function placeAtoms(){
+  mnodes.innerHTML = '';
+  atoms = [];
+  const center = {x: W/2, y: H/2};
+  const angleStep = (Math.PI * 2) / SKILLS.length;
+  SKILLS.forEach((s,i)=>{
+    const angle = i * angleStep + (Math.random()*0.6 - 0.3);
+    const radius = 110 + Math.random()*160;
+    const x = center.x + Math.cos(angle) * radius;
+    const y = center.y + Math.sin(angle) * radius;
+    const r = 12 + Math.random()*18;
+    const atom = {x,y,vx:(Math.random()-0.5)*0.6, vy:(Math.random()-0.5)*0.6, r, label: s.label, id: s.id, desc: s.desc || ''};
+
+    const pill = document.createElement('button');
+    pill.className = 'node-pill';
+    pill.style.left = (x - 60) + 'px';
+    pill.style.top = (y - 18) + 'px';
+    pill.style.position = 'absolute';
+    pill.style.pointerEvents = 'auto';
+    pill.style.minWidth = '110px';
+    pill.style.padding = '8px 12px';
+    pill.style.background = 'rgba(255,255,255,0.98)';
+    pill.style.border = '1px solid rgba(0,0,0,0.05)';
+    pill.style.borderRadius = '999px';
+    pill.style.fontWeight = '700';
+    pill.innerHTML = `<div style="font-weight:700">${s.label}</div><span class="lvl" style="display:block;color:var(--muted);font-size:11px">${s.lvl||''}</span>`;
+    pill.dataset.skill = s.id;
+    pill.setAttribute('aria-label', `${s.label} — ${s.lvl||''}`);
+    pill.addEventListener('click', ()=>{ selectSkill(s.id); });
+    pill.addEventListener('keydown',(e)=>{ if(e.key==='Enter') selectSkill(s.id); });
+    mnodes.appendChild(pill);
+    atom.el = pill;
+    atoms.push(atom);
+  });
+
+  // decorative floaters
+  for(let k=0;k<18;k++){
+    atoms.push({x: Math.random()*W, y: Math.random()*H, vx:(Math.random()-0.5)*0.3, vy:(Math.random()-0.5)*0.3, r:2+Math.random()*6, label:null});
+  }
+}
+
+function drawAtoms(){
+  ctx.clearRect(0,0,W,H);
+  // subtle vignette
+  const g = ctx.createRadialGradient(W/2,H/2,40,W/2,H/2,Math.max(W,H));
+  g.addColorStop(0,'rgba(255,255,255,0.02)');
+  g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0,0,W,H);
+
+  for(let i=0;i<atoms.length;i++){
+    const a = atoms[i];
+    a.x += a.vx;
+    a.y += a.vy;
+    if(a.x < 6) a.vx *= -1;
+    if(a.x > W-6) a.vx *= -1;
+    if(a.y < 6) a.vy *= -1;
+    if(a.y > H-6) a.vy *= -1;
+    a.vx += (W/2 - a.x) * 0.00003;
+    a.vy += (H/2 - a.y) * 0.00003;
+
+    ctx.beginPath();
+    if(a.label){
+      ctx.fillStyle = 'rgba(255,255,255,0.98)';
+      ctx.strokeStyle = 'rgba(0,0,0,0.04)';
+      ctx.lineWidth = 1;
+      ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
+      ctx.fill();
+      ctx.stroke();
+    } else {
+      ctx.fillStyle = 'rgba(0,0,0,0.04)';
+      ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
+      ctx.fill();
+    }
+
+    if(a.el){
+      a.el.style.left = (a.x - 60) + 'px';
+      a.el.style.top = (a.y - 18) + 'px';
+    }
+  }
+
+  // links between labeled atoms
+  for(let i=0;i<atoms.length;i++){
+    for(let j=i+1;j<atoms.length;j++){
+      const A = atoms[i], B = atoms[j];
+      if(!A.label || !B.label) continue;
+      const dx = A.x - B.x, dy = A.y - B.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist < 220){
+        const alpha = 1 - (dist / 220);
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(226,139,42,${0.12 * alpha})`;
+        ctx.lineWidth = 1.2 * alpha;
+        ctx.moveTo(A.x, A.y);
+        ctx.lineTo(B.x, B.y);
+        ctx.stroke();
+      }
+    }
+  }
+
+  requestAnimationFrame(drawAtoms);
+}
+
+document.getElementById('shuffleNodes').addEventListener('click', ()=>{ atoms.forEach(a=>{ a.vx += (Math.random()-0.5)*2; a.vy += (Math.random()-0.5)*2; }); });
+document.getElementById('resetNodes').addEventListener('click', ()=>{ placeAtoms(); renderGallery(PROJECTS); document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); document.querySelector('.chip')?.classList.add('active'); });
+
+function selectSkill(id){
+  const s = SKILLS.find(x=>x.id===id);
+  skillDetailsEl.textContent = `${s.label} — ${s.desc || ''}`;
+  const filtered = PROJECTS.filter(p=>{
+    const hay = (p.title + ' ' + p.tags.join(' ') + ' ' + p.long).toLowerCase();
+    return hay.includes(s.label.toLowerCase()) || (p.tags||[]).some(t=>t.toLowerCase().includes(s.label.toLowerCase()));
+  });
+  renderGallery(filtered.length ? filtered : PROJECTS);
+  document.querySelectorAll('.node-pill').forEach(p=> p.style.opacity = (p.dataset.skill === id ? '1' : '0.35'));
+}
+
+/* pan by dragging */
+let dragging=false,startX=0,startY=0;
+const container = document.querySelector('.molecule-wrap') || document.querySelector('.molecule-wrap');
+container?.addEventListener('pointerdown', (e)=>{ dragging=true; startX=e.clientX; startY=e.clientY; container.setPointerCapture(e.pointerId); });
+container?.addEventListener('pointermove', (e)=>{ if(!dragging) return; const dx=e.clientX-startX, dy=e.clientY-startY; startX=e.clientX; startY=e.clientY; atoms.forEach(a=>{ a.x += dx*0.12; a.y += dy*0.12; }); });
+container?.addEventListener('pointerup', ()=>{ dragging=false; });
+
+/* ===== init ===== */
+function init(){
+  resizeM();
+  placeAtoms();
+  drawAtoms();
+  setupFilters();
+  renderGallery(PROJECTS);
+}
+window.addEventListener('load', init);
 
 </script>
 </body>
