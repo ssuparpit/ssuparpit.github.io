@@ -1,447 +1,277 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Arpit Agrawal — Skills Molecules (Data Analyst)</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Arpit Agrawal — Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#FBF7F2;                  /* cream background */
-    --panel:#FFFFFF;               /* cards */
-    --muted:#6b6b6b;
-    --accent:#D07A2A;              /* golden accent default */
+    --bg:#FBF7F2;            /* warm cream */
+    --card:#FFFFFF;
+    --muted:#7a7a80;
+    --ink:#0f1720;
+    --accent:#E28B2A;        /* golden */
     --accent-2:#FFB86B;
-    --glass: rgba(16,20,24,0.03);
-    --card-border: rgba(16,20,24,0.06);
+    --glass: rgba(14,18,22,0.04);
     --radius:14px;
     --maxw:1200px;
-    --shadow: 0 14px 40px rgba(16,20,24,0.06);
-    --text-dark: #111827;
+    --soft-shadow: 0 12px 40px rgba(12,15,20,0.06);
   }
   *{box-sizing:border-box}
   html,body{height:100%}
-  body{margin:0;background:var(--bg);color:var(--text-dark);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; -webkit-font-smoothing:antialiased;}
-  .wrap{max-width:var(--maxw);margin:28px auto;padding:20px}
-  header{display:flex;align-items:center;justify-content:space-between;gap:16px}
-  .brand{display:flex;gap:12px;align-items:center}
-  .logo{width:58px;height:58px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:white;font-weight:800;font-family:Montserrat}
-  .title h2{margin:0;font-size:18px}
-  .title p{margin:0;color:var(--muted);font-size:13px}
-  .top-controls{display:flex;gap:10px;align-items:center}
-  .btn{padding:9px 14px;border-radius:12px;border:1px solid var(--card-border);background:transparent;font-weight:700;cursor:pointer}
-  .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;border:none;box-shadow:var(--shadow)}
-  .file-upload{display:inline-flex;align-items:center;gap:10px}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto; -webkit-font-smoothing:antialiased;}
+  a{color:inherit}
+  .container{max-width:var(--maxw);margin:30px auto;padding:22px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:18px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .avatar{width:64px;height:64px;border-radius:12px;overflow:hidden;flex-shrink:0;box-shadow:0 8px 30px rgba(0,0,0,0.06)}
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  .title h1{margin:0;font-family:Montserrat;font-weight:800;font-size:18px}
+  .title p{margin:2px 0 0 0;color:var(--muted);font-size:13px}
+  .top-actions{display:flex;gap:10px;align-items:center}
+  .btn{padding:10px 14px;border-radius:12px;border:1px solid var(--glass);background:transparent;font-weight:700;cursor:pointer}
+  .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;border:none;box-shadow:var(--soft-shadow)}
   /* layout */
-  .grid{display:grid;grid-template-columns:420px 1fr;gap:22px;margin-top:22px}
-  @media (max-width:980px){.grid{grid-template-columns:1fr}}
-  .panel{background:var(--panel);border-radius:var(--radius);padding:18px;border:1px solid var(--card-border);box-shadow:var(--shadow);}
-  /* left - molecule area */
-  .molecule-wrap{position:relative;height:700px;border-radius:12px;overflow:hidden;border:1px solid rgba(16,20,24,0.02)}
-  canvas#molecules{position:absolute;inset:0;width:100%;height:100%;display:block}
-  .core-pill{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:6;padding:26px;border-radius:999px;background:linear-gradient(135deg,rgba(255,255,255,0.95),rgba(255,255,255,0.9));box-shadow:0 20px 50px rgba(13,18,25,0.06);text-align:center;border:1px solid rgba(0,0,0,0.04)}
-  .core-pill h3{margin:0;font-family:Montserrat;font-size:18px}
-  .core-pill small{display:block;color:var(--muted);margin-top:6px;font-size:12px}
-  /* nodes look like molecular atoms */
-  .node-pill{position:absolute;z-index:8;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,0.98);border:1px solid rgba(0,0,0,0.06);font-weight:700;font-size:13px;color:var(--text-dark);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;transition:transform .18s,box-shadow .18s}
-  .node-pill .lvl{font-size:11px;color:var(--muted);font-weight:600}
-  .node-pill:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(0,0,0,0.06)}
-  /* right column gallery */
-  .header-row{display:flex;justify-content:space-between;align-items:center}
-  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;margin-bottom:12px}
-  .chip{padding:8px 12px;border-radius:999px;border:1px solid var(--card-border);background:transparent;font-weight:700;color:var(--muted);cursor:pointer}
-  .chip.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;border:none}
-  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
-  .card{background:linear-gradient(180deg,white, #fcfcfc);padding:14px;border-radius:12px;border:1px solid rgba(0,0,0,0.03);box-shadow:0 12px 30px rgba(16,20,24,0.03);transition:transform .18s;cursor:pointer}
-  .card:hover{transform:translateY(-6px)}
-  .thumb{height:86px;border-radius:10px;background:linear-gradient(90deg, rgba(0,0,0,0.02), transparent);display:grid;place-items:center;color:var(--muted);font-size:13px}
-  .card h4{margin:8px 0 0 0;font-family:Montserrat;font-size:16px}
-  .meta{color:var(--muted);font-size:13px;margin-top:6px;display:flex;justify-content:space-between}
-  .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-  .tag{padding:6px 8px;border-radius:8px;border:1px solid var(--card-border);font-size:12px;color:var(--muted)}
+  .layout{display:grid;grid-template-columns:340px 1fr;gap:24px;margin-top:22px}
+  @media (max-width:980px){.layout{grid-template-columns:1fr}}
+  /* left column (profile + skills) */
+  .panel{background:var(--card);border-radius:var(--radius);padding:18px;border:1px solid var(--glass);box-shadow:var(--soft-shadow)}
+  .profile-hero{display:flex;gap:14px;align-items:center}
+  .meta h3{margin:0;font-family:Montserrat;font-size:16px}
+  .meta p{margin:4px 0 0 0;color:var(--muted);font-size:13px}
+  .about{margin-top:12px;color:var(--muted);font-size:14px;line-height:1.45}
+  .skills-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
+  .skill-pill{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:10px;border:1px dashed rgba(0,0,0,0.04);background:linear-gradient(180deg, #fff, #fbfbfb);font-weight:700}
+  .skill-pill small{color:var(--muted);font-weight:600;font-size:12px}
+  .molecule-legend{margin-top:12px;color:var(--muted);font-size:12px}
+  .shuffle-row{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:12px}
+  /* right column (projects + contact) */
+  .hero-banner{background:linear-gradient(90deg, rgba(226,139,42,0.06), rgba(255,184,107,0.03));padding:18px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid rgba(226,139,42,0.06)}
+  .hero-left h2{margin:0;font-family:Montserrat;font-weight:800}
+  .hero-left p{margin:6px 0 0 0;color:var(--muted)}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .chip{padding:8px 12px;border-radius:999px;border:1px solid var(--glass);background:transparent;font-weight:700;color:var(--muted);cursor:pointer}
+  .chip.active{background:var(--accent);color:#fff;border:none;box-shadow:0 8px 24px rgba(226,139,42,0.12)}
+  .grid-projects{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-top:14px}
+  .proj-card{background:var(--card);border-radius:12px;padding:14px;border:1px solid var(--glass);box-shadow:0 8px 30px rgba(12,15,20,0.03);transition:transform .22s,box-shadow .22s;cursor:pointer;overflow:hidden}
+  .proj-card:hover{transform:translateY(-8px);box-shadow:0 28px 90px rgba(12,15,20,0.08)}
+  .proj-thumb{height:140px;border-radius:10px;background:#f6f6f6;overflow:hidden}
+  .proj-thumb img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1);transition:transform .6s}
+  .proj-card:hover .proj-thumb img{transform:scale(1.04)}
+  .proj-info h4{margin:10px 0 0 0;font-family:Montserrat}
+  .proj-meta{color:var(--muted);font-size:13px;margin-top:6px;display:flex;justify-content:space-between;align-items:center}
+  .proj-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .tag{padding:6px 8px;border-radius:8px;border:1px solid var(--glass);color:var(--muted);font-weight:700;font-size:12px}
   /* contact */
-  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-  .input,textarea{padding:10px;border-radius:10px;border:1px solid var(--card-border);background:transparent;font-size:14px}
-  textarea{min-height:120px;resize:vertical}
-  .contact-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+  .contact-panel{margin-top:14px}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .input,textarea{padding:12px;border-radius:10px;border:1px solid var(--glass);font-size:14px}
+  textarea{min-height:110px;resize:vertical}
+  .contact-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
   /* modal */
-  .modal-backdrop{position:fixed;inset:0;background:rgba(10,12,14,0.32);display:none;align-items:center;justify-content:center;z-index:999}
-  .modal{width:min(960px,92%);border-radius:12px;padding:18px;background:white;border:1px solid rgba(0,0,0,0.04)}
-  .modal h3{margin:0}
-  /* small screens */
-  @media (max-width:760px){.grid{grid-template-columns:1fr}.contact-grid{grid-template-columns:1fr}}
-  /* subtle focus outline */
-  :focus{outline:2px solid rgba(208,122,42,0.14);outline-offset:3px}
+  .backdrop{position:fixed;inset:0;background:rgba(12,15,20,0.5);display:none;align-items:center;justify-content:center;z-index:999}
+  .modal{width:min(880px,94%);background:var(--card);padding:18px;border-radius:12px;border:1px solid var(--glass);max-height:90vh;overflow:auto}
+  .modal .media-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+  .modal img, .modal video{width:100%;border-radius:8px}
+  /* footer */
+  footer{margin-top:26px;color:var(--muted);font-size:13px;text-align:center}
+  /* small screens tweaks */
+  @media (max-width:720px){
+    .grid-projects{grid-template-columns:1fr}
+    .contact-grid{grid-template-columns:1fr}
+  }
 </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="container">
     <header>
       <div class="brand">
-        <div class="logo" style="padding:0;overflow:hidden">
-  <img src="me image.jpg"
-       alt="Arpit Agrawal"
-       style="width:100%;height:100%;object-fit:cover;border-radius:12px;display:block"/>
-</div>
+        <div class="avatar"><img src="me image.jpg" alt="Arpit Agrawal"></div>
         <div class="title">
-          <h2>Arpit Agrawal</h2>
+          <h1>Arpit Agrawal</h1>
           <p>Data Analyst · Data Engineer · Visual storyteller</p>
         </div>
       </div>
 
-      <div class="top-controls">
-        <!-- Resume link (uses your uploaded file) -->
-        <a id="resumeLink" class="btn" href="Me Resume.pdf" target="_blank" rel="noopener noreferrer" title="Open uploaded resume">Resume</a>
-
-        <!-- Upload control to replace resume link locally (client-only) -->
-        <label class="btn" style="display:inline-flex;align-items:center;gap:8px;cursor:pointer">
-          <input id="resumeUploader" type="file" accept=".pdf,.doc,.docx" style="display:none">
+      <div class="top-actions">
+        <a href="Me Resume.pdf" class="btn" target="_blank" rel="noopener noreferrer">Resume</a>
+        <label class="btn" style="cursor:pointer">
+          <input id="resumeUploader" type="file" accept=".pdf,.doc,.docx" style="display:none" />
           Upload
         </label>
-
-        <button id="hireBtn" class="btn primary">Hire / Contact</button>
+        <button class="btn primary" id="contactBtn">Hire / Contact</button>
       </div>
     </header>
 
-    <main class="grid" aria-label="main content">
-      <!-- LEFT: Molecules -->
-      <section class="panel" aria-labelledby="skillsTitle">
-        <h3 id="skillsTitle" style="margin:0 0 8px 0">Skills Molecules</h3>
-        <p style="margin:0 0 12px 0;color:var(--muted)">Molecules float & connect — each skill is an atom. Click one to filter projects. Drag to pan the space.</p>
-
-        <div class="molecule-wrap" id="mwrap">
-          <canvas id="molecules"></canvas>
-
-          <div class="core-pill" id="core">
-            <h3>Data</h3>
-            <small>Cleaning · Insight · Delivery</small>
-          </div>
-          <!-- node pills will be injected here -->
-        </div>
-
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
-          <div style="color:var(--muted);font-size:13px">Tip: click a skill to filter projects. Click 'shuffle' to reposition molecules.</div>
-          <div style="display:flex;gap:8px">
-            <button id="shuffle" class="btn">Shuffle</button>
-            <button id="reset" class="btn">Reset</button>
-          </div>
-        </div>
-
-        <div style="margin-top:12px">
-          <strong>Selected Skill</strong>
-          <div id="skillDetails" style="margin-top:8px;color:var(--muted);font-size:13px">No selection yet.</div>
-        </div>
-      </section>
-
-      <!-- RIGHT: Projects + Contact -->
-      <section>
-        <div class="panel">
-          <div class="header-row">
-            <div>
-              <h3 style="margin:0">Project Gallery</h3>
-              <p style="margin:6px 0 0 0;color:var(--muted);font-size:13px">A focused set of projects. Click any card for details.</p>
+    <div class="layout">
+      <!-- LEFT: profile + skills -->
+      <aside class="panel" aria-labelledby="profileTitle">
+        <div class="profile-hero">
+          <div style="flex:1">
+            <div class="meta">
+              <h3 id="profileTitle">About</h3>
+              <p>Data Analyst focused on automating reporting, building dashboards, and deriving actionable insights.</p>
             </div>
-            <div style="color:var(--muted);font-size:12px">Futuristic, light, professional</div>
+            <div class="about">I turn messy data into clear narratives — automation, dashboards, and cross-functional impact. Experience across retail, logistics, and operations.</div>
           </div>
+        </div>
 
+        <div class="skills-grid" id="skillsList" aria-label="skills">
+          <!-- skill pills injected -->
+        </div>
+
+        <div class="molecule-legend">Tip: Click a skill to filter projects. Shuffle repositions items for variety.</div>
+        <div class="shuffle-row">
+          <div></div>
+          <div style="display:flex;gap:8px">
+            <button class="btn" id="shuffle">Shuffle</button>
+            <button class="btn" id="reset">Reset</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- RIGHT: projects + contact -->
+      <main>
+        <section class="panel hero-banner" aria-labelledby="projectsTitle">
+          <div class="hero-left">
+            <h2 id="projectsTitle">Project Gallery</h2>
+            <p>A focused set of case studies — click any card for full details.</p>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:12px;color:var(--muted)">Futuristic • Aesthetic • Lightweight</div>
+          </div>
+        </section>
+
+        <section class="panel" style="margin-top:14px">
           <div class="filters" id="filters"></div>
 
-          <div class="gallery" id="gallery"></div>
-        </div>
+          <div class="grid-projects" id="gallery"></div>
+        </section>
 
-        <div class="panel" style="margin-top:14px">
-          <h3 style="margin:0 0 8px 0">Contact Portal</h3>
-          <p style="margin:0 0 12px 0;color:var(--muted);font-size:13px">Drop a short note — demo submit shows a success toast (replace with your webhook in JS).</p>
-
+        <section class="panel contact-panel">
+          <h3 style="margin:0">Contact</h3>
+          <p style="margin:6px 0 12px 0;color:var(--muted)">Shoot a short note — demo submit only (replace with webhook in JS).</p>
           <form id="contactForm" onsubmit="return false;">
             <div class="contact-grid">
-              <input class="input" id="name" placeholder="Your name" />
-              <input class="input" id="email" placeholder="Email" />
-              <input class="input" id="role" placeholder="Role / Short note (e.g., Data internship)" style="grid-column:1/3" />
-              <textarea id="message" placeholder="Message — be brief, be human"></textarea>
+              <input class="input" id="c_name" placeholder="Your name" />
+              <input class="input" id="c_email" placeholder="Email" />
+              <input class="input" id="c_role" placeholder="Role / short note" style="grid-column:1/3" />
+              <textarea id="c_msg" placeholder="Message — be brief, be human" style="grid-column:1/3"></textarea>
             </div>
             <div class="contact-actions">
               <button class="btn" id="clearBtn" type="button">Clear</button>
-              <button class="btn primary" id="sendBtn" type="submit">Send message</button>
+              <button class="btn primary" id="sendBtn">Send</button>
             </div>
+            <div id="contactResult" style="margin-top:10px;color:var(--muted)"></div>
           </form>
-          <div id="contactResult" style="margin-top:12px;color:var(--muted)"></div>
-        </div>
-      </section>
-    </main>
+        </section>
+
+      </main>
+    </div>
+
+    <footer>Built with care — portfolio UI refreshed.</footer>
   </div>
 
-  <!-- Case study modal -->
-  <div class="modal-backdrop" id="modal" aria-hidden="true" role="dialog">
-    <div class="modal" role="document" id="modalCard">
+  <!-- Modal -->
+  <div class="backdrop" id="backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <h3 id="modalTitle">Case study</h3>
-        <button id="modalClose" class="btn">Close</button>
+        <button class="btn" id="closeModal">Close</button>
       </div>
       <p id="modalBlurb" style="color:var(--muted)"></p>
-      <div id="modalBody" style="margin-top:12px;color:var(--muted)"></div>
+      <div id="modalBody" class="modal-body"></div>
     </div>
   </div>
 
-  <!-- toast -->
-  <div id="toast" style="position:fixed;right:20px;bottom:20px;padding:12px 16px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;display:none;box-shadow:0 12px 40px rgba(13,18,25,0.08);font-weight:700;z-index:9999">Sent</div>
-
 <script>
-/* ===========
- Data & SKILLS
- Only core data-analyst skills per your brief.
- ===========
-*/
+/* ========= DATA (update here if you add projects) ========= */
 const SKILLS = [
-  {id:'sql', label:'SQL', lvl:'Expert', desc:'Relational queries, window functions, MySQL Workbench'},
-  {id:'python', label:'Python', lvl:'Expert', desc:'Pandas, NumPy, scripting, ETL'},
-  {id:'pandas', label:'Pandas', lvl:'Expert', desc:'Dataframes, joins, cleaning'},
-  {id:'powerbi', label:'Power BI', lvl:'Advanced', desc:'Dashboards, measures, visuals'},
-  {id:'tableau', label:'Tableau', lvl:'Advanced', desc:'Dashboards, viz design'},
-  {id:'excel', label:'Advanced Excel', lvl:'Advanced', desc:'Pivot tables, formulas, power features'},
-  {id:'pivot', label:'Pivot Tables', lvl:'Advanced', desc:'Slicing, aggregation, analysis'},
-  {id:'dataclean', label:'Data Cleaning', lvl:'Expert', desc:'Missing values, normalization, rules'},
-  {id:'dataviz', label:'Data Visualization', lvl:'Advanced', desc:'Story-driven visuals'},
-  {id:'spss', label:'SPSS', lvl:'Advanced', desc:'Stat tests, regressions'},
-  {id:'stats', label:'Statistical Analysis', lvl:'Advanced', desc:'Hypothesis testing, regressions'},
-  {id:'brd', label:'BRD', lvl:'Intermediate', desc:'Business Requirement Docs'},
-  {id:'frd', label:'FRD', lvl:'Intermediate', desc:'Functional Requirement Docs'},
-  {id:'srs', label:'SRS', lvl:'Intermediate', desc:'System Requirement Specs'},
-  {id:'datainterp', label:'Data Interpretation', lvl:'Advanced', desc:'Insights & recommendations'},
-  {id:'mysqlwb', label:'MySQL Workbench', lvl:'Advanced', desc:'DB tools & queries'},
-  {id:'git', label:'Git / GitHub', lvl:'Intermediate', desc:'Version control & repos'},
-  {id:'azure', label:'Azure', lvl:'Intermediate', desc:'Cloud pipelines & Databricks'}
+  {id:'sql',label:'SQL',lvl:'Expert'},
+  {id:'python',label:'Python',lvl:'Expert'},
+  {id:'pandas',label:'Pandas',lvl:'Expert'},
+  {id:'powerbi',label:'Power BI',lvl:'Advanced'},
+  {id:'tableau',label:'Tableau',lvl:'Advanced'},
+  {id:'excel',label:'Advanced Excel',lvl:'Advanced'},
+  {id:'pivot',label:'Pivot Tables',lvl:'Advanced'},
+  {id:'dataclean',label:'Data Cleaning',lvl:'Expert'},
+  {id:'dataviz',label:'Data Visualization',lvl:'Advanced'},
+  {id:'spss',label:'SPSS',lvl:'Advanced'},
+  {id:'brd',label:'BRD/FRD/SRS',lvl:'Intermediate'},
+  {id:'datainterp',label:'Data Interpretation',lvl:'Advanced'},
+  {id:'azure',label:'Azure',lvl:'Intermediate'},
+  {id:'git',label:'Git / GitHub',lvl:'Intermediate'}
 ];
 
-/* sample projects seeded from resume (edit further) */
-  const PROJECTS = [
+const PROJECTS = [
   {
-    id: 'promo',
-    title: 'Smart Promotion Profitability Tracker',
-    tags: ['ETL','SQL','Power BI'],
-    blurb: 'Promo uplift modelling & profitability command center',
-    long: 'Built ETL pipelines using Python; uplift modeling, SQL testing and a Power BI command center tracking ROI.',
-    thumb: 'SmartPromotionProfitabilityTracker.jpg',
-    media: [
-      { type: 'img', src: 'SmartPromotionProfitabilityTracker.jpg', caption: 'Promotion dashboard overview' }
-    ]
+    id:'promo',
+    title:'Smart Promotion Profitability Tracker',
+    tags:['ETL','SQL','Power BI'],
+    blurb:'Promo uplift modelling & profitability command center',
+    long:'Built ETL pipelines in Python, A/B tests, uplift modeling and a Power BI command center to track promotion ROI.',
+    thumb:'SmartPromotionProfitabilityTracker.jpg',
+    media:[ {type:'img', src:'SmartPromotionProfitabilityTracker.jpg', caption:'Command center snapshot'} ]
   },
   {
-    id: 'retail',
-    title: 'Retail & Logistics Intelligence Hub',
-    tags: ['Geo','SQL','Forecasting','Tableau'],
-    blurb: 'Route optimization & forecasting, Snowflake analytics',
-    long: 'Cloud warehouse + route optimization reduced delivery times and improved inventory accuracy.',
-    thumb: 'Retail&LogisticsIntelligenceHub.jpg',
-    media: [
-      { type: 'img', src: 'Retail&LogisticsIntelligenceHub.jpg', caption: 'Logistics dashboard' },
-      { type: 'video', src: 'canva-R7Y5xsjlsvA.mp4', caption: 'Walkthrough demo (mp4)' }
-    ]
+    id:'retail',
+    title:'Retail & Logistics Intelligence Hub',
+    tags:['Geo','SQL','Tableau'],
+    blurb:'Route optimisation & forecasting, Snowflake analytics',
+    long:'End-to-end analytics for logistics—forecasting, route optimisation and cloud analytics in Snowflake and Tableau.',
+    thumb:'Retail&LogisticsIntelligenceHub.jpg',
+    media:[ {type:'img', src:'Retail&LogisticsIntelligenceHub.jpg', caption:'Logistics dashboard'}, {type:'video', src:'canva-R7Y5xsjlsvA.mp4', caption:'Walkthrough (mp4)'} ]
   },
   {
-    id: 'supply',
-    title: 'Supply Chain Disruption Prediction',
-    tags: ['Spark','Azure','Anomaly','SQL'],
-    blurb: 'Realtime anomaly detection across 8M+ events',
-    long: 'Stream processing + TensorFlow models for anomaly detection; alerts and dashboards in Power BI.',
-    thumb: 'SupplyChainDisruptionPrediction.jpg',
-    media: [
-      { type: 'img', src: 'SupplyChainDisruptionPrediction.jpg', caption: 'Anomaly dashboard' }
-    ]
+    id:'supply',
+    title:'Supply Chain Disruption Prediction',
+    tags:['Spark','Azure','Anomaly','SQL'],
+    blurb:'Realtime anomaly detection across 8M+ events',
+    long:'Spark streaming + TensorFlow for anomaly detection, alerting layer, and Power BI dashboards for ops.',
+    thumb:'SupplyChainDisruptionPrediction.jpg',
+    media:[ {type:'img', src:'SupplyChainDisruptionPrediction.jpg', caption:'Anomaly overview'} ]
   },
   {
-    id: 'print',
-    title: 'Print Production Analytics',
-    tags: ['Power BI','Ops','SQL','Python'],
-    blurb: 'Telemetry ingestion & defect analytics',
-    long: 'Ingested printer telemetry logs, built defect classification and interactive dashboards for production teams.',
-    thumb: 'PrintProductionAnalytics.jpg',
-    media: [
-      { type: 'img', src: 'PrintProductionAnalytics.jpg', caption: 'Production dashboard view' }
-    ]
+    id:'print',
+    title:'Print Production Analytics',
+    tags:['Power BI','Ops','Python'],
+    blurb:'Telemetry ingestion & defect analytics',
+    long:'Telemetry ingestion, defect classification and interactive dashboards that helped reduce defects in production.',
+    thumb:'PrintProductionAnalytics.jpg',
+    media:[ {type:'img', src:'PrintProductionAnalytics.jpg', caption:'Production KPIs'} ]
   }
 ];
 
-/* ===========
- Utilities & DOM refs
- ===========
-*/
-const mcanvas = document.getElementById('molecules');
-const mwrap = document.getElementById('mwrap');
+/* ====== DOM refs ====== */
+const skillsList = document.getElementById('skillsList');
 const galleryEl = document.getElementById('gallery');
 const filtersEl = document.getElementById('filters');
-const skillDetails = document.getElementById('skillDetails');
-const resumeLink = document.getElementById('resumeLink');
-const resumeUploader = document.getElementById('resumeUploader');
-const toast = document.getElementById('toast');
-const modal = document.getElementById('modal');
+const backdrop = document.getElementById('backdrop');
 const modalTitle = document.getElementById('modalTitle');
 const modalBlurb = document.getElementById('modalBlurb');
 const modalBody = document.getElementById('modalBody');
 
-/* ===========
- Canvas setup - molecules + connecting lines
- ===========
-*/
-const ctx = mcanvas.getContext('2d');
-let W, H, DPR;
-function resize(){
-  DPR = window.devicePixelRatio || 1;
-  W = mcanvas.clientWidth;
-  H = mcanvas.clientHeight;
-  mcanvas.width = Math.max(1, W * DPR);
-  mcanvas.height = Math.max(1, H * DPR);
-  ctx.setTransform(DPR,0,0,DPR,0,0);
-}
-window.addEventListener('resize', ()=>{ resize(); initMolecules(); });
-
-/* Molecules data structure */
-let atoms = []; // {x,y,vx,vy,r,label,id,el}
-function initMolecules(){
-  // clear DOM node pills
-  document.querySelectorAll('.node-pill').forEach(n=>n.remove());
-  atoms = [];
-  // central core coords
-  const center = {x: W/2, y: H/2};
-  // create atoms from SKILLS
-  const angleStep = 360 / SKILLS.length;
-  SKILLS.forEach((s,i)=>{
-    const angle = (i * angleStep) * (Math.PI/180) + (Math.random()*0.6-0.3);
-    const radius = 120 + Math.random()*160;
-    const x = center.x + Math.cos(angle) * radius;
-    const y = center.y + Math.sin(angle) * radius;
-    const r = 18 + (Math.random()*18);
-    const atom = {x,y,vx:(Math.random()-0.5)*0.4,vy:(Math.random()-0.5)*0.4,r,label:s.label,id:s.id,desc:s.desc};
-    atoms.push(atom);
-
-    // create node DOM pill for interaction
-    const pill = document.createElement('button');
-    pill.className = 'node-pill';
-    pill.style.left = (x - 48) + 'px';
-    pill.style.top = (y - 18) + 'px';
-    pill.innerHTML = `<div style="font-weight:700">${s.label}</div><span class="lvl">${s.lvl}</span>`;
-    pill.dataset.skill = s.id;
-    pill.title = s.desc;
-    pill.addEventListener('click', ()=>{ selectSkill(s.id); });
-    pill.addEventListener('keydown', (e)=>{ if(e.key==='Enter') selectSkill(s.id);});
-    mwrap.appendChild(pill);
-    atom.el = pill;
-  });
-  // optionally add a few extra floaters for atmosphere
-  for(let i=0;i<18;i++){
-    atoms.push({x:Math.random()*W, y:Math.random()*H, vx:(Math.random()-0.5)*0.2, vy:(Math.random()-0.5)*0.2, r:2+Math.random()*6, label:null});
-  }
-}
-
-/* Draw loop: atoms + lines to nearby atoms (molecule connections) */
-function draw(){
-  ctx.clearRect(0,0,W,H);
-  // background subtle gradient ring
-  const g = ctx.createRadialGradient(W/2,H/2,40,W/2,H/2,Math.max(W,H));
-  g.addColorStop(0,'rgba(255,255,255,0.02)');
-  g.addColorStop(1,'rgba(0,0,0,0)');
-  ctx.fillStyle = g;
-  ctx.fillRect(0,0,W,H);
-
-  // update & draw atoms
-  for(let i=0;i<atoms.length;i++){
-    const a = atoms[i];
-    // physics
-    a.x += a.vx;
-    a.y += a.vy;
-    // boundary bounce
-    if(a.x < 10 || a.x > W-10) a.vx *= -1;
-    if(a.y < 10 || a.y > H-10) a.vy *= -1;
-    // small slow drift towards center for grouping
-    const dx = W/2 - a.x, dy = H/2 - a.y;
-    a.vx += dx * 0.00005;
-    a.vy += dy * 0.00005;
-    // draw circle (if label exists draw slightly bigger)
-    ctx.beginPath();
-    const rr = a.r;
-    if(a.label){
-      // atom with label -> subtle rim color
-      ctx.fillStyle = 'rgba(255,255,255,0.96)';
-      ctx.strokeStyle = 'rgba(0,0,0,0.06)';
-      ctx.lineWidth = 1;
-      ctx.arc(a.x,a.y,rr,0,Math.PI*2);
-      ctx.fill();
-      ctx.stroke();
-    } else {
-      ctx.fillStyle = 'rgba(0,0,0,0.04)';
-      ctx.arc(a.x,a.y,rr,0,Math.PI*2);
-      ctx.fill();
-    }
-    // update DOM pill position if present
-    if(a.el){
-      a.el.style.left = (a.x - 48) + 'px';
-      a.el.style.top = (a.y - 18) + 'px';
-    }
-  }
-
-  // draw connections: for labeled atoms draw lines when within distance
-  for(let i=0;i<atoms.length;i++){
-    for(let j=i+1;j<atoms.length;j++){
-      const A = atoms[i], B = atoms[j];
-      if(!A.label || !B.label) continue; // only connect labeled atoms (skills)
-      const dx = A.x - B.x, dy = A.y - B.y;
-      const dist = Math.sqrt(dx*dx + dy*dy);
-      if(dist < 220){
-        const alpha = 1 - (dist/220);
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(208,122,42,${0.12 * alpha})`;
-        ctx.lineWidth = 1.4 * alpha;
-        ctx.moveTo(A.x,A.y);
-        ctx.lineTo(B.x,B.y);
-        ctx.stroke();
-      }
-    }
-  }
-
-  requestAnimationFrame(draw);
-}
-
-/* Interaction: shuffle & reset */
-document.getElementById('shuffle').addEventListener('click', ()=>{ atoms.forEach(a=>{ a.vx += (Math.random()-0.5)*3; a.vy += (Math.random()-0.5)*3; }); });
-document.getElementById('reset').addEventListener('click', ()=>{ initMolecules(); });
-
-/* Skill selection filters gallery*/
-function selectSkill(id){
-  const s = SKILLS.find(x=>x.id===id);
-  skillDetails.textContent = `${s.label} — ${s.desc}`;
-  // highlight pills opacity
-  document.querySelectorAll('.node-pill').forEach(p=>{
-    p.style.opacity = (p.dataset.skill === id ? '1' : '0.35');
-  });
-  filterGalleryBySkill(id);
-}
-
-/* Gallery rendering & filters */
-function renderGallery(list){
-  galleryEl.innerHTML = '';
-  list.forEach(p=>{
-    const card = document.createElement('div');
-    card.className = 'card';
-      card.tabIndex = 0;
-
-  // show image if project provides a thumb, otherwise fall back to tag text
-  const thumbHtml = p.thumb
-    ? `<div class="thumb"><img src="${p.thumb}" alt="${p.title} thumbnail" style="width:100%;height:100%;object-fit:cover;border-radius:8px"/></div>`
-    : `<div class="thumb">${p.tags.join(' • ')}</div>`;
-
-  card.innerHTML = thumbHtml +
-    `<h4>${p.title}</h4>
-     <div class="meta"><div style="max-width:68%">${p.blurb}</div><div style="color:var(--muted)">${p.tags[0]||''}</div></div>
-     <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>`;
-    card.addEventListener('click', ()=> openCaseStudy(p));
-    card.addEventListener('keydown',(e)=>{ if(e.key==='Enter') openCaseStudy(p); });
-    galleryEl.appendChild(card);
+/* ====== render skills ====== */
+function renderSkills(){
+  skillsList.innerHTML = '';
+  SKILLS.forEach(s=>{
+    const el = document.createElement('div');
+    el.className = 'skill-pill';
+    el.innerHTML = `<div>${s.label}</div><small>${s.lvl}</small>`;
+    el.tabIndex = 0;
+    el.addEventListener('click', ()=>{ selectSkill(s.id); });
+    el.addEventListener('keydown', (e)=>{ if(e.key==='Enter') selectSkill(s.id) });
+    skillsList.appendChild(el);
   });
 }
+
+/* ====== render filters ====== */
 function setupFilters(){
   const tags = Array.from(new Set(PROJECTS.flatMap(p=>p.tags)));
   filtersEl.innerHTML = '';
-  const all = document.createElement('button'); all.className='chip active'; all.textContent='All'; all.addEventListener('click', ()=>{ document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); all.classList.add('active'); renderGallery(PROJECTS); });
+  const all = document.createElement('button'); all.className='chip active'; all.textContent='All';
+  all.addEventListener('click', ()=>{ document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); all.classList.add('active'); renderGallery(PROJECTS); });
   filtersEl.appendChild(all);
   tags.forEach(t=>{
     const b = document.createElement('button'); b.className='chip'; b.textContent = t;
@@ -449,117 +279,95 @@ function setupFilters(){
     filtersEl.appendChild(b);
   });
 }
-function filterGalleryBySkill(skillId){
-  renderGallery(PROJECTS.filter(p=> p.long.toLowerCase().includes(skillId) || (p.tags||[]).some(t=>t.toLowerCase().includes(skillId)) || true && p)); 
-  // simple: render all but you can customize mapping from skill->project. For now, show all and rely on tags.
-  // To make strict: map project.skills arrays to project items.
-  renderGallery(PROJECTS.filter(p=> true)); // keep it simple; you can map projects.skills later
+
+/* ====== render gallery ====== */
+function renderGallery(list){
+  galleryEl.innerHTML = '';
+  list.forEach(p=>{
+    const card = document.createElement('article');
+    card.className = 'proj-card';
+    card.tabIndex = 0;
+    const thumbHtml = p.thumb ? `<div class="proj-thumb"><img src="${p.thumb}" alt="${p.title}"/></div>` : `<div class="proj-thumb">${p.tags.join(' • ')}</div>`;
+    card.innerHTML = thumbHtml + `<div class="proj-info"><h4>${p.title}</h4><div class="proj-meta"><div style="max-width:68%">${p.blurb}</div><div style="color:var(--muted);font-weight:700">${p.tags[0]||''}</div></div><div class="proj-tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div>`;
+    card.addEventListener('click', ()=> openCaseStudy(p));
+    card.addEventListener('keydown',(e)=>{ if(e.key==='Enter') openCaseStudy(p) });
+    galleryEl.appendChild(card);
+  });
 }
 
-/* Case study modal */
+/* ====== modal case study ====== */
 function openCaseStudy(p){
   modalTitle.textContent = p.title;
   modalBlurb.textContent = p.blurb;
-
   modalBody.innerHTML = `<p style="color:var(--muted)">${p.long}</p>`;
-
   if(Array.isArray(p.media) && p.media.length){
-    const mediaContainer = document.createElement('div');
-    mediaContainer.style.display = 'grid';
-    mediaContainer.style.gridTemplateColumns = '1fr 1fr';
-    mediaContainer.style.gap = '12px';
-
+    const grid = document.createElement('div'); grid.className = 'media-grid';
     p.media.forEach(m=>{
-      const el = document.createElement('div');
-
-      if(m.type === 'img'){
-        el.innerHTML = `
-          <img src="${m.src}" 
-               style="width:100%;border-radius:8px;display:block" 
-               alt="${m.caption || p.title}">
-        `;
-      } else if(m.type === 'video'){
-        el.innerHTML = `
-          <video controls style="width:100%;border-radius:8px">
-            <source src="${m.src}" type="video/mp4">
-          </video>
-        `;
-      }
-
-      if(m.caption){
-        const cap = document.createElement('div');
-        cap.textContent = m.caption;
-        cap.style.fontSize = '12px';
-        cap.style.color = 'var(--muted)';
-        cap.style.marginTop = '6px';
-        el.appendChild(cap);
-      }
-
-      mediaContainer.appendChild(el);
+      const box = document.createElement('div');
+      if(m.type === 'img') box.innerHTML = `<img src="${m.src}" alt="${m.caption||p.title}"><div style="color:var(--muted);font-size:13px;margin-top:6px">${m.caption||''}</div>`;
+      else if(m.type === 'video') box.innerHTML = `<video controls><source src="${m.src}" type="video/mp4">Your browser doesn\\'t support video.</video><div style="color:var(--muted);font-size:13px;margin-top:6px">${m.caption||''}</div>`;
+      grid.appendChild(box);
     });
-
-    modalBody.appendChild(mediaContainer);
+    modalBody.appendChild(grid);
   }
-
-  modal.style.display = 'flex';
-  modal.setAttribute('aria-hidden','false');
+  backdrop.style.display = 'flex';
+  backdrop.setAttribute('aria-hidden','false');
   document.body.style.overflow = 'hidden';
 }
-document.getElementById('modalClose').addEventListener('click', ()=>{ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); document.body.style.overflow = 'auto'; });
+document.getElementById('closeModal').addEventListener('click', closeModal);
+backdrop.addEventListener('click',(e)=>{ if(e.target === backdrop) closeModal();});
+function closeModal(){ backdrop.style.display='none'; backdrop.setAttribute('aria-hidden','true'); document.body.style.overflow='auto'; }
 
-/* Contact form demo */
+/* ====== skills -> filter mapping (strict) ====== */
+/* map projects to skills by keyword matching, simple approach */
+function selectSkill(skillId){
+  // normalize
+  const keyword = skillId.toLowerCase();
+  const filtered = PROJECTS.filter(p=>{
+    const hay = (p.title + ' ' + p.tags.join(' ') + ' ' + p.long).toLowerCase();
+    return hay.includes(keyword);
+  });
+  if(filtered.length) {
+    renderGallery(filtered);
+    document.getElementById('skillDetails')?.scrollIntoView({behavior:'smooth'});
+  } else {
+    // fallback: show all projects but highlight chips
+    renderGallery(PROJECTS);
+  }
+  // visual feedback: tint skill pills
+  document.querySelectorAll('.skill-pill').forEach(el=>{ el.style.opacity = (el.textContent.toLowerCase().includes(skillId)? '1' : '0.5'); });
+}
+
+/* ====== shuffle/resets ====== */
+document.getElementById('shuffle').addEventListener('click', ()=>{ document.querySelectorAll('.skill-pill').forEach((el,i)=>{ el.style.transform = `translate(${(Math.random()-0.5)*24}px, ${(Math.random()-0.5)*30}px)`; }); });
+document.getElementById('reset').addEventListener('click', ()=>{ document.querySelectorAll('.skill-pill').forEach(el=>{ el.style.transform = 'none'; el.style.opacity = '1'; }); renderGallery(PROJECTS); document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); document.querySelector('.chip')?.classList.add('active'); });
+
+/* ====== contact form demo ====== */
 document.getElementById('sendBtn').addEventListener('click', ()=>{
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const msg = document.getElementById('message').value.trim();
-  if(!name||!email||!msg){ showToast('Fill name, email, and a short message'); return; }
-  showToast(`Thanks ${name.split(' ')[0]} — message queued (demo)`);
+  const n = document.getElementById('c_name').value.trim();
+  const e = document.getElementById('c_email').value.trim();
+  const m = document.getElementById('c_msg').value.trim();
+  if(!n||!e||!m){ document.getElementById('contactResult').textContent = 'Please fill name, email & message.'; return; }
+  document.getElementById('contactResult').textContent = `Thanks ${n.split(' ')[0]} — message queued (demo).`;
   document.getElementById('contactForm').reset();
 });
 document.getElementById('clearBtn').addEventListener('click', ()=>{ document.getElementById('contactForm').reset(); });
 
-function showToast(txt){
-  toast.textContent = txt; toast.style.display = 'block';
-  setTimeout(()=> toast.style.display='none', 2800);
-}
-
-/* Resume upload (client-side) - replaces top link to blob URL for local preview */
-resumeUploader.addEventListener('change', (e)=>{
-  const f = e.target.files[0];
-  if(!f) return;
+/* ====== resume uploader (client-only preview) ====== */
+document.getElementById('resumeUploader').addEventListener('change',(e)=>{
+  const f = e.target.files[0]; if(!f) return;
   const url = URL.createObjectURL(f);
-  resumeLink.href = url;
-  resumeLink.download = f.name;
-  showToast('Local resume uploaded — link updated (browser-only)');
+  document.querySelector('a[href="Me Resume.pdf"]').href = url;
+  alert('Local resume link updated in browser (client-only). Commit to repo if you want it persistent.');
 });
 
-/* initialize canvas & molecules */
-function start(){
-  resize();
-  initMolecules();
-  setupFilters();
-  renderGallery(PROJECTS);
-  requestAnimationFrame(draw);
-}
+/* ====== init ====== */
+renderSkills();
+setupFilters();
+renderGallery(PROJECTS);
 
-/* Simple user pan: drag the wrapper to nudge atoms (visual only) */
-let dragging=false, sx=0, sy=0;
-mwrap.addEventListener('pointerdown', (e)=>{ dragging=true; sx=e.clientX; sy=e.clientY; mwrap.setPointerCapture(e.pointerId); });
-mwrap.addEventListener('pointermove', (e)=>{ if(!dragging) return; const dx=e.clientX-sx, dy=e.clientY-sy; sx=e.clientX; sy=e.clientY; atoms.forEach(a=>{ a.x += dx*0.12; a.y += dy*0.12; }); });
-mwrap.addEventListener('pointerup', (e)=>{ dragging=false; });
+document.getElementById('contactBtn').addEventListener('click', ()=>{ document.getElementById('c_name').focus(); window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'}); });
 
-/* keyboard: focus hire button scroll to contact */
-document.getElementById('hireBtn').addEventListener('click', ()=>{ document.getElementById('name').focus(); window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'}) });
-
-/* Kick off */
-start();
-
-/* Implementation notes (short)
- - To map skills -> projects strictly: add a 'skills' array on PROJECTS and use filterGalleryBySkill to show matching projects.
- - To host resume permanently: replace 'Me Resume.pdf' with hosted URL. The uploader only changes link locally in browser.
- - To add project media: extend PROJECTS with media property and show images/video in modalBody.
- - Colors: change --accent and --accent-2 CSS variables in :root for quick rebranding.
-*/
 </script>
 </body>
 </html>
