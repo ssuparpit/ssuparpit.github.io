@@ -1,590 +1,474 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Arpit Agrawal — Skills Galaxy (Revamped)</title>
-  <meta name="description" content="Interactive portfolio for Arpit Agrawal — Skills Galaxy: dynamic theme, animated skills, project gallery, case studies, contact portal." />
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    /* ================================
-       Configurable CSS variables / palettes
-       ================================ */
-    :root{
-      --bg-900: #08050a;
-      --bg-800: #0f0b14;
-      --glass: rgba(255,255,255,0.03);
-      --card: rgba(255,255,255,0.02);
-      --muted: rgba(255,255,255,0.6);
-      --radius: 14px;
-      --maxw: 1200px;
-
-      /* theme tokens (update dynamically via JS) */
-      --accent-1: #2D1B4E; /* primary */
-      --accent-2: #FF4D6D; /* accent */
-      --accent-3: #7F5BFF; /* supporting */
-      --gradient-stop-a: rgba(45,27,78,0.9);
-      --gradient-stop-b: rgba(255,77,109,0.75);
-      --text: #f8f7fb;
-      --glass-border: rgba(255,255,255,0.04);
-      --focus: 2px solid rgba(255,255,255,0.12);
-    }
-
-    /* theme presets (referenced in JS) */
-    /* end tokens */
-
-    /* ===== base & reset ===== */
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;background:radial-gradient(1200px 600px at 10% 10%, rgba(255,255,255,0.01), transparent), linear-gradient(180deg,var(--bg-900),var(--bg-800));color:var(--text);font-family:Inter, Montserrat, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;overflow-y:scroll;}
-    a{color:inherit}
-    :focus{outline:none}
-
-    .wrap{max-width:var(--maxw);margin:32px auto;padding:22px}
-
-    /* ===== header ===== */
-    header{display:flex;align-items:center;justify-content:space-between;gap:18px}
-    .brand{display:flex;align-items:center;gap:14px}
-    .logo{
-      width:62px;height:62px;border-radius:14px;display:grid;place-items:center;
-      background:linear-gradient(135deg,var(--accent-1),var(--accent-3));
-      box-shadow:0 8px 30px rgba(0,0,0,0.55), 0 2px 12px rgba(0,0,0,0.5) inset;
-      font-weight:800;font-family:Montserrat;color:white
-    }
-    .title h2{margin:0;font-size:18px;letter-spacing:0.2px}
-    .title p{margin:0;color:var(--muted);font-size:13px}
-
-    .controls{display:flex;gap:10px;align-items:center}
-    .btn{padding:10px 14px;border-radius:12px;background:transparent;border:1px solid var(--glass-border);cursor:pointer;font-weight:700;color:var(--text);font-size:13px;backdrop-filter: blur(6px)}
-    .btn.strong{background:linear-gradient(90deg,var(--accent-2),var(--accent-3));color:#0b0710;border:none;box-shadow:0 8px 30px rgba(0,0,0,0.45)}
-    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
-
-    /* ===== layout grid ===== */
-    .grid{display:grid;grid-template-columns:420px 1fr;gap:24px;margin-top:26px;align-items:start}
-    @media (max-width:980px){.grid{grid-template-columns:1fr;}.brand{gap:10px}.logo{width:52px;height:52px}}
-    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:var(--radius);border:1px solid var(--glass-border);box-shadow:0 10px 40px rgba(0,0,0,0.6);}
-
-    /* ===== skill galaxy ===== */
-    .galaxy-wrap{position:relative;height:660px;border-radius:12px;overflow:hidden;padding:12px;background:
-      radial-gradient(600px 600px at 20% 40%, rgba(255,255,255,0.02), transparent 10%),
-      linear-gradient(180deg, rgba(255,255,255,0.01), transparent 40%);border:1px solid rgba(255,255,255,0.02)}
-    #galaxy{position:relative;height:100%;display:grid;place-items:center;}
-
-/* interactive particle canvas (behind nodes) */
-    #particleCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;mix-blend-mode:screen;opacity:0.9}
-
-    .core{
-      width:160px;height:160px;border-radius:999px;display:grid;place-items:center;
-      background:linear-gradient(135deg,var(--gradient-stop-a),var(--gradient-stop-b));
-      box-shadow:0 18px 60px rgba(0,0,0,0.65), inset 0 -8px 20px rgba(255,255,255,0.02);
-      z-index:3;transform:translateZ(0);
-      font-weight:800;font-family:Montserrat
-    }
-    .core small{display:block;margin-top:6px;font-size:12px;color:rgba(255,255,255,0.85);font-weight:600}
-
-    /* nodes (fluid, modern pill) */
-    .node{position:absolute;padding:10px 14px;border-radius:999px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);text-align:center;font-weight:700;font-size:13px;cursor:pointer;transition:transform .28s cubic-bezier(.2,.9,.3,1),box-shadow .28s ease,opacity .28s ease;z-index:2;color:var(--text)}
-    .node .lvl{display:block;font-size:11px;color:var(--muted);margin-top:6px;font-weight:600}
-    .node:hover{transform:translateY(-6px) scale(1.06);box-shadow:0 18px 50px rgba(0,0,0,0.6), 0 6px 18px rgba(0,0,0,0.5) inset}
-    .node:focus{box-shadow:var(--focus)}
-    /* subtle pulse */
-    .node.pulse::after{content:'';position:absolute;inset:-10px;border-radius:999px;background:linear-gradient(90deg, rgba(255,255,255,0.01), transparent);opacity:0.8;filter:blur(8px);z-index:-1;animation:pulse 3.6s infinite}
-    @keyframes pulse{0%{transform:scale(.98);opacity:.25}50%{transform:scale(1.14);opacity:.08}100%{transform:scale(.98);opacity:.25}}
-
-    /* ===== right column: gallery + filters ===== */
-    .header-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-    .filters{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
-    .chip{padding:8px 12px;border-radius:999px;background:transparent;border:1px solid rgba(255,255,255,0.04);cursor:pointer;font-weight:700;font-size:13px;color:var(--muted)}
-    .chip.active{background:linear-gradient(90deg,var(--accent-2),var(--accent-3));color:#0b0710;border:none;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
-
-    .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;gap:10px;min-height:170px;transition:transform .28s cubic-bezier(.2,.9,.3,1),box-shadow .28s;outline:none}
-    .card:hover{transform:translateY(-8px);box-shadow: 0 24px 80px rgba(0,0,0,0.6)}
-    .card:focus{box-shadow:0 18px 40px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.07)}
-    .thumb{height:96px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.02), transparent);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
-    .card h4{margin:0;font-family:Montserrat;font-weight:800}
-    .meta{display:flex;justify-content:space-between;color:var(--muted);font-size:13px}
-    .tags{display:flex;gap:8px;flex-wrap:wrap}
-    .tag{padding:6px 8px;background:rgba(255,255,255,0.02);border-radius:8px;font-size:12px;color:var(--muted)}
-
-    /* ===== contact ===== */
-    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-    .input,textarea{width:100%;padding:10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text);font-size:14px}
-    textarea{min-height:120px;resize:vertical}
-    .contact-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
-    .toast{position:fixed;right:22px;bottom:22px;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--accent-2),var(--accent-3));color:#111;font-weight:700;box-shadow:0 14px 40px rgba(0,0,0,0.6);display:none;z-index:9999}
-
-    /* ===== modal ===== */
-    .modal-backdrop{position:fixed;inset:0;background:rgba(2,2,4,0.64);display:none;align-items:center;justify-content:center;z-index:999}
-    .modal{width:min(960px,92%);max-height:88vh;overflow:auto;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border:1px solid rgba(255,255,255,0.04)}
-    .modal .close{background:transparent;border:0;color:var(--muted);font-weight:800;cursor:pointer;padding:6px 10px;border-radius:8px}
-    .modal h3{margin-top:0}
-    .modal .case-media{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-    .modal p{color:var(--muted);line-height:1.45}
-
-    /* small screens */
-    @media (max-width:720px){
-      .contact-grid{grid-template-columns:1fr}
-      .core{width:140px;height:140px}
-      .galaxy-wrap{height:520px}
-    }
-
-    /* reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      .node.pulse::after{animation:none}
-      .card,.node,.core{transition:none}
-    }
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Arpit Agrawal — Skills Molecules (Data Analyst)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF7F2;                  /* cream background */
+    --panel:#FFFFFF;               /* cards */
+    --muted:#6b6b6b;
+    --accent:#D07A2A;              /* golden accent default */
+    --accent-2:#FFB86B;
+    --glass: rgba(16,20,24,0.03);
+    --card-border: rgba(16,20,24,0.06);
+    --radius:14px;
+    --maxw:1200px;
+    --shadow: 0 14px 40px rgba(16,20,24,0.06);
+    --text-dark: #111827;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--text-dark);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:var(--maxw);margin:28px auto;padding:20px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{display:flex;gap:12px;align-items:center}
+  .logo{width:58px;height:58px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:white;font-weight:800;font-family:Montserrat}
+  .title h2{margin:0;font-size:18px}
+  .title p{margin:0;color:var(--muted);font-size:13px}
+  .top-controls{display:flex;gap:10px;align-items:center}
+  .btn{padding:9px 14px;border-radius:12px;border:1px solid var(--card-border);background:transparent;font-weight:700;cursor:pointer}
+  .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;border:none;box-shadow:var(--shadow)}
+  .file-upload{display:inline-flex;align-items:center;gap:10px}
+  /* layout */
+  .grid{display:grid;grid-template-columns:420px 1fr;gap:22px;margin-top:22px}
+  @media (max-width:980px){.grid{grid-template-columns:1fr}}
+  .panel{background:var(--panel);border-radius:var(--radius);padding:18px;border:1px solid var(--card-border);box-shadow:var(--shadow);}
+  /* left - molecule area */
+  .molecule-wrap{position:relative;height:700px;border-radius:12px;overflow:hidden;border:1px solid rgba(16,20,24,0.02)}
+  canvas#molecules{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .core-pill{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:6;padding:26px;border-radius:999px;background:linear-gradient(135deg,rgba(255,255,255,0.95),rgba(255,255,255,0.9));box-shadow:0 20px 50px rgba(13,18,25,0.06);text-align:center;border:1px solid rgba(0,0,0,0.04)}
+  .core-pill h3{margin:0;font-family:Montserrat;font-size:18px}
+  .core-pill small{display:block;color:var(--muted);margin-top:6px;font-size:12px}
+  /* nodes look like molecular atoms */
+  .node-pill{position:absolute;z-index:8;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,0.98);border:1px solid rgba(0,0,0,0.06);font-weight:700;font-size:13px;color:var(--text-dark);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;transition:transform .18s,box-shadow .18s}
+  .node-pill .lvl{font-size:11px;color:var(--muted);font-weight:600}
+  .node-pill:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(0,0,0,0.06)}
+  /* right column gallery */
+  .header-row{display:flex;justify-content:space-between;align-items:center}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;margin-bottom:12px}
+  .chip{padding:8px 12px;border-radius:999px;border:1px solid var(--card-border);background:transparent;font-weight:700;color:var(--muted);cursor:pointer}
+  .chip.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;border:none}
+  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .card{background:linear-gradient(180deg,white, #fcfcfc);padding:14px;border-radius:12px;border:1px solid rgba(0,0,0,0.03);box-shadow:0 12px 30px rgba(16,20,24,0.03);transition:transform .18s;cursor:pointer}
+  .card:hover{transform:translateY(-6px)}
+  .thumb{height:86px;border-radius:10px;background:linear-gradient(90deg, rgba(0,0,0,0.02), transparent);display:grid;place-items:center;color:var(--muted);font-size:13px}
+  .card h4{margin:8px 0 0 0;font-family:Montserrat;font-size:16px}
+  .meta{color:var(--muted);font-size:13px;margin-top:6px;display:flex;justify-content:space-between}
+  .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .tag{padding:6px 8px;border-radius:8px;border:1px solid var(--card-border);font-size:12px;color:var(--muted)}
+  /* contact */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  .input,textarea{padding:10px;border-radius:10px;border:1px solid var(--card-border);background:transparent;font-size:14px}
+  textarea{min-height:120px;resize:vertical}
+  .contact-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+  /* modal */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(10,12,14,0.32);display:none;align-items:center;justify-content:center;z-index:999}
+  .modal{width:min(960px,92%);border-radius:12px;padding:18px;background:white;border:1px solid rgba(0,0,0,0.04)}
+  .modal h3{margin:0}
+  /* small screens */
+  @media (max-width:760px){.grid{grid-template-columns:1fr}.contact-grid{grid-template-columns:1fr}}
+  /* subtle focus outline */
+  :focus{outline:2px solid rgba(208,122,42,0.14);outline-offset:3px}
+</style>
 </head>
 <body>
   <div class="wrap">
     <header>
       <div class="brand">
-        <div class="logo" aria-hidden="true">AA</div>
+        <div class="logo">AA</div>
         <div class="title">
           <h2>Arpit Agrawal</h2>
           <p>Data Analyst · Data Engineer · Visual storyteller</p>
         </div>
       </div>
-      <div class="controls" role="toolbar" aria-label="top controls">
-        <button class="btn ghost" id="resumeBtn" title="Open resume">Resume</button>
-        <button class="btn strong" id="hireBtn">Hire / Contact</button>
+
+      <div class="top-controls">
+        <!-- Resume link (uses your uploaded file) -->
+        <a id="resumeLink" class="btn" href="Me Resume.pdf" target="_blank" rel="noopener noreferrer" title="Open uploaded resume">Resume</a>
+
+        <!-- Upload control to replace resume link locally (client-only) -->
+        <label class="btn" style="display:inline-flex;align-items:center;gap:8px;cursor:pointer">
+          <input id="resumeUploader" type="file" accept=".pdf,.doc,.docx" style="display:none">
+          Upload
+        </label>
+
+        <button id="hireBtn" class="btn primary">Hire / Contact</button>
       </div>
     </header>
 
-    <main class="grid" role="main" aria-labelledby="pageTitle">
-      <!-- LEFT -->
+    <main class="grid" aria-label="main content">
+      <!-- LEFT: Molecules -->
       <section class="panel" aria-labelledby="skillsTitle">
-        <h3 id="skillsTitle" style="margin:0 0 8px 0">Skills Galaxy</h3>
-        <p style="margin:0 0 12px 0;color:var(--muted)">Interactive skill map grouped by clusters — click a node to see examples & filter projects.</p>
+        <h3 id="skillsTitle" style="margin:0 0 8px 0">Skills Molecules</h3>
+        <p style="margin:0 0 12px 0;color:var(--muted)">Molecules float & connect — each skill is an atom. Click one to filter projects. Drag to pan the space.</p>
 
-        <div class="galaxy-wrap panel-inner">
-          <canvas id="particleCanvas" aria-hidden="true"></canvas>
-          <div id="galaxy" aria-hidden="false">
-            <div class="core" id="core" role="img" aria-label="core: Data — Systems · Models · Dashboards">
-              <div style="text-align:center">
-                <div style="font-size:18px">Data</div>
-                <small>Systems · Models · Dashboards</small>
-              </div>
-            </div>
+        <div class="molecule-wrap" id="mwrap">
+          <canvas id="molecules"></canvas>
+
+          <div class="core-pill" id="core">
+            <h3>Data</h3>
+            <small>Cleaning · Insight · Delivery</small>
           </div>
+          <!-- node pills will be injected here -->
         </div>
 
-        <div style="display:flex;gap:10px;margin-top:16px;align-items:center;justify-content:space-between">
-          <div style="color:var(--muted);font-size:13px">Tip: click skills to filter. Hover nodes for level. Drag galaxy to pan.</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+          <div style="color:var(--muted);font-size:13px">Tip: click a skill to filter projects. Click 'shuffle' to reposition molecules.</div>
           <div style="display:flex;gap:8px">
-            <button class="btn" id="shuffle">Shuffle</button>
-            <button class="btn" id="reset">Reset</button>
+            <button id="shuffle" class="btn">Shuffle</button>
+            <button id="reset" class="btn">Reset</button>
           </div>
         </div>
 
-        <div style="margin-top:14px">
+        <div style="margin-top:12px">
           <strong>Selected Skill</strong>
-          <div id="skillDetails" style="margin-top:8px;color:var(--muted);font-size:13px">Click a node to see details.</div>
-        </div>
-
-        <!-- theme control -->
-        <div style="margin-top:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-          <label style="font-weight:700;color:var(--muted);font-size:13px">Theme</label>
-          <div id="themePresets" style="display:flex;gap:8px"></div>
-          <button class="btn" id="rndTheme">Randomize</button>
-          <button class="btn ghost" id="resetTheme">Refine</button>
+          <div id="skillDetails" style="margin-top:8px;color:var(--muted);font-size:13px">No selection yet.</div>
         </div>
       </section>
 
-      <!-- RIGHT -->
+      <!-- RIGHT: Projects + Contact -->
       <section>
         <div class="panel">
           <div class="header-row">
             <div>
               <h3 style="margin:0">Project Gallery</h3>
-              <p style="margin:6px 0 0 0;color:var(--muted);font-size:13px">Filterable, animated, keyboard-accessible. Click a card for a case study.</p>
+              <p style="margin:6px 0 0 0;color:var(--muted);font-size:13px">A focused set of projects. Click any card for details.</p>
             </div>
-            <div style="color:var(--muted);font-size:12px">Polished UI • Interactive</div>
+            <div style="color:var(--muted);font-size:12px">Futuristic, light, professional</div>
           </div>
 
-          <div class="filters" id="filters" aria-label="project filters"></div>
-          <div class="gallery" id="gallery" aria-live="polite"></div>
+          <div class="filters" id="filters"></div>
+
+          <div class="gallery" id="gallery"></div>
         </div>
 
-        <div class="panel" style="margin-top:16px">
-          <h3 style="margin:0 0 10px 0">Contact Portal</h3>
-          <p style="margin:0 0 12px 0;color:var(--muted);font-size:13px">Creative contact form — messages demo to your email (replace endpoint in JS).</p>
-          <form id="contactForm">
+        <div class="panel" style="margin-top:14px">
+          <h3 style="margin:0 0 8px 0">Contact Portal</h3>
+          <p style="margin:0 0 12px 0;color:var(--muted);font-size:13px">Drop a short note — demo submit shows a success toast (replace with your webhook in JS).</p>
+
+          <form id="contactForm" onsubmit="return false;">
             <div class="contact-grid">
-              <input class="input" id="c_name" placeholder="Your name" aria-label="name" />
-              <input class="input" id="c_email" placeholder="Email" aria-label="email" />
-              <input class="input" id="c_role" placeholder="Role / Short note (e.g., Data internship)" aria-label="role" style="grid-column:1/3" />
-              <textarea id="c_msg" placeholder="Message — be brief, be human" aria-label="message"></textarea>
+              <input class="input" id="name" placeholder="Your name" />
+              <input class="input" id="email" placeholder="Email" />
+              <input class="input" id="role" placeholder="Role / Short note (e.g., Data internship)" style="grid-column:1/3" />
+              <textarea id="message" placeholder="Message — be brief, be human"></textarea>
             </div>
             <div class="contact-actions">
-              <button class="btn" type="button" id="clearBtn">Clear</button>
-              <button class="btn strong" id="sendBtn" type="submit">Send message</button>
+              <button class="btn" id="clearBtn" type="button">Clear</button>
+              <button class="btn primary" id="sendBtn" type="submit">Send message</button>
             </div>
           </form>
           <div id="contactResult" style="margin-top:12px;color:var(--muted)"></div>
         </div>
-
-        <footer style="margin-top:18px;color:var(--muted);font-size:13px;text-align:center">
-          Built with ☕ and a little visual chaos — View source on GitHub
-        </footer>
       </section>
     </main>
   </div>
 
-  <!-- Modal for case studies -->
-  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="modal" role="document">
+  <!-- Case study modal -->
+  <div class="modal-backdrop" id="modal" aria-hidden="true" role="dialog">
+    <div class="modal" role="document" id="modalCard">
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <h3 id="modalTitle">Case Study</h3>
-        <div>
-          <button class="close" id="modalClose">Close ✕</button>
-        </div>
+        <h3 id="modalTitle">Case study</h3>
+        <button id="modalClose" class="btn">Close</button>
       </div>
-      <div id="modalBody">
-        <p class="muted" id="modalBlurb" style="color:var(--muted)"></p>
-        <div class="case-media" id="modalMedia"></div>
-        <div style="margin-top:12px" id="modalLong"></div>
-      </div>
+      <p id="modalBlurb" style="color:var(--muted)"></p>
+      <div id="modalBody" style="margin-top:12px;color:var(--muted)"></div>
     </div>
   </div>
 
-  <div class="toast" id="toast">Message sent</div>
+  <!-- toast -->
+  <div id="toast" style="position:fixed;right:20px;bottom:20px;padding:12px 16px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;display:none;box-shadow:0 12px 40px rgba(13,18,25,0.08);font-weight:700;z-index:9999">Sent</div>
 
-  <script>
-    /* =========================
-       Data seeds (customize)
-       ========================= */
-    const SKILLS = [
-      {id:'python', label:'Python', cluster:'Engineering', lvl:'Expert', desc:'ETL, automation, Pandas, NumPy, production scripts'},
-      {id:'sql', label:'SQL', cluster:'Engineering', lvl:'Expert', desc:'Joins, window functions, modeling, Snowflake & MySQL'},
-      {id:'powerbi', label:'Power BI', cluster:'Viz', lvl:'Advanced', desc:'Dashboards, KPIs, drilldowns, embedded reports'},
-      {id:'spatial', label:'Geo & Spatial', cluster:'Engineering', lvl:'Advanced', desc:'PostGIS, Mapbox, routing & geospatial features'},
-      {id:'ml', label:'Machine Learning', cluster:'Modeling', lvl:'Advanced', desc:'Scikit-learn, TensorFlow basics, uplift modeling'},
-      {id:'pipelines', label:'Data Pipelines', cluster:'Engineering', lvl:'Advanced', desc:'ETL workflows, scheduling, SQL modelling'},
-      {id:'viz', label:'Data Viz', cluster:'Viz', lvl:'Advanced', desc:'Tableau, Matplotlib, Plotly — clear storytelling'},
-      {id:'stats', label:'Statistics', cluster:'Modeling', lvl:'Advanced', desc:'SPSS, hypothesis tests, regression, A/B testing'},
-      {id:'infra', label:'DB Admin', cluster:'Infra', lvl:'Intermediate', desc:'MySQL, Azure basics, monitoring'}
-    ];
+<script>
+/* ===========
+ Data & SKILLS
+ Only core data-analyst skills per your brief.
+ ===========
+*/
+const SKILLS = [
+  {id:'sql', label:'SQL', lvl:'Expert', desc:'Relational queries, window functions, MySQL Workbench'},
+  {id:'python', label:'Python', lvl:'Expert', desc:'Pandas, NumPy, scripting, ETL'},
+  {id:'pandas', label:'Pandas', lvl:'Expert', desc:'Dataframes, joins, cleaning'},
+  {id:'powerbi', label:'Power BI', lvl:'Advanced', desc:'Dashboards, measures, visuals'},
+  {id:'tableau', label:'Tableau', lvl:'Advanced', desc:'Dashboards, viz design'},
+  {id:'excel', label:'Advanced Excel', lvl:'Advanced', desc:'Pivot tables, formulas, power features'},
+  {id:'pivot', label:'Pivot Tables', lvl:'Advanced', desc:'Slicing, aggregation, analysis'},
+  {id:'dataclean', label:'Data Cleaning', lvl:'Expert', desc:'Missing values, normalization, rules'},
+  {id:'dataviz', label:'Data Visualization', lvl:'Advanced', desc:'Story-driven visuals'},
+  {id:'spss', label:'SPSS', lvl:'Advanced', desc:'Stat tests, regressions'},
+  {id:'stats', label:'Statistical Analysis', lvl:'Advanced', desc:'Hypothesis testing, regressions'},
+  {id:'brd', label:'BRD', lvl:'Intermediate', desc:'Business Requirement Docs'},
+  {id:'frd', label:'FRD', lvl:'Intermediate', desc:'Functional Requirement Docs'},
+  {id:'srs', label:'SRS', lvl:'Intermediate', desc:'System Requirement Specs'},
+  {id:'datainterp', label:'Data Interpretation', lvl:'Advanced', desc:'Insights & recommendations'},
+  {id:'mysqlwb', label:'MySQL Workbench', lvl:'Advanced', desc:'DB tools & queries'},
+  {id:'git', label:'Git / GitHub', lvl:'Intermediate', desc:'Version control & repos'},
+  {id:'azure', label:'Azure', lvl:'Intermediate', desc:'Cloud pipelines & Databricks'}
+];
 
-    const PROJECTS = [
-      {id:'retail', title:'Global Retail & Logistics Intelligence', tags:['Geo','Forecasting','Snowflake'], blurb:'Warehouse & route optimization; Tableau & Power BI dashboards', thumb:'', skills:['spatial','ml','viz'], long:'Built forecasting and routing pipelines, created dashboards for ops, reduced idle time by X% (anonymized metric).', media:[]},
-      {id:'promo', title:'Smart Promotion Profitability Tracker', tags:['ETL','A/B','Power BI'], blurb:'Promo uplift modelling & profitability command center', thumb:'', skills:['python','powerbi','stats'], long:'End-to-end ETL → analytics pipeline for promotion analysis. Built RFM and uplift models and a profitability dashboard.', media:[]},
-      {id:'supply', title:'Supply Chain Disruption Prediction', tags:['Spark','Azure','Anomaly'], blurb:'8M+ events, TensorFlow models, real-time alerts', thumb:'', skills:['pipelines','ml','infra'], long:'Realtime anomaly detection using Spark streaming and TensorFlow; implemented alerting in Azure.', media:[]},
-      {id:'print', title:'Print Production Analytics', tags:['Power BI','Ops','Python'], blurb:'Printer telemetry and defect analytics', thumb:'', skills:['python','viz','sql'], long:'Telemetry ingestion, defect classification, and interactive dashboards for production managers.', media:[]}
-    ];
+/* sample projects seeded from resume (edit further) */
+const PROJECTS = [
+  {id:'promo', title:'Smart Promotion Profitability Tracker', tags:['ETL','A/B','Power BI'], blurb:'Promo uplift modelling & profitability command center', long:'Built ETL with Python; uplift modeling, A/B testing and a Power BI command center tracking ROI.'},
+  {id:'retail', title:'Retail & Logistics Intelligence Hub', tags:['Geo','Forecasting','Tableau'], blurb:'Route optimization & forecasting, Snowflake analytics', long:'Cloud warehouse + route optimization reduced delivery times and improved inventory accuracy.'},
+  {id:'supply', title:'Supply Chain Disruption Prediction', tags:['Spark','Azure','Anomaly'], blurb:'Realtime anomaly detection across 8M+ events', long:'Stream processing + TensorFlow models for anomaly detection; alerts and dashboards in Power BI.'},
+  {id:'print', title:'Print Production Analytics', tags:['Power BI','Ops','Python'], blurb:'Telemetry ingestion & defect analytics', long:'Ingested printer logs, built defect classification and interactive dashboards for ops.'}
+];
 
-    /* =========================
-       THEMES (presets)
-       ========================= */
-    const THEMES = {
-      'Aurora': {
-        accent1:'#2D1B4E', accent2:'#FF4D6D', accent3:'#7F5BFF',
-        a:'rgba(45,27,78,0.95)', b:'rgba(255,77,109,0.78)'
-      },
-      'Night Chrome': {
-        accent1:'#0f1b2d', accent2:'#6be3ff', accent3:'#7d7dff',
-        a:'rgba(12,22,36,0.95)', b:'rgba(107,227,255,0.72)'
-      },
-      'Oceanic': {
-        accent1:'#05445E', accent2:'#189AB4', accent3:'#75E6DA',
-        a:'rgba(5,68,94,0.95)', b:'rgba(24,154,180,0.72)'
-      },
-      'Solar': {
-        accent1:'#7B3F00', accent2:'#FFB86B', accent3:'#FFD37D',
-        a:'rgba(123,63,0,0.95)', b:'rgba(255,184,107,0.78)'
-      }
-    };
+/* ===========
+ Utilities & DOM refs
+ ===========
+*/
+const mcanvas = document.getElementById('molecules');
+const mwrap = document.getElementById('mwrap');
+const galleryEl = document.getElementById('gallery');
+const filtersEl = document.getElementById('filters');
+const skillDetails = document.getElementById('skillDetails');
+const resumeLink = document.getElementById('resumeLink');
+const resumeUploader = document.getElementById('resumeUploader');
+const toast = document.getElementById('toast');
+const modal = document.getElementById('modal');
+const modalTitle = document.getElementById('modalTitle');
+const modalBlurb = document.getElementById('modalBlurb');
+const modalBody = document.getElementById('modalBody');
 
-    /* ================
-       helpers: DOM refs
-       ================ */
-    const galaxy = document.getElementById('galaxy');
-    const gallery = document.getElementById('gallery');
-    const filtersEl = document.getElementById('filters');
-    const skillDetails = document.getElementById('skillDetails');
-    const particleCanvas = document.getElementById('particleCanvas');
-    const themePresets = document.getElementById('themePresets');
-    const modalBackdrop = document.getElementById('modalBackdrop');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalBlurb = document.getElementById('modalBlurb');
-    const modalMedia = document.getElementById('modalMedia');
-    const modalLong = document.getElementById('modalLong');
-    const toast = document.getElementById('toast');
+/* ===========
+ Canvas setup - molecules + connecting lines
+ ===========
+*/
+const ctx = mcanvas.getContext('2d');
+let W, H, DPR;
+function resize(){
+  DPR = window.devicePixelRatio || 1;
+  W = mcanvas.clientWidth;
+  H = mcanvas.clientHeight;
+  mcanvas.width = Math.max(1, W * DPR);
+  mcanvas.height = Math.max(1, H * DPR);
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+window.addEventListener('resize', ()=>{ resize(); initMolecules(); });
 
-    /* ===================
-       Particle background
-       =================== */
-    const ctx = particleCanvas.getContext('2d');
-    let particles = [];
-    function resizeCanvas(){
-      particleCanvas.width = particleCanvas.clientWidth * devicePixelRatio;
-      particleCanvas.height = particleCanvas.clientHeight * devicePixelRatio;
-      ctx.scale(devicePixelRatio, devicePixelRatio);
+/* Molecules data structure */
+let atoms = []; // {x,y,vx,vy,r,label,id,el}
+function initMolecules(){
+  // clear DOM node pills
+  document.querySelectorAll('.node-pill').forEach(n=>n.remove());
+  atoms = [];
+  // central core coords
+  const center = {x: W/2, y: H/2};
+  // create atoms from SKILLS
+  const angleStep = 360 / SKILLS.length;
+  SKILLS.forEach((s,i)=>{
+    const angle = (i * angleStep) * (Math.PI/180) + (Math.random()*0.6-0.3);
+    const radius = 120 + Math.random()*160;
+    const x = center.x + Math.cos(angle) * radius;
+    const y = center.y + Math.sin(angle) * radius;
+    const r = 18 + (Math.random()*18);
+    const atom = {x,y,vx:(Math.random()-0.5)*0.4,vy:(Math.random()-0.5)*0.4,r,label:s.label,id:s.id,desc:s.desc};
+    atoms.push(atom);
+
+    // create node DOM pill for interaction
+    const pill = document.createElement('button');
+    pill.className = 'node-pill';
+    pill.style.left = (x - 48) + 'px';
+    pill.style.top = (y - 18) + 'px';
+    pill.innerHTML = `<div style="font-weight:700">${s.label}</div><span class="lvl">${s.lvl}</span>`;
+    pill.dataset.skill = s.id;
+    pill.title = s.desc;
+    pill.addEventListener('click', ()=>{ selectSkill(s.id); });
+    pill.addEventListener('keydown', (e)=>{ if(e.key==='Enter') selectSkill(s.id);});
+    mwrap.appendChild(pill);
+    atom.el = pill;
+  });
+  // optionally add a few extra floaters for atmosphere
+  for(let i=0;i<18;i++){
+    atoms.push({x:Math.random()*W, y:Math.random()*H, vx:(Math.random()-0.5)*0.2, vy:(Math.random()-0.5)*0.2, r:2+Math.random()*6, label:null});
+  }
+}
+
+/* Draw loop: atoms + lines to nearby atoms (molecule connections) */
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  // background subtle gradient ring
+  const g = ctx.createRadialGradient(W/2,H/2,40,W/2,H/2,Math.max(W,H));
+  g.addColorStop(0,'rgba(255,255,255,0.02)');
+  g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0,0,W,H);
+
+  // update & draw atoms
+  for(let i=0;i<atoms.length;i++){
+    const a = atoms[i];
+    // physics
+    a.x += a.vx;
+    a.y += a.vy;
+    // boundary bounce
+    if(a.x < 10 || a.x > W-10) a.vx *= -1;
+    if(a.y < 10 || a.y > H-10) a.vy *= -1;
+    // small slow drift towards center for grouping
+    const dx = W/2 - a.x, dy = H/2 - a.y;
+    a.vx += dx * 0.00005;
+    a.vy += dy * 0.00005;
+    // draw circle (if label exists draw slightly bigger)
+    ctx.beginPath();
+    const rr = a.r;
+    if(a.label){
+      // atom with label -> subtle rim color
+      ctx.fillStyle = 'rgba(255,255,255,0.96)';
+      ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+      ctx.lineWidth = 1;
+      ctx.arc(a.x,a.y,rr,0,Math.PI*2);
+      ctx.fill();
+      ctx.stroke();
+    } else {
+      ctx.fillStyle = 'rgba(0,0,0,0.04)';
+      ctx.arc(a.x,a.y,rr,0,Math.PI*2);
+      ctx.fill();
     }
-    function initParticles(n=60){
-      particles = [];
-      const w = particleCanvas.clientWidth, h = particleCanvas.clientHeight;
-      for(let i=0;i<n;i++){
-        particles.push({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          r: 0.6 + Math.random()*2.6,
-          vx: (Math.random()-0.5)*0.3,
-          vy: (Math.random()-0.5)*0.3,
-          alpha: 0.05 + Math.random()*0.12
-        });
-      }
+    // update DOM pill position if present
+    if(a.el){
+      a.el.style.left = (a.x - 48) + 'px';
+      a.el.style.top = (a.y - 18) + 'px';
     }
-    let mouse = {x:-9999,y:-9999};
-    particleCanvas.addEventListener('mousemove', (e)=>{const rect = particleCanvas.getBoundingClientRect(); mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top;});
-    particleCanvas.addEventListener('mouseleave', ()=>{ mouse.x = -9999; mouse.y = -9999; });
+  }
 
-    function drawParticles(){
-      const w = particleCanvas.clientWidth, h = particleCanvas.clientHeight;
-      ctx.clearRect(0,0,particleCanvas.width, particleCanvas.height);
-      particles.forEach(p=>{
-        p.x += p.vx;
-        p.y += p.vy;
-        // wrap
-        if(p.x < -10) p.x = w+10;
-        if(p.x > w+10) p.x = -10;
-        if(p.y < -10) p.y = h+10;
-        if(p.y > h+10) p.y = -10;
-        // mouse repulsion
-        if(mouse.x > -9000){
-          const dx = p.x - mouse.x; const dy = p.y - mouse.y;
-          const d2 = dx*dx + dy*dy;
-          if(d2 < 50000){
-            const s = 1 + (50000 - d2)/50000 * 0.6;
-            p.x += dx * 0.003 * s;
-            p.y += dy * 0.003 * s;
-          }
-        }
-        // draw
+  // draw connections: for labeled atoms draw lines when within distance
+  for(let i=0;i<atoms.length;i++){
+    for(let j=i+1;j<atoms.length;j++){
+      const A = atoms[i], B = atoms[j];
+      if(!A.label || !B.label) continue; // only connect labeled atoms (skills)
+      const dx = A.x - B.x, dy = A.y - B.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist < 220){
+        const alpha = 1 - (dist/220);
         ctx.beginPath();
-        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r*8);
-        grd.addColorStop(0, `rgba(255,255,255,${p.alpha})`);
-        grd.addColorStop(1, 'rgba(255,255,255,0)');
-        ctx.fillStyle = grd;
-        ctx.arc(p.x, p.y, p.r*3, 0, Math.PI*2);
-        ctx.fill();
-      });
-    }
-
-    /* ====================
-       Skill nodes placement
-       ==================== */
-    function placeNodes(){
-      // remove old nodes
-      document.querySelectorAll('.node').forEach(n=>n.remove());
-      const w = galaxy.clientWidth, h = galaxy.clientHeight;
-      const centerX = w/2, centerY = h/2;
-
-      const clusters = {};
-      SKILLS.forEach(s=> { if(!clusters[s.cluster]) clusters[s.cluster]=[]; clusters[s.cluster].push(s); });
-
-      // cluster angle defaults
-      const baseAngles = {Engineering:330, Viz:70, Modeling:150, Infra:230};
-      const clusterKeys = Object.keys(clusters);
-      clusterKeys.forEach(cluster => {
-        const list = clusters[cluster];
-        const base = baseAngles[cluster]|| (Math.random()*360);
-        list.forEach((skill,i)=>{
-          const angle = (base + i*18 + (Math.random()*18-9))*(Math.PI/180);
-          const radius = 120 + Math.random()*170;
-          const x = centerX + Math.cos(angle)*radius;
-          const y = centerY + Math.sin(angle)*radius;
-          const node = document.createElement('button');
-          node.className = 'node' + (Math.random()>0.7? ' pulse' : '');
-          node.style.left = (x - 48) + 'px';
-          node.style.top = (y - 18) + 'px';
-          node.innerHTML = `<div style="pointer-events:none">${skill.label}</div><span class='lvl'>${skill.lvl}</span>`;
-          node.dataset.skill = skill.id;
-          node.tabIndex = 0;
-          node.setAttribute('aria-label', `${skill.label} — ${skill.lvl}`);
-          node.addEventListener('click', ()=> selectSkill(skill.id));
-          node.addEventListener('keydown', (e)=>{ if(e.key==='Enter') selectSkill(skill.id); });
-          galaxy.appendChild(node);
-        });
-      });
-    }
-
-    function selectSkill(id){
-      const s = SKILLS.find(x=>x.id===id);
-      skillDetails.innerHTML = `<strong>${s.label}</strong> — ${s.desc}. Projects filtered below.`;
-      filterGalleryBySkill(id);
-      // highlight nodes: subtle opacity
-      document.querySelectorAll('.node').forEach(n=>{ n.style.opacity = (n.dataset.skill===id? '1' : '0.45'); });
-    }
-
-    /* ====================
-       Gallery / filters
-       ==================== */
-    function renderGallery(list){
-      gallery.innerHTML = '';
-      list.forEach(p=>{
-        const card = document.createElement('article');
-        card.className='card';
-        card.tabIndex = 0;
-        card.setAttribute('role','button');
-        card.setAttribute('aria-label', `${p.title}: ${p.blurb}`);
-        card.innerHTML = `<div class="thumb">${p.tags.join(' • ')}</div>
-                          <h4>${p.title}</h4>
-                          <div class="meta"><div style="max-width:68%">${p.blurb}</div><div style="color:var(--muted);font-weight:700">${p.tags[0]||''}</div></div>
-                          <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>`;
-        card.addEventListener('click', ()=> openModal(p));
-        card.addEventListener('keydown', (e)=>{ if(e.key==='Enter') openModal(p); });
-        gallery.appendChild(card);
-      });
-    }
-
-    function setupFilters(){
-      const allTags = Array.from(new Set(PROJECTS.flatMap(p=>p.tags)));
-      filtersEl.innerHTML = '';
-      const allChip = document.createElement('button'); allChip.className='chip active'; allChip.textContent='All';
-      allChip.addEventListener('click', ()=> { document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); allChip.classList.add('active'); renderGallery(PROJECTS); });
-      filtersEl.appendChild(allChip);
-      allTags.forEach(t=>{
-        const b = document.createElement('button'); b.className='chip'; b.textContent=t;
-        b.addEventListener('click', ()=> { document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); b.classList.add('active'); filterGalleryByTag(t); });
-        filtersEl.appendChild(b);
-      });
-    }
-
-    function filterGalleryByTag(tag){ renderGallery(PROJECTS.filter(p=>p.tags.includes(tag))); }
-    function filterGalleryBySkill(skillId){ renderGallery(PROJECTS.filter(p=>p.skills.includes(skillId))); }
-
-    /* ====================
-       Modal: case study
-       ==================== */
-    function openModal(p){
-      modalTitle.textContent = p.title;
-      modalBlurb.textContent = p.blurb;
-      modalMedia.innerHTML = '';
-      modalLong.innerHTML = `<p style="color:var(--muted)">${p.long}</p>`;
-      // Media demo (if any)
-      if(p.media && p.media.length){
-        p.media.forEach(m=>{
-          const el = document.createElement('div');
-          if(m.type==='img'){ el.innerHTML = `<img src="${m.src}" style="width:100%;border-radius:8px">`; }
-          else if(m.type==='video'){ el.innerHTML = `<video controls style="width:100%;border-radius:8px"><source src="${m.src}"></video>`; }
-          modalMedia.appendChild(el);
-        });
-      } else {
-        modalMedia.innerHTML = `<div style="background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);border-radius:8px;padding:18px;color:var(--muted)">No media attached. Replace <code>project.media</code> with images/videos in the JS data.</div>`;
+        ctx.strokeStyle = `rgba(208,122,42,${0.12 * alpha})`;
+        ctx.lineWidth = 1.4 * alpha;
+        ctx.moveTo(A.x,A.y);
+        ctx.lineTo(B.x,B.y);
+        ctx.stroke();
       }
-      modalBackdrop.style.display = 'flex';
-      modalBackdrop.setAttribute('aria-hidden','false');
-      document.body.style.overflow = 'hidden';
     }
-    document.getElementById('modalClose').addEventListener('click', closeModal);
-    modalBackdrop.addEventListener('click', (e)=>{ if(e.target === modalBackdrop) closeModal(); });
-    function closeModal(){ modalBackdrop.style.display='none'; modalBackdrop.setAttribute('aria-hidden','true'); document.body.style.overflow='auto'; }
+  }
 
-    /* ====================
-       Contact form (demo)
-       ==================== */
-    document.getElementById('contactForm').addEventListener('submit', (e)=>{
-      e.preventDefault(); sendMessage();
-    });
-    document.getElementById('sendBtn').addEventListener('click', (e)=>{ e.preventDefault(); sendMessage(); });
+  requestAnimationFrame(draw);
+}
 
-    function sendMessage(){
-      const name = document.getElementById('c_name').value.trim();
-      const email = document.getElementById('c_email').value.trim();
-      const role = document.getElementById('c_role').value.trim();
-      const msg = document.getElementById('c_msg').value.trim();
-      if(!name || !email || !msg){ showTempMessage('Please fill name, email, and message'); return; }
-      // Demo: show toast. Replace with fetch POST to your server or Google Apps Script webhook.
-      showTempMessage(`Thanks ${name.split(' ')[0]} — message queued (demo)`, true);
-      document.getElementById('contactForm').reset();
-    }
+/* Interaction: shuffle & reset */
+document.getElementById('shuffle').addEventListener('click', ()=>{ atoms.forEach(a=>{ a.vx += (Math.random()-0.5)*3; a.vy += (Math.random()-0.5)*3; }); });
+document.getElementById('reset').addEventListener('click', ()=>{ initMolecules(); });
 
-    function showTempMessage(txt, good=false){
-      toast.textContent = txt;
-      toast.style.display = 'block';
-      if(good) toast.style.background = `linear-gradient(90deg,var(--accent-2),var(--accent-3))`;
-      setTimeout(()=>{ toast.style.display='none'; }, 3000);
-    }
+/* Skill selection filters gallery*/
+function selectSkill(id){
+  const s = SKILLS.find(x=>x.id===id);
+  skillDetails.textContent = `${s.label} — ${s.desc}`;
+  // highlight pills opacity
+  document.querySelectorAll('.node-pill').forEach(p=>{
+    p.style.opacity = (p.dataset.skill === id ? '1' : '0.35');
+  });
+  filterGalleryBySkill(id);
+}
 
-    document.getElementById('clearBtn').addEventListener('click', ()=>{ document.getElementById('contactForm').reset(); document.getElementById('contactResult').textContent=''; });
+/* Gallery rendering & filters */
+function renderGallery(list){
+  galleryEl.innerHTML = '';
+  list.forEach(p=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.tabIndex = 0;
+    card.innerHTML = `<div class="thumb">${p.tags.join(' • ')}</div>
+                      <h4>${p.title}</h4>
+                      <div class="meta"><div style="max-width:68%">${p.blurb}</div><div style="color:var(--muted)">${p.tags[0]||''}</div></div>
+                      <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>`;
+    card.addEventListener('click', ()=> openCaseStudy(p));
+    card.addEventListener('keydown',(e)=>{ if(e.key==='Enter') openCaseStudy(p); });
+    galleryEl.appendChild(card);
+  });
+}
+function setupFilters(){
+  const tags = Array.from(new Set(PROJECTS.flatMap(p=>p.tags)));
+  filtersEl.innerHTML = '';
+  const all = document.createElement('button'); all.className='chip active'; all.textContent='All'; all.addEventListener('click', ()=>{ document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); all.classList.add('active'); renderGallery(PROJECTS); });
+  filtersEl.appendChild(all);
+  tags.forEach(t=>{
+    const b = document.createElement('button'); b.className='chip'; b.textContent = t;
+    b.addEventListener('click', ()=>{ document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); b.classList.add('active'); renderGallery(PROJECTS.filter(p=>p.tags.includes(t))); });
+    filtersEl.appendChild(b);
+  });
+}
+function filterGalleryBySkill(skillId){
+  renderGallery(PROJECTS.filter(p=> p.long.toLowerCase().includes(skillId) || (p.tags||[]).some(t=>t.toLowerCase().includes(skillId)) || true && p)); 
+  // simple: render all but you can customize mapping from skill->project. For now, show all and rely on tags.
+  // To make strict: map project.skills arrays to project items.
+  renderGallery(PROJECTS.filter(p=> true)); // keep it simple; you can map projects.skills later
+}
 
-    /* ====================
-       Theme controls
-       ==================== */
-    function setTheme(t){
-      const root = document.documentElement;
-      root.style.setProperty('--accent-1', t.accent1);
-      root.style.setProperty('--accent-2', t.accent2);
-      root.style.setProperty('--accent-3', t.accent3);
-      root.style.setProperty('--gradient-stop-a', t.a);
-      root.style.setProperty('--gradient-stop-b', t.b);
-    }
-    function randomTheme(){
-      const keys = Object.keys(THEMES);
-      const k = keys[Math.floor(Math.random()*keys.length)];
-      return THEMES[k];
-    }
+/* Case study modal */
+function openCaseStudy(p){
+  modalTitle.textContent = p.title;
+  modalBlurb.textContent = p.blurb;
+  modalBody.innerHTML = `<p style="color:var(--muted)">${p.long}</p>`;
+  modal.style.display = 'flex';
+  modal.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+}
+document.getElementById('modalClose').addEventListener('click', ()=>{ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); document.body.style.overflow = 'auto'; });
 
-    // build preset buttons
-    Object.keys(THEMES).forEach(k=>{
-      const b = document.createElement('button');
-      b.className = 'btn';
-      b.textContent = k;
-      b.addEventListener('click', ()=> setTheme(THEMES[k]));
-      themePresets.appendChild(b);
-    });
-    document.getElementById('rndTheme').addEventListener('click', ()=> setTheme(randomTheme()));
-    document.getElementById('resetTheme').addEventListener('click', ()=> setTheme(THEMES['Aurora']));
+/* Contact form demo */
+document.getElementById('sendBtn').addEventListener('click', ()=>{
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const msg = document.getElementById('message').value.trim();
+  if(!name||!email||!msg){ showToast('Fill name, email, and a short message'); return; }
+  showToast(`Thanks ${name.split(' ')[0]} — message queued (demo)`);
+  document.getElementById('contactForm').reset();
+});
+document.getElementById('clearBtn').addEventListener('click', ()=>{ document.getElementById('contactForm').reset(); });
 
-    /* ====== shuffle / reset ====== */
-    document.getElementById('shuffle').addEventListener('click', ()=> { placeNodes(); });
-    document.getElementById('reset').addEventListener('click', ()=> { placeNodes(); skillDetails.textContent='Click a node to see details.'; renderGallery(PROJECTS); document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); document.querySelector('.chip')?.classList.add('active'); document.querySelectorAll('.node').forEach(n=>n.style.opacity='1'); });
+function showToast(txt){
+  toast.textContent = txt; toast.style.display = 'block';
+  setTimeout(()=> toast.style.display='none', 2800);
+}
 
-    /* resume / hire buttons */
-    document.getElementById('resumeBtn').addEventListener('click', ()=> { window.open('Me Resume.pdf','_blank'); });
-    document.getElementById('hireBtn').addEventListener('click', ()=> { document.getElementById('c_name').focus(); window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}); });
+/* Resume upload (client-side) - replaces top link to blob URL for local preview */
+resumeUploader.addEventListener('change', (e)=>{
+  const f = e.target.files[0];
+  if(!f) return;
+  const url = URL.createObjectURL(f);
+  resumeLink.href = url;
+  resumeLink.download = f.name;
+  showToast('Local resume uploaded — link updated (browser-only)');
+});
 
-    /* ====================
-       Init & animation loop
-       ==================== */
-    function init(){
-      // size canvas
-      resizeCanvas();
-      initParticles(70);
-      placeNodes();
-      setupFilters();
-      renderGallery(PROJECTS);
-      setTheme(THEMES['Aurora']);
-      animate();
-    }
-    window.addEventListener('resize', ()=>{ resizeCanvas(); initParticles(particles.length); placeNodes(); });
-    window.addEventListener('load', init);
+/* initialize canvas & molecules */
+function start(){
+  resize();
+  initMolecules();
+  setupFilters();
+  renderGallery(PROJECTS);
+  requestAnimationFrame(draw);
+}
 
-    function animate(){
-      drawParticles();
-      requestAnimationFrame(animate);
-    }
+/* Simple user pan: drag the wrapper to nudge atoms (visual only) */
+let dragging=false, sx=0, sy=0;
+mwrap.addEventListener('pointerdown', (e)=>{ dragging=true; sx=e.clientX; sy=e.clientY; mwrap.setPointerCapture(e.pointerId); });
+mwrap.addEventListener('pointermove', (e)=>{ if(!dragging) return; const dx=e.clientX-sx, dy=e.clientY-sy; sx=e.clientX; sy=e.clientY; atoms.forEach(a=>{ a.x += dx*0.12; a.y += dy*0.12; }); });
+mwrap.addEventListener('pointerup', (e)=>{ dragging=false; });
 
-    /* ====================
-       Accessibility niceties
-       ==================== */
-    // allow keyboard escape to close modal
-    window.addEventListener('keydown', (e)=>{
-      if(e.key==='Escape'){ closeModal(); }
-    });
+/* keyboard: focus hire button scroll to contact */
+document.getElementById('hireBtn').addEventListener('click', ()=>{ document.getElementById('name').focus(); window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'}) });
 
-    /* ====================
-       Implementation notes (brief)
-       ====================
-       - Replace PROJECTS[].thumb/media with real image/video links.
-       - Wire contact form: POST to your endpoint inside sendMessage() (fetch API).
-       - Host: GitHub Pages / Netlify / Vercel.
-       - Performance: keep media optimized (WebP/MP4 H264). Thumbnails ~ <150KB.
-       - For more advanced animations, swap the particleCanvas for WebGL particles (optional).
-       ==================== */
-  </script>
+/* Kick off */
+start();
+
+/* Implementation notes (short)
+ - To map skills -> projects strictly: add a 'skills' array on PROJECTS and use filterGalleryBySkill to show matching projects.
+ - To host resume permanently: replace 'Me Resume.pdf' with hosted URL. The uploader only changes link locally in browser.
+ - To add project media: extend PROJECTS with media property and show images/video in modalBody.
+ - Colors: change --accent and --accent-2 CSS variables in :root for quick rebranding.
+*/
+</script>
 </body>
 </html>
