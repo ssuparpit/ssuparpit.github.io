@@ -3,255 +3,408 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Arpit Agrawal — Skills Galaxy</title>
-  <meta name="description" content="Interactive portfolio for Arpit Agrawal — Skills Galaxy: project gallery, interactive skills map, contact portal." />
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
-
+  <title>Arpit Agrawal — Skills Galaxy (Revamped)</title>
+  <meta name="description" content="Interactive portfolio for Arpit Agrawal — Skills Galaxy: dynamic theme, animated skills, project gallery, case studies, contact portal." />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
+    /* ================================
+       Configurable CSS variables / palettes
+       ================================ */
     :root{
-      /* Color system (primary palette) */
-      --aurora-indigo: #2D1B4E;     /* deep indigo */
-      --neon-coral: #FF4D6D;       /* accent */
-      --bg: #0f0b14;               /* near black */
-      --card: #17121c;             /* panel */
-      --muted: #bfb8d6;           /* secondary text */
-      --glass: rgba(255,255,255,0.04);
-
-      /* Semantic */
-      --success: #22c55e;
-      --danger: #ef4444;
-
-      /* layout */
-      --max-width: 1100px;
+      --bg-900: #08050a;
+      --bg-800: #0f0b14;
+      --glass: rgba(255,255,255,0.03);
+      --card: rgba(255,255,255,0.02);
+      --muted: rgba(255,255,255,0.6);
       --radius: 14px;
+      --maxw: 1200px;
+
+      /* theme tokens (update dynamically via JS) */
+      --accent-1: #2D1B4E; /* primary */
+      --accent-2: #FF4D6D; /* accent */
+      --accent-3: #7F5BFF; /* supporting */
+      --gradient-stop-a: rgba(45,27,78,0.9);
+      --gradient-stop-b: rgba(255,77,109,0.75);
+      --text: #f8f7fb;
+      --glass-border: rgba(255,255,255,0.04);
+      --focus: 2px solid rgba(255,255,255,0.12);
     }
 
-    /* Reset / base */
+    /* theme presets (referenced in JS) */
+    /* end tokens */
+
+    /* ===== base & reset ===== */
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{margin:0;background:linear-gradient(180deg,var(--bg),#07060a);color:#fff;font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;}
+    body{margin:0;background:radial-gradient(1200px 600px at 10% 10%, rgba(255,255,255,0.01), transparent), linear-gradient(180deg,var(--bg-900),var(--bg-800));color:var(--text);font-family:Inter, Montserrat, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;overflow-y:scroll;}
     a{color:inherit}
+    :focus{outline:none}
 
-    .wrap{max-width:var(--max-width);margin:36px auto;padding:24px}
+    .wrap{max-width:var(--maxw);margin:32px auto;padding:22px}
 
-    /* Header */
+    /* ===== header ===== */
     header{display:flex;align-items:center;justify-content:space-between;gap:18px}
     .brand{display:flex;align-items:center;gap:14px}
-    .logo{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--aurora-indigo),rgba(45,27,78,0.6));box-shadow:0 6px 20px rgba(45,27,78,0.3);} 
-    .logo h1{margin:0;font-size:18px;font-weight:800;letter-spacing:0.6px}
-    .title{line-height:1}
-    .title h2{margin:0;font-size:16px}
+    .logo{
+      width:62px;height:62px;border-radius:14px;display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--accent-1),var(--accent-3));
+      box-shadow:0 8px 30px rgba(0,0,0,0.55), 0 2px 12px rgba(0,0,0,0.5) inset;
+      font-weight:800;font-family:Montserrat;color:white
+    }
+    .title h2{margin:0;font-size:18px;letter-spacing:0.2px}
     .title p{margin:0;color:var(--muted);font-size:13px}
 
-    /* Top controls */
-    .controls{display:flex;gap:8px;align-items:center}
-    .btn{padding:10px 14px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.04);cursor:pointer;font-weight:600}
-    .btn.primary{background:linear-gradient(90deg,var(--neon-coral),#ff6b82);color:#111}
+    .controls{display:flex;gap:10px;align-items:center}
+    .btn{padding:10px 14px;border-radius:12px;background:transparent;border:1px solid var(--glass-border);cursor:pointer;font-weight:700;color:var(--text);font-size:13px;backdrop-filter: blur(6px)}
+    .btn.strong{background:linear-gradient(90deg,var(--accent-2),var(--accent-3));color:#0b0710;border:none;box-shadow:0 8px 30px rgba(0,0,0,0.45)}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
 
-    /* Layout grid */
-    .grid{display:grid;grid-template-columns:420px 1fr;gap:22px;margin-top:28px}
+    /* ===== layout grid ===== */
+    .grid{display:grid;grid-template-columns:420px 1fr;gap:24px;margin-top:26px;align-items:start}
+    @media (max-width:980px){.grid{grid-template-columns:1fr;}.brand{gap:10px}.logo{width:52px;height:52px}}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:var(--radius);border:1px solid var(--glass-border);box-shadow:0 10px 40px rgba(0,0,0,0.6);}
 
-    /* Left: Skills Galaxy */
-    .panel{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:var(--radius);backdrop-filter: blur(6px);border:1px solid rgba(255,255,255,0.03)}
-    .galaxy{height:620px;border-radius:12px;position:relative;overflow:hidden;background:radial-gradient(circle at 10% 10%, rgba(255,255,255,0.02), transparent 10%),linear-gradient(180deg, rgba(255,255,255,0.015), transparent);display:flex;align-items:center;justify-content:center}
+    /* ===== skill galaxy ===== */
+    .galaxy-wrap{position:relative;height:660px;border-radius:12px;overflow:hidden;padding:12px;background:
+      radial-gradient(600px 600px at 20% 40%, rgba(255,255,255,0.02), transparent 10%),
+      linear-gradient(180deg, rgba(255,255,255,0.01), transparent 40%);border:1px solid rgba(255,255,255,0.02)}
+    #galaxy{position:relative;height:100%;display:grid;place-items:center;}
 
-    /* Skill nodes */
-    .node{position:absolute;min-width:96px;padding:10px 12px;border-radius:999px;background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);text-align:center;font-weight:700;font-size:13px;cursor:pointer;transition:transform .28s ease,box-shadow .28s ease}
-    .node .badge{display:block;font-size:11px;color:var(--muted);margin-top:6px;font-weight:600}
-    .node:hover{transform:scale(1.08);box-shadow:0 12px 30px rgba(45,27,78,0.45)}
+/* interactive particle canvas (behind nodes) */
+    #particleCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;mix-blend-mode:screen;opacity:0.9}
 
-    /* center core */
-    .core{width:170px;height:170px;border-radius:999px;display:grid;place-items:center;background:linear-gradient(135deg,var(--aurora-indigo),#39265f);box-shadow:0 10px 40px rgba(45,27,78,0.45);font-weight:800}
-    .core small{display:block;font-weight:600;color:var(--neon-coral);font-size:12px}
+    .core{
+      width:160px;height:160px;border-radius:999px;display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--gradient-stop-a),var(--gradient-stop-b));
+      box-shadow:0 18px 60px rgba(0,0,0,0.65), inset 0 -8px 20px rgba(255,255,255,0.02);
+      z-index:3;transform:translateZ(0);
+      font-weight:800;font-family:Montserrat
+    }
+    .core small{display:block;margin-top:6px;font-size:12px;color:rgba(255,255,255,0.85);font-weight:600}
 
-    /* Right: Project gallery */
-    .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-    .chip{padding:8px 12px;border-radius:999px;background:transparent;border:1px solid rgba(255,255,255,0.04);cursor:pointer}
-    .chip.active{background:linear-gradient(90deg,var(--neon-coral),#ff7a88);color:#111;border:none}
+    /* nodes (fluid, modern pill) */
+    .node{position:absolute;padding:10px 14px;border-radius:999px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);text-align:center;font-weight:700;font-size:13px;cursor:pointer;transition:transform .28s cubic-bezier(.2,.9,.3,1),box-shadow .28s ease,opacity .28s ease;z-index:2;color:var(--text)}
+    .node .lvl{display:block;font-size:11px;color:var(--muted);margin-top:6px;font-weight:600}
+    .node:hover{transform:translateY(-6px) scale(1.06);box-shadow:0 18px 50px rgba(0,0,0,0.6), 0 6px 18px rgba(0,0,0,0.5) inset}
+    .node:focus{box-shadow:var(--focus)}
+    /* subtle pulse */
+    .node.pulse::after{content:'';position:absolute;inset:-10px;border-radius:999px;background:linear-gradient(90deg, rgba(255,255,255,0.01), transparent);opacity:0.8;filter:blur(8px);z-index:-1;animation:pulse 3.6s infinite}
+    @keyframes pulse{0%{transform:scale(.98);opacity:.25}50%{transform:scale(1.14);opacity:.08}100%{transform:scale(.98);opacity:.25}}
 
-    .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
-    .card{background:linear-gradient(180deg,var(--card),rgba(17,12,20,0.7));padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;gap:8px;min-height:150px}
-    .card h4{margin:0}
-    .meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}
+    /* ===== right column: gallery + filters ===== */
+    .header-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+    .filters{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+    .chip{padding:8px 12px;border-radius:999px;background:transparent;border:1px solid rgba(255,255,255,0.04);cursor:pointer;font-weight:700;font-size:13px;color:var(--muted)}
+    .chip.active{background:linear-gradient(90deg,var(--accent-2),var(--accent-3));color:#0b0710;border:none;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+
+    .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;gap:10px;min-height:170px;transition:transform .28s cubic-bezier(.2,.9,.3,1),box-shadow .28s;outline:none}
+    .card:hover{transform:translateY(-8px);box-shadow: 0 24px 80px rgba(0,0,0,0.6)}
+    .card:focus{box-shadow:0 18px 40px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.07)}
+    .thumb{height:96px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.02), transparent);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
+    .card h4{margin:0;font-family:Montserrat;font-weight:800}
+    .meta{display:flex;justify-content:space-between;color:var(--muted);font-size:13px}
     .tags{display:flex;gap:8px;flex-wrap:wrap}
-    .tag{padding:6px 8px;background:rgba(255,255,255,0.02);border-radius:8px;font-size:12px}
+    .tag{padding:6px 8px;background:rgba(255,255,255,0.02);border-radius:8px;font-size:12px;color:var(--muted)}
 
-    /* animated preview */
-    .thumb{height:96px;border-radius:10px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
-
-    /* Contact portal */
-    .contact{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .input,textarea{width:100%;padding:10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:#fff}
+    /* ===== contact ===== */
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+    .input,textarea{width:100%;padding:10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text);font-size:14px}
     textarea{min-height:120px;resize:vertical}
-    .contact .full{grid-column:1/-1}
+    .contact-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+    .toast{position:fixed;right:22px;bottom:22px;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--accent-2),var(--accent-3));color:#111;font-weight:700;box-shadow:0 14px 40px rgba(0,0,0,0.6);display:none;z-index:9999}
 
-    footer{margin-top:26px;color:var(--muted);font-size:13px;text-align:center}
+    /* ===== modal ===== */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,2,4,0.64);display:none;align-items:center;justify-content:center;z-index:999}
+    .modal{width:min(960px,92%);max-height:88vh;overflow:auto;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border:1px solid rgba(255,255,255,0.04)}
+    .modal .close{background:transparent;border:0;color:var(--muted);font-weight:800;cursor:pointer;padding:6px 10px;border-radius:8px}
+    .modal h3{margin-top:0}
+    .modal .case-media{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+    .modal p{color:var(--muted);line-height:1.45}
 
     /* small screens */
-    @media (max-width:980px){.grid{grid-template-columns:1fr;}.galaxy{height:520px}}
+    @media (max-width:720px){
+      .contact-grid{grid-template-columns:1fr}
+      .core{width:140px;height:140px}
+      .galaxy-wrap{height:520px}
+    }
 
-    /* subtle floating stars */
-    .stars{position:absolute;inset:0;pointer-events:none}
-    .star{position:absolute;width:2px;height:2px;background:white;opacity:.06;border-radius:50%}
-
-    /* micro-animations for nodes (JS will set positions) */
+    /* reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .node.pulse::after{animation:none}
+      .card,.node,.core{transition:none}
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header>
       <div class="brand">
-        <div class="logo"><h1 style="font-size:16px">AA</h1></div>
+        <div class="logo" aria-hidden="true">AA</div>
         <div class="title">
           <h2>Arpit Agrawal</h2>
           <p>Data Analyst · Data Engineer · Visual storyteller</p>
         </div>
       </div>
-      <div class="controls">
-        <button class="btn" id="downloadPDF">Resume</button>
-        <button class="btn primary" id="hireBtn">Hire / Contact</button>
+      <div class="controls" role="toolbar" aria-label="top controls">
+        <button class="btn ghost" id="resumeBtn" title="Open resume">Resume</button>
+        <button class="btn strong" id="hireBtn">Hire / Contact</button>
       </div>
     </header>
 
-    <main class="grid">
-      <!-- LEFT: Skills Galaxy -->
-      <section class="panel">
-        <h3 style="margin:0 0 10px 0">Skills Galaxy</h3>
-        <p style="margin:0 0 16px 0;color:var(--muted);font-size:14px">Interactive skill map grouped by clusters — click a node to see examples & projects.</p>
+    <main class="grid" role="main" aria-labelledby="pageTitle">
+      <!-- LEFT -->
+      <section class="panel" aria-labelledby="skillsTitle">
+        <h3 id="skillsTitle" style="margin:0 0 8px 0">Skills Galaxy</h3>
+        <p style="margin:0 0 12px 0;color:var(--muted)">Interactive skill map grouped by clusters — click a node to see examples & filter projects.</p>
 
-        <div class="galaxy" id="galaxy">
-          <div class="stars" id="stars"></div>
-
-          <div class="core" id="core">
-            <div style="text-align:center">
-              <div style="font-size:20px">Data</div>
-              <small>Systems · Models · Dashboards</small>
+        <div class="galaxy-wrap panel-inner">
+          <canvas id="particleCanvas" aria-hidden="true"></canvas>
+          <div id="galaxy" aria-hidden="false">
+            <div class="core" id="core" role="img" aria-label="core: Data — Systems · Models · Dashboards">
+              <div style="text-align:center">
+                <div style="font-size:18px">Data</div>
+                <small>Systems · Models · Dashboards</small>
+              </div>
             </div>
           </div>
-
-          <!-- nodes injected by JS -->
         </div>
 
-        <div style="display:flex;gap:10px;margin-top:16px;align-items:center">
-          <div style="flex:1;color:var(--muted);font-size:13px">Pro tip: click skills to filter projects. Drag the galaxy to pan.</div>
+        <div style="display:flex;gap:10px;margin-top:16px;align-items:center;justify-content:space-between">
+          <div style="color:var(--muted);font-size:13px">Tip: click skills to filter. Hover nodes for level. Drag galaxy to pan.</div>
           <div style="display:flex;gap:8px">
             <button class="btn" id="shuffle">Shuffle</button>
             <button class="btn" id="reset">Reset</button>
           </div>
         </div>
 
-        <div style="margin-top:12px;">
+        <div style="margin-top:14px">
           <strong>Selected Skill</strong>
           <div id="skillDetails" style="margin-top:8px;color:var(--muted);font-size:13px">Click a node to see details.</div>
         </div>
 
+        <!-- theme control -->
+        <div style="margin-top:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <label style="font-weight:700;color:var(--muted);font-size:13px">Theme</label>
+          <div id="themePresets" style="display:flex;gap:8px"></div>
+          <button class="btn" id="rndTheme">Randomize</button>
+          <button class="btn ghost" id="resetTheme">Refine</button>
+        </div>
       </section>
 
-      <!-- RIGHT: Projects + Contact -->
+      <!-- RIGHT -->
       <section>
         <div class="panel">
-          <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="header-row">
             <div>
               <h3 style="margin:0">Project Gallery</h3>
-              <p style="margin:6px 0 0 0;color:var(--muted);font-size:13px">Filterable, animated, and keyboard accessible.</p>
+              <p style="margin:6px 0 0 0;color:var(--muted);font-size:13px">Filterable, animated, keyboard-accessible. Click a card for a case study.</p>
             </div>
-            <div style="text-align:right;color:var(--muted);font-size:12px">Powered by JS + lightweight CSS</div>
+            <div style="color:var(--muted);font-size:12px">Polished UI • Interactive</div>
           </div>
 
-          <div class="filters" id="filters"></div>
-
-          <div class="gallery" id="gallery"></div>
-
+          <div class="filters" id="filters" aria-label="project filters"></div>
+          <div class="gallery" id="gallery" aria-live="polite"></div>
         </div>
 
-        <div class="panel" style="margin-top:14px">
-          <h3 style="margin:0 0 8px 0">Contact Portal</h3>
-          <p style="margin:0 0 12px 0;color:var(--muted);font-size:13px">Creative contact form with personality — answers routed to your email or Google Form.</p>
-
-          <form id="contactForm" onsubmit="return false;">
-            <div class="contact">
-              <input class="input" id="name" placeholder="Your name" />
-              <input class="input" id="email" placeholder="Email" />
-              <input class="input full" id="role" placeholder="Role / Short note (e.g., 'Data internship')" />
-              <textarea id="message" placeholder="Message — be brief, be human" class="full"></textarea>
-              <div class="full" style="display:flex;gap:8px;justify-content:flex-end">
-                <button class="btn" type="button" id="clearBtn">Clear</button>
-                <button class="btn primary" id="sendBtn">Send message</button>
-              </div>
+        <div class="panel" style="margin-top:16px">
+          <h3 style="margin:0 0 10px 0">Contact Portal</h3>
+          <p style="margin:0 0 12px 0;color:var(--muted);font-size:13px">Creative contact form — messages demo to your email (replace endpoint in JS).</p>
+          <form id="contactForm">
+            <div class="contact-grid">
+              <input class="input" id="c_name" placeholder="Your name" aria-label="name" />
+              <input class="input" id="c_email" placeholder="Email" aria-label="email" />
+              <input class="input" id="c_role" placeholder="Role / Short note (e.g., Data internship)" aria-label="role" style="grid-column:1/3" />
+              <textarea id="c_msg" placeholder="Message — be brief, be human" aria-label="message"></textarea>
+            </div>
+            <div class="contact-actions">
+              <button class="btn" type="button" id="clearBtn">Clear</button>
+              <button class="btn strong" id="sendBtn" type="submit">Send message</button>
             </div>
           </form>
-
           <div id="contactResult" style="margin-top:12px;color:var(--muted)"></div>
         </div>
 
-        <footer>
-          Built with ☕ and a touch of chaos. • View source: GitHub
+        <footer style="margin-top:18px;color:var(--muted);font-size:13px;text-align:center">
+          Built with ☕ and a little visual chaos — View source on GitHub
         </footer>
       </section>
     </main>
   </div>
 
-  <script>
-    /* ====== Data (customize) ======
-       The projects and skills below are seeded from your resume. Edit these arrays to add more.
-       Resume source: see delivered files (user's resume was used to pick skills & projects). */
+  <!-- Modal for case studies -->
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal" role="document">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3 id="modalTitle">Case Study</h3>
+        <div>
+          <button class="close" id="modalClose">Close ✕</button>
+        </div>
+      </div>
+      <div id="modalBody">
+        <p class="muted" id="modalBlurb" style="color:var(--muted)"></p>
+        <div class="case-media" id="modalMedia"></div>
+        <div style="margin-top:12px" id="modalLong"></div>
+      </div>
+    </div>
+  </div>
 
+  <div class="toast" id="toast">Message sent</div>
+
+  <script>
+    /* =========================
+       Data seeds (customize)
+       ========================= */
     const SKILLS = [
-      {id:'python',label:'Python',cluster:'Engineering',lvl:'Expert',desc:'ETL, automation, modeling, Pandas, NumPy'},
-      {id:'sql',label:'SQL',cluster:'Engineering',lvl:'Expert',desc:'Joins, window functions, modeling, SQLite, MySQL'},
-      {id:'powerbi',label:'Power BI',cluster:'Viz',lvl:'Advanced',desc:'Dashboards, KPIs, drilldowns'},
-      {id:'spatial',label:'Geo & Spatial',cluster:'Engineering',lvl:'Advanced',desc:'PostGIS, Mapbox, routing'},
-      {id:'ml',label:'Machine Learning',cluster:'Modeling',lvl:'Advanced',desc:'Scikit-learn, TensorFlow basics'},
-      {id:'sqlperf',label:'Data Pipelines',cluster:'Engineering',lvl:'Advanced',desc:'ETL workflows & scheduling'},
-      {id:'viz',label:'Data Viz',cluster:'Viz',lvl:'Advanced',desc:'Tableau, Matplotlib, Plotly'},
-      {id:'stats',label:'Statistics',cluster:'Modeling',lvl:'Advanced',desc:'SPSS, regression, A/B testing'},
-      {id:'dber',label:'DB Admin',cluster:'Infra',lvl:'Intermediate',desc:'MySQL, Azure, Snowflake basics'}
+      {id:'python', label:'Python', cluster:'Engineering', lvl:'Expert', desc:'ETL, automation, Pandas, NumPy, production scripts'},
+      {id:'sql', label:'SQL', cluster:'Engineering', lvl:'Expert', desc:'Joins, window functions, modeling, Snowflake & MySQL'},
+      {id:'powerbi', label:'Power BI', cluster:'Viz', lvl:'Advanced', desc:'Dashboards, KPIs, drilldowns, embedded reports'},
+      {id:'spatial', label:'Geo & Spatial', cluster:'Engineering', lvl:'Advanced', desc:'PostGIS, Mapbox, routing & geospatial features'},
+      {id:'ml', label:'Machine Learning', cluster:'Modeling', lvl:'Advanced', desc:'Scikit-learn, TensorFlow basics, uplift modeling'},
+      {id:'pipelines', label:'Data Pipelines', cluster:'Engineering', lvl:'Advanced', desc:'ETL workflows, scheduling, SQL modelling'},
+      {id:'viz', label:'Data Viz', cluster:'Viz', lvl:'Advanced', desc:'Tableau, Matplotlib, Plotly — clear storytelling'},
+      {id:'stats', label:'Statistics', cluster:'Modeling', lvl:'Advanced', desc:'SPSS, hypothesis tests, regression, A/B testing'},
+      {id:'infra', label:'DB Admin', cluster:'Infra', lvl:'Intermediate', desc:'MySQL, Azure basics, monitoring'}
     ];
 
     const PROJECTS = [
-      {id:'retail',title:'Global Retail & Logistics Intelligence',tags:['Geo','Forecasting','Snowflake'],blurb:'Warehouse & route optimization; Tableau & Power BI dashboards',thumb:'',skills:['spatial','ml','viz']},
-      {id:'promo',title:'Smart Promotion Profitability Tracker',tags:['ETL','A/B','Power BI'],blurb:'Promo uplift modelling & profitability command center',thumb:'',skills:['python','powerbi','stats']},
-      {id:'supply',title:'Supply Chain Disruption Prediction',tags:['Spark','Azure','Anomaly'],blurb:'8M+ events, TensorFlow models, real-time alerts',thumb:'',skills:['sqlperf','ml','dber']},
-      {id:'frac',title:'Print Production Analytics',tags:['Power BI','Ops','Python'],blurb:'Printer telemetry and defect analytics',thumb:'',skills:['python','viz','sql']}
+      {id:'retail', title:'Global Retail & Logistics Intelligence', tags:['Geo','Forecasting','Snowflake'], blurb:'Warehouse & route optimization; Tableau & Power BI dashboards', thumb:'', skills:['spatial','ml','viz'], long:'Built forecasting and routing pipelines, created dashboards for ops, reduced idle time by X% (anonymized metric).', media:[]},
+      {id:'promo', title:'Smart Promotion Profitability Tracker', tags:['ETL','A/B','Power BI'], blurb:'Promo uplift modelling & profitability command center', thumb:'', skills:['python','powerbi','stats'], long:'End-to-end ETL → analytics pipeline for promotion analysis. Built RFM and uplift models and a profitability dashboard.', media:[]},
+      {id:'supply', title:'Supply Chain Disruption Prediction', tags:['Spark','Azure','Anomaly'], blurb:'8M+ events, TensorFlow models, real-time alerts', thumb:'', skills:['pipelines','ml','infra'], long:'Realtime anomaly detection using Spark streaming and TensorFlow; implemented alerting in Azure.', media:[]},
+      {id:'print', title:'Print Production Analytics', tags:['Power BI','Ops','Python'], blurb:'Printer telemetry and defect analytics', thumb:'', skills:['python','viz','sql'], long:'Telemetry ingestion, defect classification, and interactive dashboards for production managers.', media:[]}
     ];
 
-    /* Grab DOM */
+    /* =========================
+       THEMES (presets)
+       ========================= */
+    const THEMES = {
+      'Aurora': {
+        accent1:'#2D1B4E', accent2:'#FF4D6D', accent3:'#7F5BFF',
+        a:'rgba(45,27,78,0.95)', b:'rgba(255,77,109,0.78)'
+      },
+      'Night Chrome': {
+        accent1:'#0f1b2d', accent2:'#6be3ff', accent3:'#7d7dff',
+        a:'rgba(12,22,36,0.95)', b:'rgba(107,227,255,0.72)'
+      },
+      'Oceanic': {
+        accent1:'#05445E', accent2:'#189AB4', accent3:'#75E6DA',
+        a:'rgba(5,68,94,0.95)', b:'rgba(24,154,180,0.72)'
+      },
+      'Solar': {
+        accent1:'#7B3F00', accent2:'#FFB86B', accent3:'#FFD37D',
+        a:'rgba(123,63,0,0.95)', b:'rgba(255,184,107,0.78)'
+      }
+    };
+
+    /* ================
+       helpers: DOM refs
+       ================ */
     const galaxy = document.getElementById('galaxy');
     const gallery = document.getElementById('gallery');
-    const filters = document.getElementById('filters');
+    const filtersEl = document.getElementById('filters');
     const skillDetails = document.getElementById('skillDetails');
+    const particleCanvas = document.getElementById('particleCanvas');
+    const themePresets = document.getElementById('themePresets');
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBlurb = document.getElementById('modalBlurb');
+    const modalMedia = document.getElementById('modalMedia');
+    const modalLong = document.getElementById('modalLong');
+    const toast = document.getElementById('toast');
 
-    /* Utility: place nodes in circular clusters */
+    /* ===================
+       Particle background
+       =================== */
+    const ctx = particleCanvas.getContext('2d');
+    let particles = [];
+    function resizeCanvas(){
+      particleCanvas.width = particleCanvas.clientWidth * devicePixelRatio;
+      particleCanvas.height = particleCanvas.clientHeight * devicePixelRatio;
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+    }
+    function initParticles(n=60){
+      particles = [];
+      const w = particleCanvas.clientWidth, h = particleCanvas.clientHeight;
+      for(let i=0;i<n;i++){
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: 0.6 + Math.random()*2.6,
+          vx: (Math.random()-0.5)*0.3,
+          vy: (Math.random()-0.5)*0.3,
+          alpha: 0.05 + Math.random()*0.12
+        });
+      }
+    }
+    let mouse = {x:-9999,y:-9999};
+    particleCanvas.addEventListener('mousemove', (e)=>{const rect = particleCanvas.getBoundingClientRect(); mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top;});
+    particleCanvas.addEventListener('mouseleave', ()=>{ mouse.x = -9999; mouse.y = -9999; });
+
+    function drawParticles(){
+      const w = particleCanvas.clientWidth, h = particleCanvas.clientHeight;
+      ctx.clearRect(0,0,particleCanvas.width, particleCanvas.height);
+      particles.forEach(p=>{
+        p.x += p.vx;
+        p.y += p.vy;
+        // wrap
+        if(p.x < -10) p.x = w+10;
+        if(p.x > w+10) p.x = -10;
+        if(p.y < -10) p.y = h+10;
+        if(p.y > h+10) p.y = -10;
+        // mouse repulsion
+        if(mouse.x > -9000){
+          const dx = p.x - mouse.x; const dy = p.y - mouse.y;
+          const d2 = dx*dx + dy*dy;
+          if(d2 < 50000){
+            const s = 1 + (50000 - d2)/50000 * 0.6;
+            p.x += dx * 0.003 * s;
+            p.y += dy * 0.003 * s;
+          }
+        }
+        // draw
+        ctx.beginPath();
+        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r*8);
+        grd.addColorStop(0, `rgba(255,255,255,${p.alpha})`);
+        grd.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = grd;
+        ctx.arc(p.x, p.y, p.r*3, 0, Math.PI*2);
+        ctx.fill();
+      });
+    }
+
+    /* ====================
+       Skill nodes placement
+       ==================== */
     function placeNodes(){
-      // remove previous nodes
+      // remove old nodes
       document.querySelectorAll('.node').forEach(n=>n.remove());
-
       const w = galaxy.clientWidth, h = galaxy.clientHeight;
       const centerX = w/2, centerY = h/2;
 
-      const clusters = {Engineering:[],Viz:[],Modeling:[],Infra:[]};
-      SKILLS.forEach(s=> clusters[s.cluster] && clusters[s.cluster].push(s));
+      const clusters = {};
+      SKILLS.forEach(s=> { if(!clusters[s.cluster]) clusters[s.cluster]=[]; clusters[s.cluster].push(s); });
 
-      const clusterAngles = {Engineering:-20, Viz:90, Modeling:200, Infra:290};
-
-      Object.keys(clusters).forEach(clusterName=>{
-        const list = clusters[clusterName];
-        const angleStart = clusterAngles[clusterName] || 0;
+      // cluster angle defaults
+      const baseAngles = {Engineering:330, Viz:70, Modeling:150, Infra:230};
+      const clusterKeys = Object.keys(clusters);
+      clusterKeys.forEach(cluster => {
+        const list = clusters[cluster];
+        const base = baseAngles[cluster]|| (Math.random()*360);
         list.forEach((skill,i)=>{
-          const angle = (angleStart + i*18 + (Math.random()*14-7)) * (Math.PI/180);
-          const radius = 140 + Math.random()*120;
-          const x = centerX + Math.cos(angle)*radius - 48;
-          const y = centerY + Math.sin(angle)*radius - 18;
-          const node = document.createElement('div');
-          node.className='node';
-          node.style.left = x + 'px';
-          node.style.top = y + 'px';
-          node.innerHTML = `<div>${skill.label}</div><span class='badge'>${skill.lvl}</span>`;
+          const angle = (base + i*18 + (Math.random()*18-9))*(Math.PI/180);
+          const radius = 120 + Math.random()*170;
+          const x = centerX + Math.cos(angle)*radius;
+          const y = centerY + Math.sin(angle)*radius;
+          const node = document.createElement('button');
+          node.className = 'node' + (Math.random()>0.7? ' pulse' : '');
+          node.style.left = (x - 48) + 'px';
+          node.style.top = (y - 18) + 'px';
+          node.innerHTML = `<div style="pointer-events:none">${skill.label}</div><span class='lvl'>${skill.lvl}</span>`;
           node.dataset.skill = skill.id;
           node.tabIndex = 0;
-          node.addEventListener('click', ()=>selectSkill(skill.id));
+          node.setAttribute('aria-label', `${skill.label} — ${skill.lvl}`);
+          node.addEventListener('click', ()=> selectSkill(skill.id));
           node.addEventListener('keydown', (e)=>{ if(e.key==='Enter') selectSkill(skill.id); });
           galaxy.appendChild(node);
         });
@@ -262,103 +415,176 @@
       const s = SKILLS.find(x=>x.id===id);
       skillDetails.innerHTML = `<strong>${s.label}</strong> — ${s.desc}. Projects filtered below.`;
       filterGalleryBySkill(id);
+      // highlight nodes: subtle opacity
+      document.querySelectorAll('.node').forEach(n=>{ n.style.opacity = (n.dataset.skill===id? '1' : '0.45'); });
     }
 
-    /* gallery rendering */
+    /* ====================
+       Gallery / filters
+       ==================== */
     function renderGallery(list){
-      gallery.innerHTML='';
+      gallery.innerHTML = '';
       list.forEach(p=>{
-        const card = document.createElement('div'); card.className='card';
-        const thumb = document.createElement('div'); thumb.className='thumb'; thumb.textContent = p.tags.join(' • ');
-        const h = document.createElement('h4'); h.textContent = p.title;
-        const meta = document.createElement('div'); meta.className='meta'; meta.innerHTML = `<span>${p.blurb}</span><span>${p.tags[0]||''}</span>`;
-        const tagWrap = document.createElement('div'); tagWrap.className='tags'; p.tags.forEach(t=>{ const el=document.createElement('div'); el.className='tag'; el.textContent=t; tagWrap.appendChild(el); });
-        card.appendChild(thumb); card.appendChild(h); card.appendChild(meta); card.appendChild(tagWrap);
-        // keyboard focus
+        const card = document.createElement('article');
+        card.className='card';
         card.tabIndex = 0;
+        card.setAttribute('role','button');
+        card.setAttribute('aria-label', `${p.title}: ${p.blurb}`);
+        card.innerHTML = `<div class="thumb">${p.tags.join(' • ')}</div>
+                          <h4>${p.title}</h4>
+                          <div class="meta"><div style="max-width:68%">${p.blurb}</div><div style="color:var(--muted);font-weight:700">${p.tags[0]||''}</div></div>
+                          <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>`;
+        card.addEventListener('click', ()=> openModal(p));
+        card.addEventListener('keydown', (e)=>{ if(e.key==='Enter') openModal(p); });
         gallery.appendChild(card);
       });
     }
 
     function setupFilters(){
       const allTags = Array.from(new Set(PROJECTS.flatMap(p=>p.tags)));
-      filters.innerHTML='';
-      const allChip = document.createElement('button'); allChip.className='chip active'; allChip.textContent='All'; allChip.addEventListener('click', ()=>{document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); allChip.classList.add('active'); renderGallery(PROJECTS)});
-      filters.appendChild(allChip);
+      filtersEl.innerHTML = '';
+      const allChip = document.createElement('button'); allChip.className='chip active'; allChip.textContent='All';
+      allChip.addEventListener('click', ()=> { document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); allChip.classList.add('active'); renderGallery(PROJECTS); });
+      filtersEl.appendChild(allChip);
       allTags.forEach(t=>{
-        const btn = document.createElement('button'); btn.className='chip'; btn.textContent=t; btn.addEventListener('click', ()=>{document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); btn.classList.add('active'); filterGalleryByTag(t)});
-        filters.appendChild(btn);
+        const b = document.createElement('button'); b.className='chip'; b.textContent=t;
+        b.addEventListener('click', ()=> { document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); b.classList.add('active'); filterGalleryByTag(t); });
+        filtersEl.appendChild(b);
       });
     }
 
-    function filterGalleryByTag(tag){ renderGallery(PROJECTS.filter(p=>p.tags.includes(tag))) }
-    function filterGalleryBySkill(skillId){ renderGallery(PROJECTS.filter(p=>p.skills.includes(skillId))) }
+    function filterGalleryByTag(tag){ renderGallery(PROJECTS.filter(p=>p.tags.includes(tag))); }
+    function filterGalleryBySkill(skillId){ renderGallery(PROJECTS.filter(p=>p.skills.includes(skillId))); }
 
-    /* galaxy interactivity: pan */
-    let isDown=false, startX, startY, originLeft=0, originTop=0;
-    galaxy.addEventListener('pointerdown', (e)=>{ isDown=true; startX=e.clientX; startY=e.clientY; galaxy.setPointerCapture(e.pointerId); });
-    galaxy.addEventListener('pointermove', (e)=>{ if(!isDown) return; const dx=e.clientX-startX; const dy=e.clientY-startY; galaxy.scrollLeft = -dx; galaxy.scrollTop = -dy; /* minor effect */ });
-    galaxy.addEventListener('pointerup', ()=>{ isDown=false; });
+    /* ====================
+       Modal: case study
+       ==================== */
+    function openModal(p){
+      modalTitle.textContent = p.title;
+      modalBlurb.textContent = p.blurb;
+      modalMedia.innerHTML = '';
+      modalLong.innerHTML = `<p style="color:var(--muted)">${p.long}</p>`;
+      // Media demo (if any)
+      if(p.media && p.media.length){
+        p.media.forEach(m=>{
+          const el = document.createElement('div');
+          if(m.type==='img'){ el.innerHTML = `<img src="${m.src}" style="width:100%;border-radius:8px">`; }
+          else if(m.type==='video'){ el.innerHTML = `<video controls style="width:100%;border-radius:8px"><source src="${m.src}"></video>`; }
+          modalMedia.appendChild(el);
+        });
+      } else {
+        modalMedia.innerHTML = `<div style="background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);border-radius:8px;padding:18px;color:var(--muted)">No media attached. Replace <code>project.media</code> with images/videos in the JS data.</div>`;
+      }
+      modalBackdrop.style.display = 'flex';
+      modalBackdrop.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', (e)=>{ if(e.target === modalBackdrop) closeModal(); });
+    function closeModal(){ modalBackdrop.style.display='none'; modalBackdrop.setAttribute('aria-hidden','true'); document.body.style.overflow='auto'; }
 
-    document.getElementById('shuffle').addEventListener('click', ()=>{ placeNodes(); });
-    document.getElementById('reset').addEventListener('click', ()=>{ placeNodes(); skillDetails.textContent='Click a node to see details.'; renderGallery(PROJECTS); document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); document.querySelector('.chip')?.classList.add('active'); });
+    /* ====================
+       Contact form (demo)
+       ==================== */
+    document.getElementById('contactForm').addEventListener('submit', (e)=>{
+      e.preventDefault(); sendMessage();
+    });
+    document.getElementById('sendBtn').addEventListener('click', (e)=>{ e.preventDefault(); sendMessage(); });
 
-    document.getElementById('sendBtn').addEventListener('click', ()=>{
-      // minimal client-side capture + friendly message. Replace with real endpoint or Google Form webhook.
-      const name = document.getElementById('name').value || 'Anonymous';
-      const email = document.getElementById('email').value || 'no-email';
-      const role = document.getElementById('role').value || '';
-      const msg = document.getElementById('message').value || '';
-      document.getElementById('contactResult').textContent = `Thanks ${name.split(' ')[0]} — message queued (demo). Email: ${email}`;
-      // you should POST this to your server or a Google Apps Script endpoint.
+    function sendMessage(){
+      const name = document.getElementById('c_name').value.trim();
+      const email = document.getElementById('c_email').value.trim();
+      const role = document.getElementById('c_role').value.trim();
+      const msg = document.getElementById('c_msg').value.trim();
+      if(!name || !email || !msg){ showTempMessage('Please fill name, email, and message'); return; }
+      // Demo: show toast. Replace with fetch POST to your server or Google Apps Script webhook.
+      showTempMessage(`Thanks ${name.split(' ')[0]} — message queued (demo)`, true);
+      document.getElementById('contactForm').reset();
+    }
+
+    function showTempMessage(txt, good=false){
+      toast.textContent = txt;
+      toast.style.display = 'block';
+      if(good) toast.style.background = `linear-gradient(90deg,var(--accent-2),var(--accent-3))`;
+      setTimeout(()=>{ toast.style.display='none'; }, 3000);
+    }
+
+    document.getElementById('clearBtn').addEventListener('click', ()=>{ document.getElementById('contactForm').reset(); document.getElementById('contactResult').textContent=''; });
+
+    /* ====================
+       Theme controls
+       ==================== */
+    function setTheme(t){
+      const root = document.documentElement;
+      root.style.setProperty('--accent-1', t.accent1);
+      root.style.setProperty('--accent-2', t.accent2);
+      root.style.setProperty('--accent-3', t.accent3);
+      root.style.setProperty('--gradient-stop-a', t.a);
+      root.style.setProperty('--gradient-stop-b', t.b);
+    }
+    function randomTheme(){
+      const keys = Object.keys(THEMES);
+      const k = keys[Math.floor(Math.random()*keys.length)];
+      return THEMES[k];
+    }
+
+    // build preset buttons
+    Object.keys(THEMES).forEach(k=>{
+      const b = document.createElement('button');
+      b.className = 'btn';
+      b.textContent = k;
+      b.addEventListener('click', ()=> setTheme(THEMES[k]));
+      themePresets.appendChild(b);
+    });
+    document.getElementById('rndTheme').addEventListener('click', ()=> setTheme(randomTheme()));
+    document.getElementById('resetTheme').addEventListener('click', ()=> setTheme(THEMES['Aurora']));
+
+    /* ====== shuffle / reset ====== */
+    document.getElementById('shuffle').addEventListener('click', ()=> { placeNodes(); });
+    document.getElementById('reset').addEventListener('click', ()=> { placeNodes(); skillDetails.textContent='Click a node to see details.'; renderGallery(PROJECTS); document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active')); document.querySelector('.chip')?.classList.add('active'); document.querySelectorAll('.node').forEach(n=>n.style.opacity='1'); });
+
+    /* resume / hire buttons */
+    document.getElementById('resumeBtn').addEventListener('click', ()=> { window.open('Me Resume.pdf','_blank'); });
+    document.getElementById('hireBtn').addEventListener('click', ()=> { document.getElementById('c_name').focus(); window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}); });
+
+    /* ====================
+       Init & animation loop
+       ==================== */
+    function init(){
+      // size canvas
+      resizeCanvas();
+      initParticles(70);
+      placeNodes();
+      setupFilters();
+      renderGallery(PROJECTS);
+      setTheme(THEMES['Aurora']);
+      animate();
+    }
+    window.addEventListener('resize', ()=>{ resizeCanvas(); initParticles(particles.length); placeNodes(); });
+    window.addEventListener('load', init);
+
+    function animate(){
+      drawParticles();
+      requestAnimationFrame(animate);
+    }
+
+    /* ====================
+       Accessibility niceties
+       ==================== */
+    // allow keyboard escape to close modal
+    window.addEventListener('keydown', (e)=>{
+      if(e.key==='Escape'){ closeModal(); }
     });
 
-    document.getElementById('clearBtn').addEventListener('click', ()=>{ document.getElementById('contactForm').reset(); document.getElementById('contactResult').textContent = '' });
-
-    // Resume and hire actions
-    document.getElementById('downloadPDF').addEventListener('click', ()=>{ window.open('Me Resume.pdf','_blank'); });
-    document.getElementById('hireBtn').addEventListener('click', ()=>{ document.getElementById('name').focus(); window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}) });
-
-    /* Stars generator */
-    function makeStars(){ const s = document.getElementById('stars'); s.innerHTML=''; for(let i=0;i<40;i++){ const star=document.createElement('div'); star.className='star'; star.style.left=(Math.random()*100)+'%'; star.style.top=(Math.random()*100)+'%'; star.style.opacity=(Math.random()*0.7).toFixed(2); star.style.transform=`scale(${Math.random()*1.8})`; s.appendChild(star);} }
-
-    /* init */
-    function init(){ makeStars(); placeNodes(); setupFilters(); renderGallery(PROJECTS); }
-    window.addEventListener('load', init);
-    window.addEventListener('resize', ()=>{ placeNodes(); });
-
+    /* ====================
+       Implementation notes (brief)
+       ====================
+       - Replace PROJECTS[].thumb/media with real image/video links.
+       - Wire contact form: POST to your endpoint inside sendMessage() (fetch API).
+       - Host: GitHub Pages / Netlify / Vercel.
+       - Performance: keep media optimized (WebP/MP4 H264). Thumbnails ~ <150KB.
+       - For more advanced animations, swap the particleCanvas for WebGL particles (optional).
+       ==================== */
   </script>
-
-  <!-- Implementation Notes (visible to devs) -->
-  <!--
-    Implementation notes:
-    - This is a single-file static prototype. Drop it on any static host (GitHub Pages, Netlify, Vercel).
-    - Replace Me Resume.pdf path with your hosted resume or blob link if not deploying from same folder.
-    - To wire the contact form: add a POST to your serverless function or Google Apps Script URL inside sendBtn handler.
-
-    Customization checklist:
-    1. Edit SKILLS and PROJECTS arrays in the <script> to add real links, thumbnails, repo links and case studies.
-    2. For thumbnails, set 'thumb' property to an image URL and update the .thumb element creation to use <img>.
-    3. Accessibility: add aria-labels to nodes and cards. Ensure color contrast across palette.
-    4. Add analytics: push contact form events to GA4 or Segment.
-    5. To add keyboard shortcuts: bind keys for filter toggles and core focus.
-
-    Color & Typography System:
-    - Primary: var(--aurora-indigo) #2D1B4E (brand)
-    - Accent: var(--neon-coral) #FF4D6D (call-to-action)
-    - Background: #0f0b14
-    - Typo: Montserrat (weights 300/400/600/800) — headings: 600–800; body: 300–400
-
-    Media suggestions:
-    - Use 3 hero shots: 1 portrait (professional), 1 in-action (coding/whiteboard), 1 lifestyle (casual). Keep RAW aspect ratio 3:2.
-    - For projects, include: short GIF (4–6s), PNG thumbnail, short 30–60s video walkthrough hosted on YouTube/Vimeo.
-    - Keep images optimized: WebP or compressed JPEGs under 200KB where possible.
-
-    Extensibility ideas:
-    - Add a modal case-study viewer which loads markdown or JSON for each project.
-    - Add GitHub API integration to auto-sync latest repos and star counts.
-    - Export: create a printable one-page resume from the same data structures.
-  -->
-
 </body>
 </html>
