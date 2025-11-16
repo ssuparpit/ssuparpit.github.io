@@ -78,7 +78,11 @@
   <div class="wrap">
     <header>
       <div class="brand">
-        <div class="logo">AA</div>
+        <div class="logo" style="padding:0;overflow:hidden">
+  <img src="me image.jpg"
+       alt="Arpit Agrawal"
+       style="width:100%;height:100%;object-fit:cover;border-radius:12px;display:block"/>
+</div>
         <div class="title">
           <h2>Arpit Agrawal</h2>
           <p>Data Analyst · Data Engineer · Visual storyteller</p>
@@ -210,11 +214,52 @@ const SKILLS = [
 ];
 
 /* sample projects seeded from resume (edit further) */
-const PROJECTS = [
-  {id:'promo', title:'Smart Promotion Profitability Tracker', tags:['ETL','A/B','Power BI'], blurb:'Promo uplift modelling & profitability command center', long:'Built ETL with Python; uplift modeling, A/B testing and a Power BI command center tracking ROI.'},
-  {id:'retail', title:'Retail & Logistics Intelligence Hub', tags:['Geo','Forecasting','Tableau'], blurb:'Route optimization & forecasting, Snowflake analytics', long:'Cloud warehouse + route optimization reduced delivery times and improved inventory accuracy.'},
-  {id:'supply', title:'Supply Chain Disruption Prediction', tags:['Spark','Azure','Anomaly'], blurb:'Realtime anomaly detection across 8M+ events', long:'Stream processing + TensorFlow models for anomaly detection; alerts and dashboards in Power BI.'},
-  {id:'print', title:'Print Production Analytics', tags:['Power BI','Ops','Python'], blurb:'Telemetry ingestion & defect analytics', long:'Ingested printer logs, built defect classification and interactive dashboards for ops.'}
+  const PROJECTS = [
+  {
+    id: 'promo',
+    title: 'Smart Promotion Profitability Tracker',
+    tags: ['ETL','A/B','Power BI'],
+    blurb: 'Promo uplift modelling & profitability command center',
+    long: 'Built ETL pipelines using Python; uplift modeling, A/B testing and a Power BI command center tracking ROI.',
+    thumb: 'SmartPromotionProfitabilityTracker.jpg',
+    media: [
+      { type: 'img', src: 'SmartPromotionProfitabilityTracker.jpg', caption: 'Promotion dashboard overview' }
+    ]
+  },
+  {
+    id: 'retail',
+    title: 'Retail & Logistics Intelligence Hub',
+    tags: ['Geo','Forecasting','Tableau'],
+    blurb: 'Route optimization & forecasting, Snowflake analytics',
+    long: 'Cloud warehouse + route optimization reduced delivery times and improved inventory accuracy.',
+    thumb: 'Retail&LogisticsIntelligenceHub.jpg',
+    media: [
+      { type: 'img', src: 'Retail&LogisticsIntelligenceHub.jpg', caption: 'Logistics dashboard' },
+      { type: 'video', src: 'canva-R7Y5xsjlsvA.mp4', caption: 'Walkthrough demo (mp4)' }
+    ]
+  },
+  {
+    id: 'supply',
+    title: 'Supply Chain Disruption Prediction',
+    tags: ['Spark','Azure','Anomaly'],
+    blurb: 'Realtime anomaly detection across 8M+ events',
+    long: 'Stream processing + TensorFlow models for anomaly detection; alerts and dashboards in Power BI.',
+    thumb: 'SupplyChainDisruptionPrediction.jpg',
+    media: [
+      { type: 'img', src: 'SupplyChainDisruptionPrediction.jpg', caption: 'Anomaly dashboard' }
+    ]
+  },
+  {
+    id: 'print',
+    title: 'Print Production Analytics',
+    tags: ['Power BI','Ops','Python'],
+    blurb: 'Telemetry ingestion & defect analytics',
+    long: 'Ingested printer telemetry logs, built defect classification and interactive dashboards for production teams.',
+    thumb: 'PrintProductionAnalytics.jpg',
+    media: [
+      { type: 'img', src: 'PrintProductionAnalytics.jpg', caption: 'Production dashboard view' }
+    ]
+  }
 ];
 
 /* ===========
@@ -377,11 +422,17 @@ function renderGallery(list){
   list.forEach(p=>{
     const card = document.createElement('div');
     card.className = 'card';
-    card.tabIndex = 0;
-    card.innerHTML = `<div class="thumb">${p.tags.join(' • ')}</div>
-                      <h4>${p.title}</h4>
-                      <div class="meta"><div style="max-width:68%">${p.blurb}</div><div style="color:var(--muted)">${p.tags[0]||''}</div></div>
-                      <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>`;
+      card.tabIndex = 0;
+
+  // show image if project provides a thumb, otherwise fall back to tag text
+  const thumbHtml = p.thumb
+    ? `<div class="thumb"><img src="${p.thumb}" alt="${p.title} thumbnail" style="width:100%;height:100%;object-fit:cover;border-radius:8px"/></div>`
+    : `<div class="thumb">${p.tags.join(' • ')}</div>`;
+
+  card.innerHTML = thumbHtml +
+    `<h4>${p.title}</h4>
+     <div class="meta"><div style="max-width:68%">${p.blurb}</div><div style="color:var(--muted)">${p.tags[0]||''}</div></div>
+     <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>`;
     card.addEventListener('click', ()=> openCaseStudy(p));
     card.addEventListener('keydown',(e)=>{ if(e.key==='Enter') openCaseStudy(p); });
     galleryEl.appendChild(card);
@@ -409,7 +460,47 @@ function filterGalleryBySkill(skillId){
 function openCaseStudy(p){
   modalTitle.textContent = p.title;
   modalBlurb.textContent = p.blurb;
+
   modalBody.innerHTML = `<p style="color:var(--muted)">${p.long}</p>`;
+
+  if(Array.isArray(p.media) && p.media.length){
+    const mediaContainer = document.createElement('div');
+    mediaContainer.style.display = 'grid';
+    mediaContainer.style.gridTemplateColumns = '1fr 1fr';
+    mediaContainer.style.gap = '12px';
+
+    p.media.forEach(m=>{
+      const el = document.createElement('div');
+
+      if(m.type === 'img'){
+        el.innerHTML = `
+          <img src="${m.src}" 
+               style="width:100%;border-radius:8px;display:block" 
+               alt="${m.caption || p.title}">
+        `;
+      } else if(m.type === 'video'){
+        el.innerHTML = `
+          <video controls style="width:100%;border-radius:8px">
+            <source src="${m.src}" type="video/mp4">
+          </video>
+        `;
+      }
+
+      if(m.caption){
+        const cap = document.createElement('div');
+        cap.textContent = m.caption;
+        cap.style.fontSize = '12px';
+        cap.style.color = 'var(--muted)';
+        cap.style.marginTop = '6px';
+        el.appendChild(cap);
+      }
+
+      mediaContainer.appendChild(el);
+    });
+
+    modalBody.appendChild(mediaContainer);
+  }
+
   modal.style.display = 'flex';
   modal.setAttribute('aria-hidden','false');
   document.body.style.overflow = 'hidden';
