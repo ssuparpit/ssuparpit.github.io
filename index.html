@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Arpit Agrawal — Portfolio</title>
+<title>Arpit Agrawal — Data Analyst at Microsoft</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -16,11 +16,15 @@
   --accent:#2564CF;        /* Microsoft blue */
   --accent-soft:#E8F2FF;
 
+  --accent-alt:#7C3AED;    /* your secondary accent */
+  --accent-alt-soft:#F4E9FF;
+
   --border:#E1DFDD;
   --border-strong:#C8C6C4;
   --glass:#E1DFDD;
 
   --radius:8px;
+  --radius-lg:16px;
   --maxw:1120px;
   --soft-shadow:0 2px 8px rgba(0,0,0,0.06);
 }
@@ -52,7 +56,7 @@ body{
 
 a{color:inherit;text-decoration:none}
 
-/* ===== Dark theme overrides (body[data-theme="dark"]) ===== */
+/* ===== Dark theme ===== */
 body[data-theme="dark"]{
   --bg:#020617;
   --bg-soft:#020617;
@@ -63,6 +67,9 @@ body[data-theme="dark"]{
   --accent:#60A5FA;
   --accent-soft:#1D4ED8;
 
+  --accent-alt:#A855F7;
+  --accent-alt-soft:#1E1B4B;
+
   --border:#1F2937;
   --border-strong:#4B5563;
   --glass:#1F2937;
@@ -71,7 +78,7 @@ body[data-theme="dark"]{
   background:radial-gradient(circle at 0 0,#020617 0,#020617 45%,#020617 100%);
 }
 
-/* ===== animated Microsoft background (CSS-only) ===== */
+/* ===== animated Microsoft background ===== */
 
 #ms-bg{
   position:fixed;
@@ -109,7 +116,7 @@ body[data-theme="dark"] #ms-bg-inner{
   filter:blur(0.7px);
 }
 
-/* ===== scroll reveal for sections ===== */
+/* ===== scroll reveal ===== */
 
 .page-section{
   opacity:0;
@@ -141,11 +148,11 @@ body[data-theme="dark"] #ms-bg-inner{
   padding:10px 0 12px;
   border-bottom:1px solid var(--border);
   backdrop-filter:blur(16px);
-  background:rgba(243,242,241,0.88);
+  background:rgba(243,242,241,0.9);
 }
 
 body[data-theme="dark"] .topbar{
-  background:rgba(15,23,42,0.9);
+  background:rgba(15,23,42,0.92);
 }
 
 /* ===== brand block ===== */
@@ -162,7 +169,7 @@ body[data-theme="dark"] .topbar{
   border-radius:16px;
   overflow:hidden;
   background:#D0D0D0;
-  box-shadow:0 10px 26px rgba(0,0,0,0.12);
+  box-shadow:0 10px 26px rgba(0,0,0,0.16);
 }
 
 .avatar img{
@@ -212,7 +219,7 @@ body[data-theme="dark"] .topbar{
   flex-wrap:wrap;
 }
 
-/* tiny CSS Microsoft mark */
+/* tiny MS mark */
 
 .ms-mark{
   width:16px;
@@ -277,12 +284,12 @@ body[data-theme="dark"] .btn:hover{
   background:transparent;
 }
 
-/* nav tabs (fake multi-page) */
+/* nav tabs */
 
 .page-tabs{
   margin-top:10px;
   display:flex;
-  gap:10px;
+  gap:8px;
   flex-wrap:wrap;
   justify-content:flex-end;
 }
@@ -302,7 +309,7 @@ body[data-theme="dark"] .btn:hover{
   color:var(--ink);
 }
 
-/* generic panels */
+/* panels */
 
 .section-inner{
   margin-top:26px;
@@ -310,7 +317,7 @@ body[data-theme="dark"] .btn:hover{
 
 .panel{
   background:var(--card);
-  border-radius:var(--radius);
+  border-radius:var(--radius-lg);
   border:1px solid var(--border);
   padding:18px 18px 16px;
   box-shadow:var(--soft-shadow);
@@ -328,7 +335,7 @@ body[data-theme="dark"] .btn:hover{
   margin-bottom:8px;
 }
 
-/* overview / hero */
+/* ===== Overview / hero ===== */
 
 .hero-layout{
   display:grid;
@@ -336,14 +343,53 @@ body[data-theme="dark"] .btn:hover{
   gap:16px;
 }
 
+/* metrics row */
+
+.metric-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+.metric-tile{
+  flex:1;
+  min-width:140px;
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:var(--bg-soft);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+body[data-theme="dark"] .metric-tile{
+  background:#020617;
+}
+
+.metric-main{
+  font-size:18px;
+  font-weight:700;
+}
+
+.metric-label{
+  font-size:11px;
+  color:var(--muted);
+}
+
+/* hero banner */
+
 .hero-banner{
-  border-radius:var(--radius);
+  border-radius:var(--radius-lg);
   background:linear-gradient(135deg,#EDF3FF,#FFFFFF);
   border:1px solid #CEDBFF;
-  padding:12px 14px;
+  padding:12px 14px 14px;
   display:grid;
   grid-template-columns:1fr;
   gap:10px;
+  position:relative;
+  overflow:hidden;
 }
 
 body[data-theme="dark"] .hero-banner{
@@ -351,11 +397,30 @@ body[data-theme="dark"] .hero-banner{
   border-color:#1D4ED8;
 }
 
+.hero-banner::before{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:radial-gradient(circle at 0 0,rgba(37,100,207,0.18),transparent 55%);
+  opacity:0.8;
+  pointer-events:none;
+}
+
+body[data-theme="dark"] .hero-banner::before{
+  background:radial-gradient(circle at 0 0,rgba(37,100,207,0.3),transparent 55%);
+}
+
+.hero-banner-inner{
+  position:relative;
+  z-index:1;
+}
+
 .hero-video{
   border-radius:10px;
   overflow:hidden;
   border:1px solid #CED8FF;
   box-shadow:0 10px 25px rgba(38,84,180,0.17);
+  transform-origin:center;
 }
 
 body[data-theme="dark"] .hero-video{
@@ -370,21 +435,21 @@ body[data-theme="dark"] .hero-video{
 }
 
 .hero-copy h4{
-  margin:0 0 6px 0;
+  margin:8px 0 4px 0;
   font-size:14px;
   font-weight:600;
 }
 
 .hero-tech{
-  margin-top:6px;
+  margin-top:4px;
   font-size:12px;
   color:var(--muted);
 }
 
-/* right mini panel */
+/* side panel */
 
 .hero-side{
-  border-radius:var(--radius);
+  border-radius:var(--radius-lg);
   border:1px solid var(--border);
   background:var(--bg-soft);
   padding:12px 14px;
@@ -407,7 +472,7 @@ body[data-theme="dark"] .hero-side{
   color:var(--muted);
 }
 
-/* skills section */
+/* ===== skills section ===== */
 
 .skills-grid{
   display:grid;
@@ -418,7 +483,7 @@ body[data-theme="dark"] .hero-side{
 .molecule-wrap{
   position:relative;
   height:420px;
-  border-radius:var(--radius);
+  border-radius:var(--radius-lg);
   overflow:hidden;
   border:1px solid var(--border);
   background:#FFFFFF;
@@ -474,6 +539,15 @@ body[data-theme="dark"] .node-pill{
   box-shadow:0 8px 20px rgba(0,0,0,0.12);
 }
 
+/* halo on selected skill */
+.node-pill.selected::after{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border-radius:999px;
+  border:2px solid rgba(37,100,207,0.3);
+}
+
 .skills-tip{
   position:absolute;
   left:12px;
@@ -490,7 +564,7 @@ body[data-theme="dark"] .node-pill{
 /* Microsoft experience card */
 
 .experience-panel{
-  border-radius:var(--radius);
+  border-radius:var(--radius-lg);
   border:1px solid #CEDBFF;
   background:#F3F7FF;
   padding:12px 14px;
@@ -565,7 +639,7 @@ body[data-theme="dark"] .ms-link a{
   color:var(--muted);
 }
 
-/* projects */
+/* ===== Work / projects ===== */
 
 .filters{
   display:flex;
@@ -596,7 +670,6 @@ body[data-theme="dark"] .chip{
   border-color:var(--accent);
 }
 
-/* dark mode chip override */
 body[data-theme="dark"] .chip.active{
   background:#1D4ED8;
   color:#E5E7EB;
@@ -611,7 +684,7 @@ body[data-theme="dark"] .chip.active{
 
 .proj-card{
   background:#FFFFFF;
-  border-radius:var(--radius);
+  border-radius:var(--radius-lg);
   border:1px solid var(--border);
   padding:10px 12px;
   display:grid;
@@ -638,7 +711,7 @@ body[data-theme="dark"] .proj-card:hover{
 
 .proj-thumb{
   height:72px;
-  border-radius:6px;
+  border-radius:10px;
   overflow:hidden;
   background:#F3F2F1;
 }
@@ -683,7 +756,135 @@ body[data-theme="dark"] .proj-thumb{
   color:var(--muted);
 }
 
-/* contact */
+/* ===== Systems & Playbooks ===== */
+
+.systems-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:12px;
+  margin-top:10px;
+}
+
+.system-card{
+  border-radius:var(--radius-lg);
+  border:1px solid var(--border);
+  padding:12px 14px;
+  background:var(--bg-soft);
+}
+
+body[data-theme="dark"] .system-card{
+  background:#020617;
+}
+
+.system-label{
+  font-size:11px;
+  font-weight:600;
+  color:var(--accent-alt);
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+}
+
+.system-card h4{
+  margin:4px 0 4px 0;
+  font-size:14px;
+}
+
+.system-body{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.system-meta{
+  margin-top:8px;
+  font-size:11px;
+}
+
+/* ===== About: Principles, Timeline, Certs ===== */
+
+.about-grid{
+  display:grid;
+  grid-template-columns: minmax(260px,1.4fr) minmax(260px,1.6fr);
+  gap:16px;
+}
+
+.principles-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:10px;
+  margin-top:8px;
+}
+
+.principle-card{
+  border-radius:var(--radius-lg);
+  border:1px solid var(--border);
+  padding:10px 12px;
+  background:var(--card);
+}
+
+.principle-title{
+  font-size:13px;
+  font-weight:600;
+}
+
+.principle-body{
+  margin-top:4px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* timeline / certs */
+
+.timeline{
+  margin-top:6px;
+  padding-left:0;
+  list-style:none;
+  border-left:2px solid var(--border);
+}
+
+.timeline li{
+  padding-left:10px;
+  margin:6px 0;
+  position:relative;
+  font-size:12px;
+}
+
+.timeline li::before{
+  content:"";
+  position:absolute;
+  left:-6px;
+  top:6px;
+  width:8px;
+  height:8px;
+  border-radius:999px;
+  background:var(--accent);
+}
+
+.cert-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:8px;
+  margin-top:6px;
+}
+
+.cert-card{
+  border-radius:999px;
+  border:1px solid var(--border);
+  padding:6px 10px;
+  font-size:11px;
+}
+
+/* mini log */
+
+.log-card{
+  margin-top:10px;
+  border-radius:var(--radius-lg);
+  border:1px solid var(--border);
+  padding:10px 12px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* ===== Contact ===== */
 
 .contact-grid{
   display:grid;
@@ -726,7 +927,7 @@ textarea:focus{
   margin-top:10px;
 }
 
-/* modal & footer */
+/* ===== Modal & footer ===== */
 
 .backdrop{
   position:fixed;
@@ -783,7 +984,7 @@ footer{
   text-align:center;
 }
 
-/* responsive tweaks */
+/* ===== responsive ===== */
 
 @media (max-width:900px){
   .hero-layout{
@@ -792,11 +993,15 @@ footer{
   .skills-grid{
     grid-template-columns:1fr;
   }
+  .about-grid{
+    grid-template-columns:1fr;
+  }
 }
 
 @media (max-width:720px){
   .contact-grid{grid-template-columns:1fr}
   .grid-projects{grid-template-columns:1fr}
+  .metric-row{flex-direction:column;}
 }
 </style>
 </head>
@@ -816,7 +1021,7 @@ footer{
     <header class="topbar">
       <div class="brand">
         <div class="avatar">
-          <!-- make sure this file exists in same folder -->
+          <!-- Make sure this file exists and name matches exactly -->
           <img src="me image.jpg" alt="Arpit Agrawal">
         </div>
         <div>
@@ -836,7 +1041,7 @@ footer{
       <div>
         <div class="top-actions">
           <button class="btn ghost" id="themeToggle" type="button">☾ Dark</button>
-          <!-- also make sure this file exists -->
+          <!-- Make sure Me Resume.pdf sits next to this HTML -->
           <a id="resumeLink" href="Me Resume.pdf" class="btn" target="_blank" rel="noopener">Resume</a>
           <label class="btn ghost">
             <input id="resumeUploader" type="file" accept=".pdf,.doc,.docx" hidden />
@@ -847,42 +1052,70 @@ footer{
         <nav class="page-tabs" aria-label="Sections">
           <a href="#overview" class="page-tab active">Overview</a>
           <a href="#skills" class="page-tab">Skills</a>
-          <a href="#projects" class="page-tab">Projects</a>
+          <a href="#work" class="page-tab">Work</a>
+          <a href="#systems" class="page-tab">Systems</a>
+          <a href="#about" class="page-tab">About</a>
           <a href="#contact" class="page-tab">Contact</a>
         </nav>
       </div>
     </header>
 
-    <!-- OVERVIEW SECTION -->
+    <!-- OVERVIEW -->
     <section id="overview" class="page-section section-inner visible">
       <div class="panel">
-        <div class="section-title">Featured Walkthrough</div>
+        <div class="section-title">Overview · Retail &amp; Ops Analytics</div>
+        <div class="metric-row">
+          <div class="metric-tile">
+            <div>
+              <div class="metric-main" data-target="6" data-suffix="+">0</div>
+              <div class="metric-label">End-to-end analytics projects</div>
+            </div>
+            <span style="font-size:11px;color:var(--muted);">SQL · Python · BI</span>
+          </div>
+          <div class="metric-tile">
+            <div>
+              <div class="metric-main" data-target="3" data-suffix="x">0</div>
+              <div class="metric-label">Reporting efficiency uplift</div>
+            </div>
+            <span style="font-size:11px;color:var(--muted);">Automation focus</span>
+          </div>
+          <div class="metric-tile">
+            <div>
+              <div class="metric-main" data-target="4" data-suffix="+">0</div>
+              <div class="metric-label">Domains: retail, ops, supply, print</div>
+            </div>
+            <span style="font-size:11px;color:var(--muted);">Cross-industry</span>
+          </div>
+        </div>
+
         <p style="margin:0 0 10px 0;color:var(--muted)">Short demo of the Retail &amp; Logistics Intelligence Hub.</p>
 
         <div class="hero-layout">
           <div class="hero-banner">
-            <div class="hero-video">
-              <video id="featuredVideo" controls playsinline>
-                <source src="canva-R7YS5xjlsvA.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            </div>
-            <div class="hero-copy">
-              <h4>Retail &amp; Logistics — walkthrough</h4>
-              <p style="margin:0;color:var(--muted);font-size:13px">
-                End-to-end analytics hub for routing optimisation, forecasting, and operations insights.
-              </p>
-              <p class="hero-tech">
-                Built using: SQL · Power BI · Azure · Python<br>
-                Inspired by internal Microsoft reporting patterns (demo only).
-              </p>
-              <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
-                <button class="btn" type="button" onclick="openCaseStudy(PROJECTS.find(p=>p.id==='retail'))">
-                  Open case study
-                </button>
-                <button class="btn" type="button" onclick="document.getElementById('featuredVideo').play()">
-                  Play
-                </button>
+            <div class="hero-banner-inner">
+              <div class="hero-video" id="heroVideoShell">
+                <video id="featuredVideo" controls playsinline>
+                  <source src="canva-R7YS5xjlsvA.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="hero-copy" id="heroCopy">
+                <h4>Retail &amp; Logistics — walkthrough</h4>
+                <p style="margin:0;color:var(--muted);font-size:13px">
+                  End-to-end analytics hub for routing optimisation, forecasting, and operations insights.
+                </p>
+                <p class="hero-tech">
+                  Built using: SQL · Power BI · Azure · Python<br>
+                  Inspired by internal Microsoft reporting patterns (demo only).
+                </p>
+                <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+                  <button class="btn" type="button" onclick="openCaseStudy(PROJECTS.find(p=>p.id==='retail'))">
+                    Open case study
+                  </button>
+                  <button class="btn" type="button" onclick="document.getElementById('featuredVideo').play()">
+                    Play
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -899,7 +1132,7 @@ footer{
       </div>
     </section>
 
-    <!-- SKILLS SECTION -->
+    <!-- SKILLS -->
     <section id="skills" class="page-section section-inner">
       <div class="panel">
         <div class="section-title">Skills &amp; Experience</div>
@@ -918,7 +1151,7 @@ footer{
               </div>
             </div>
             <div class="skill-detail-text">
-              <strong>Selected Skill:</strong>
+              <strong>Selected skill:</strong>
               <span id="skillDetails">Click a node to see details.</span>
             </div>
           </div>
@@ -952,16 +1185,127 @@ footer{
       </div>
     </section>
 
-    <!-- PROJECTS SECTION -->
-    <section id="projects" class="page-section section-inner">
+    <!-- WORK / PROJECTS -->
+    <section id="work" class="page-section section-inner">
       <div class="panel">
-        <div class="section-title">Project Gallery</div>
+        <div class="section-title">Work · Project Gallery</div>
+        <p style="margin:0 0 8px 0;color:var(--muted)">Filter by tech or domain to explore case studies.</p>
         <div class="filters" id="filters"></div>
         <div class="grid-projects" id="gallery"></div>
       </div>
     </section>
 
-    <!-- CONTACT SECTION -->
+    <!-- SYSTEMS & PLAYBOOKS -->
+    <section id="systems" class="page-section section-inner">
+      <div class="panel">
+        <div class="section-title">Systems &amp; Playbooks</div>
+        <p style="margin:0 0 8px 0;color:var(--muted)">Reusable analytics systems I keep reaching for.</p>
+        <div class="systems-grid">
+          <div class="system-card">
+            <div class="system-label">Playbook</div>
+            <h4>Promotion Profitability Engine</h4>
+            <div class="system-body">
+              End-to-end framework that combines promo flags, uplift modelling, and margin tracking to answer
+              “Did this promotion actually pay off?” in one place.
+            </div>
+            <div class="system-meta">
+              Inputs: POS + campaign data · Outputs: ROI view, cannibalisation risk · Stack: Python, SQL, Power BI
+            </div>
+          </div>
+          <div class="system-card">
+            <div class="system-label">System</div>
+            <h4>Logistics Ops Healthboard</h4>
+            <div class="system-body">
+              Route performance, SLAs, and exception management in a single hub designed around ops stand-ups,
+              not just pretty charts.
+            </div>
+            <div class="system-meta">
+              Inputs: telemetry, order logs · Outputs: daily health score · Stack: Snowflake, SQL, Tableau
+            </div>
+          </div>
+          <div class="system-card">
+            <div class="system-label">Playbook</div>
+            <h4>Anomaly Radar for Supply Events</h4>
+            <div class="system-body">
+              Streaming anomaly detection pipeline with clear thresholds, alerting rules, and dashboards that
+              separate “noise” from “drop everything” events.
+            </div>
+            <div class="system-meta">
+              Inputs: event streams · Outputs: alert feed + triage board · Stack: Spark, Azure, Power BI
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT / PRINCIPLES / TIMELINE -->
+    <section id="about" class="page-section section-inner">
+      <div class="panel">
+        <div class="section-title">About · How I Work</div>
+        <div class="about-grid">
+          <!-- Principles -->
+          <div>
+            <h3 style="margin:0 0 4px 0;font-size:14px;">Working principles</h3>
+            <p style="margin:0 0 6px 0;color:var(--muted);font-size:12px;">
+              A few rules I use to keep analytics useful, not just “interesting”.
+            </p>
+            <div class="principles-grid">
+              <div class="principle-card">
+                <div class="principle-title">Make it measurable</div>
+                <div class="principle-body">
+                  Every dashboard must answer a decision question and have an owner. No orphan visuals.
+                </div>
+              </div>
+              <div class="principle-card">
+                <div class="principle-title">Design for the meeting</div>
+                <div class="principle-body">
+                  I design views for weekly stand-ups and monthly reviews, not vague “exploration”.
+                </div>
+              </div>
+              <div class="principle-card">
+                <div class="principle-title">Automate the boring</div>
+                <div class="principle-body">
+                  Manual Excel steps are red flags. If it repeats, it gets scripted or modelled.
+                </div>
+              </div>
+              <div class="principle-card">
+                <div class="principle-title">Stay explainable</div>
+                <div class="principle-body">
+                  Models are only as good as the story stakeholders can tell with them in 2 minutes.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline / Certs / Log -->
+          <div>
+            <h3 style="margin:0 0 4px 0;font-size:14px;">Timeline &amp; credentials</h3>
+            <ul class="timeline">
+              <li><strong>2025 — Present</strong> · Data Analyst (Vendor) at Microsoft via BlitzPath Innovation.</li>
+              <li><strong>2023 — 2024</strong> · Data Analyst at ESVADHYAYA &amp; consulting projects.</li>
+              <li><strong>Before</strong> · Analytics across education, manufacturing, and ops.</li>
+            </ul>
+
+            <div style="margin-top:8px;font-size:12px;font-weight:600;">Selected certifications</div>
+            <div class="cert-grid">
+              <div class="cert-card">Machine Learning with Python — freeCodeCamp</div>
+              <div class="cert-card">Google Analytics (GA4) — Google Skillshop</div>
+              <div class="cert-card">SQL (Intermediate) — HackerRank</div>
+              <div class="cert-card">Programming Foundations with Python — CodeSignal / HackerRank</div>
+            </div>
+
+            <div class="log-card">
+              <strong>Notes from the field</strong><br>
+              I’m currently exploring how to bring promotion analytics, supply chain anomaly detection,
+              and geospatial delivery insights into one “ops command center” — with real-time-ish data and
+              less slideware.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
     <section id="contact" class="page-section section-inner">
       <div class="panel contact-panel">
         <div class="section-title">Contact</div>
@@ -980,7 +1324,7 @@ footer{
           <div id="contactResult" style="margin-top:10px;color:var(--muted)"></div>
         </form>
       </div>
-      <footer>Built with care — interactive portfolio.</footer>
+      <footer>Built with care — Arpit’s interactive analytics portfolio.</footer>
     </section>
   </div>
 
@@ -1020,8 +1364,8 @@ const PROJECTS = [
     id:'promo',
     title:'Smart Promotion Profitability Tracker',
     tags:['ETL','SQL','Power BI'],
-    blurb:'Promo uplift modelling & profitability command center',
-    long:'Built ETL pipelines in Python, A/B tests and uplift modeling, and created a Power BI command center to track promotion ROI.',
+    blurb:'Promo uplift modelling & profitability command center.',
+    long:'Built ETL pipelines in Python, A/B tests and uplift modeling, and created a Power BI command center to track promotion ROI and margin lift across campaigns.',
     thumb:'SmartPromotionProfitabilityTracker.jpg',
     media:[ {type:'img', src:'SmartPromotionProfitabilityTracker.jpg', caption:'Command center snapshot'} ]
   },
@@ -1029,8 +1373,8 @@ const PROJECTS = [
     id:'retail',
     title:'Retail & Logistics Intelligence Hub',
     tags:['Geo','SQL','Tableau'],
-    blurb:'Route optimisation & forecasting, Snowflake analytics',
-    long:'End-to-end analytics for logistics—forecasting, route optimisation and cloud analytics in Snowflake and Tableau.',
+    blurb:'Route optimisation & forecasting, Snowflake analytics.',
+    long:'End-to-end analytics for logistics—forecasting, route optimisation, and cloud analytics in Snowflake and Tableau. Focused on weekly ops reviews and route decisions, not just static reports.',
     thumb:'Retail&LogisticsIntelligenceHub.jpg',
     media:[ {type:'img', src:'Retail&LogisticsIntelligenceHub.jpg', caption:'Logistics dashboard'}, {type:'video', src:'canva-R7Y5xsjlsvA.mp4', caption:'Walkthrough (mp4)'} ]
   },
@@ -1038,8 +1382,8 @@ const PROJECTS = [
     id:'supply',
     title:'Supply Chain Disruption Prediction',
     tags:['Spark','Azure','Anomaly','SQL'],
-    blurb:'Realtime anomaly detection across 8M+ events',
-    long:'Spark streaming + TensorFlow for anomaly detection, alerting layer, and Power BI dashboards for ops.',
+    blurb:'Realtime anomaly detection across 8M+ events.',
+    long:'Spark streaming + TensorFlow for anomaly detection, with an alerting layer and Power BI dashboards for ops. Designed to show “what broke, where, and who needs to jump in” in under 30 seconds.',
     thumb:'SupplyChainDisruptionPrediction.jpg',
     media:[ {type:'img', src:'SupplyChainDisruptionPrediction.jpg', caption:'Anomaly overview'} ]
   },
@@ -1047,8 +1391,8 @@ const PROJECTS = [
     id:'print',
     title:'Print Production Analytics',
     tags:['Power BI','Ops','Python'],
-    blurb:'Telemetry ingestion & defect analytics',
-    long:'Telemetry ingestion, defect classification and interactive dashboards that helped reduce defects in production.',
+    blurb:'Telemetry ingestion & defect analytics.',
+    long:'Telemetry ingestion, defect classification, and interactive dashboards that helped reduce defects in production lines and highlight bottlenecks for plant leadership.',
     thumb:'PrintProductionAnalytics.jpg',
     media:[ {type:'img', src:'PrintProductionAnalytics.jpg', caption:'Production KPIs'} ]
   }
@@ -1067,6 +1411,11 @@ const sections    = document.querySelectorAll('.page-section');
 const tabs        = document.querySelectorAll('.page-tab');
 const msBgInner   = document.getElementById('ms-bg-inner');
 const themeToggle = document.getElementById('themeToggle');
+const heroVideoShell = document.getElementById('heroVideoShell');
+const heroCopy    = document.getElementById('heroCopy');
+const metricMainEls = document.querySelectorAll('.metric-main');
+
+let metricsAnimated = false;
 
 /* ===== Filters + gallery ===== */
 function setupFilters(){
@@ -1188,7 +1537,7 @@ document.getElementById('resumeUploader').addEventListener('change',(e)=>{
   const f = e.target.files[0]; if(!f) return;
   const url = URL.createObjectURL(f);
   resumeLink.href = url;
-  alert('Local resume link updated in browser (demo). To make it permanent, rename your file to "Me Resume.pdf" and keep it with this HTML.');
+  alert('Local resume link updated in browser (demo). To make it permanent, place your final PDF as "Me Resume.pdf" next to this HTML.');
 });
 
 /* ===== Molecule engine ===== */
@@ -1322,6 +1671,8 @@ document.getElementById('resetNodes').addEventListener('click', ()=>{
   renderGallery(PROJECTS);
   document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
   document.querySelector('.chip')?.classList.add('active');
+  document.querySelectorAll('.node-pill').forEach(p=>{ p.style.opacity='1'; p.classList.remove('selected'); });
+  skillDetailsEl.textContent = 'Click a node to see details.';
 });
 
 function selectSkill(id){
@@ -1334,11 +1685,13 @@ function selectSkill(id){
   });
   renderGallery(filtered.length ? filtered : PROJECTS);
   document.querySelectorAll('.node-pill').forEach(p=>{
-    p.style.opacity = (p.dataset.skill === id ? '1' : '0.35');
+    const match = p.dataset.skill === id;
+    p.style.opacity = match ? '1' : '0.35';
+    p.classList.toggle('selected', match);
   });
 }
 
-/* ===== page tabs + scroll reveal ===== */
+/* ===== page tabs + scroll reveal / metrics ===== */
 const sectionObserver = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
@@ -1347,21 +1700,53 @@ const sectionObserver = new IntersectionObserver((entries)=>{
       tabs.forEach(t=>{
         t.classList.toggle('active', t.getAttribute('href') === '#' + id);
       });
+
+      if(id === 'overview' && !metricsAnimated){
+        animateMetrics();
+        metricsAnimated = true;
+      }
     }
   });
 },{threshold:0.25});
 
 sections.forEach(sec=>sectionObserver.observe(sec));
 
-/* ===== parallax Microsoft logo on scroll ===== */
+/* metric counters */
+function animateMetrics(){
+  metricMainEls.forEach(el=>{
+    const target = Number(el.dataset.target || '0');
+    const suffix = el.dataset.suffix || '';
+    let current = 0;
+    const steps = 30;
+    const stepVal = target / steps;
+    let count = 0;
+    const interval = setInterval(()=>{
+      count++;
+      current += stepVal;
+      if(count >= steps){
+        current = target;
+        clearInterval(interval);
+      }
+      el.textContent = Math.round(current) + suffix;
+    }, 30);
+  });
+}
+
+/* ===== parallax MS logo + hero ===== */
 window.addEventListener('scroll', ()=>{
-  if(!msBgInner) return;
   const y = window.scrollY || 0;
-  const offset = y * -0.08;
-  const scale  = 1 + Math.min(y/2000, 0.08);
-  const opacity = 0.10 + Math.min(y/1500, 0.06);
-  msBgInner.style.transform = `translateY(${offset}px) scale(${scale})`;
-  msBgInner.style.opacity   = opacity.toString();
+  if(msBgInner){
+    const offset = y * -0.08;
+    const scale  = 1 + Math.min(y/2000, 0.08);
+    const opacity = 0.10 + Math.min(y/1500, 0.06);
+    msBgInner.style.transform = `translateY(${offset}px) scale(${scale})`;
+    msBgInner.style.opacity   = opacity.toString();
+  }
+  if(heroVideoShell && heroCopy){
+    const smallOffset = y * 0.02;
+    heroVideoShell.style.transform = `translateY(${smallOffset}px)`;
+    heroCopy.style.transform       = `translateY(${smallOffset * 0.6}px)`;
+  }
 });
 
 /* ===== theme toggle ===== */
@@ -1380,7 +1765,6 @@ if(themeToggle){
   });
 }
 
-/* on load, restore theme */
 const savedTheme = localStorage.getItem('aa-theme') || 'light';
 applyTheme(savedTheme);
 
