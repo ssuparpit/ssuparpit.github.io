@@ -1,1 +1,559 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Arpit Agrawal — Data Analyst</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F5F7;
+  --card:#FFFFFF;
+  --ink:#111827;
+  --muted:#6B7280;
 
+  --accent:#2564CF;     /* Microsoft-ish blue */
+  --accent-soft:#E5F0FF;
+
+  --border:#E5E7EB;
+  --border-strong:#D1D5DB;
+
+  --radius:14px;
+  --radius-pill:999px;
+}
+
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto;
+  font-size:14px;
+  color:var(--ink);
+  background:radial-gradient(circle at 0 0,#F9FBFF 0,#F5F5F7 45%,#F3F4F6 100%);
+}
+
+/* ---------- DARK MODE ---------- */
+body[data-theme="dark"]{
+  --bg:#020617;
+  --card:#020617;
+  --ink:#F9FAFB;
+  --muted:#9CA3AF;
+  --accent:#60A5FA;
+  --accent-soft:#062952;
+  --border:#1F2937;
+  --border-strong:#4B5563;
+  background:#020617;
+}
+
+/* ---------- LAYOUT ---------- */
+.page{
+  max-width:1120px;
+  margin:24px auto 40px;
+  padding:0 20px;
+}
+
+/* ---------- HEADER ---------- */
+.header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(245,245,247,0.9);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  margin:0 -20px 18px;
+  padding:10px 20px 12px;
+}
+
+body[data-theme="dark"] .header{
+  background:rgba(2,6,23,0.94);
+}
+
+.header-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.avatar{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  overflow:hidden;
+  background:#D1D5DB;
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.brand-text h1{
+  margin:0;
+  font-size:16px;
+  font-weight:600;
+}
+
+.brand-text p{
+  margin:2px 0 0;
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* nav */
+.nav{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.nav-link{
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  border:1px solid transparent;
+  cursor:pointer;
+  color:var(--muted);
+  background:transparent;
+}
+
+.nav-link.active{
+  color:var(--ink);
+  border-color:var(--border-strong);
+  background:#FFFFFF;
+}
+
+body[data-theme="dark"] .nav-link.active{
+  background:#020617;
+}
+
+/* resume + theme buttons */
+.btn{
+  padding:6px 12px;
+  border-radius:999px;
+  border:1px solid var(--border-strong);
+  background:#FFFFFF;
+  font-size:12px;
+  font-weight:500;
+  cursor:pointer;
+}
+
+body[data-theme="dark"] .btn{
+  background:#020617;
+  color:var(--ink);
+}
+
+.btn.primary{
+  background:var(--accent);
+  color:#FFFFFF;
+  border-color:var(--accent);
+}
+
+.btn.primary:hover{
+  filter:brightness(0.95);
+}
+
+.theme-toggle{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:5px 10px;
+  border-radius:999px;
+  border:1px solid var(--border-strong);
+  background:#FFFFFF;
+  font-size:12px;
+  cursor:pointer;
+}
+
+body[data-theme="dark"] .theme-toggle{
+  background:#020617;
+}
+
+/* ---------- HERO SECTION ---------- */
+
+.hero-wrapper{
+  background:var(--card);
+  border-radius:20px;
+  border:1px solid var(--border);
+  box-shadow:0 10px 30px rgba(15,23,42,0.06);
+  padding:18px 18px 14px;
+}
+
+/* tiny label */
+.hero-label{
+  font-size:12px;
+  font-weight:600;
+  margin-bottom:4px;
+}
+
+/* snapshot row */
+.snapshot-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:12px;
+  align-items:center;
+}
+
+.snapshot-pill{
+  flex:1;
+  min-width:220px;
+  padding:8px 11px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:#F9FAFB;
+  font-size:12px;
+}
+
+body[data-theme="dark"] .snapshot-pill{
+  background:#020617;
+}
+
+.snapshot-pill strong{
+  font-weight:600;
+}
+
+/* quick links */
+.hero-quick{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.hero-chip{
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:#FFFFFF;
+  font-size:11px;
+  cursor:pointer;
+}
+
+body[data-theme="dark"] .hero-chip{
+  background:#020617;
+}
+
+/* metric row */
+.metric-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.metric-card{
+  flex:1;
+  min-width:140px;
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:#F9FAFB;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+body[data-theme="dark"] .metric-card{
+  background:#020617;
+}
+
+.metric-value{
+  font-size:18px;
+  font-weight:700;
+}
+
+.metric-label{
+  font-size:11px;
+  color:var(--muted);
+}
+
+/* main layout */
+.hero-grid{
+  display:grid;
+  grid-template-columns:minmax(260px, 2.1fr) minmax(220px, 1.3fr);
+  gap:16px;
+}
+
+@media (max-width:900px){
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+.hero-video-card{
+  position:relative;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid #D1E2FF;
+  background:linear-gradient(135deg,#EDF3FF,#FFFFFF);
+  padding:10px;
+}
+
+body[data-theme="dark"] .hero-video-card{
+  background:linear-gradient(135deg,#020617,#020617);
+  border-color:#1D4ED8;
+}
+
+.hero-video-inner{
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 12px 28px rgba(37,100,207,0.22);
+}
+
+.hero-video-inner video{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+.hero-caption{
+  margin-top:8px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.hero-caption-title{
+  font-weight:600;
+  color:var(--ink);
+}
+
+.hero-caption-tech{
+  margin-top:3px;
+  font-size:11px;
+}
+
+/* buttons below video */
+.hero-actions{
+  margin-top:10px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+/* side panel */
+.hero-side{
+  border-radius:16px;
+  border:1px solid var(--border);
+  background:#F9FAFB;
+  padding:12px 14px;
+}
+
+body[data-theme="dark"] .hero-side{
+  background:#020617;
+}
+
+.hero-side h3{
+  margin:0 0 6px;
+  font-size:14px;
+}
+
+.hero-side ul{
+  margin:0;
+  padding-left:18px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* smooth section anchor highlight */
+.section{
+  padding-top:60px;
+}
+
+/* small helper text */
+.hero-sub{
+  margin:0 0 8px;
+  font-size:13px;
+  color:var(--muted);
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-row">
+      <div class="brand">
+        <div class="avatar">
+          <!-- use your actual image file here -->
+          <img src="me image.jpg" alt="Arpit Agrawal">
+        </div>
+        <div class="brand-text">
+          <h1>Arpit Agrawal</h1>
+          <p>Data Analyst · Data Engineer · Visual Storyteller</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav-link active" data-target="#overview">Overview</button>
+        <button class="nav-link" data-target="#cases">Deep Case Studies</button>
+        <button class="nav-link" data-target="#about">About</button>
+        <button class="nav-link" data-target="#contact">Contact</button>
+        <!-- resume link -->
+        <a class="btn primary" href="Me Resume.pdf" target="_blank" rel="noopener">Resume</a>
+        <!-- theme toggle -->
+        <button id="themeToggle" class="theme-toggle" type="button">
+          <span>☾</span><span>Dark mode</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO / OVERVIEW -->
+  <main id="overview" class="section">
+    <div class="hero-wrapper">
+      <div class="hero-label">Overview · Retail &amp; Ops Analytics</div>
+
+      <div class="snapshot-row">
+        <div class="snapshot-pill">
+          <strong>Snapshot:</strong>
+          I build analytics systems that cut reporting time, stabilise operations, and make promotions accountable.
+        </div>
+        <div class="hero-quick">
+          <button class="hero-chip">Promo ROI</button>
+          <button class="hero-chip">Logistics Hub</button>
+          <button class="hero-chip">Anomaly Radar</button>
+        </div>
+      </div>
+
+      <div class="metric-row">
+        <div class="metric-card">
+          <div>
+            <div class="metric-value" data-target="6">6+</div>
+            <div class="metric-label">End-to-end analytics projects</div>
+          </div>
+          <div class="metric-label">SQL · Python · BI</div>
+        </div>
+        <div class="metric-card">
+          <div>
+            <div class="metric-value" data-target="3">3x</div>
+            <div class="metric-label">Reporting efficiency uplift</div>
+          </div>
+          <div class="metric-label">Automation focus</div>
+        </div>
+        <div class="metric-card">
+          <div>
+            <div class="metric-value" data-target="4">4+</div>
+            <div class="metric-label">Domains: retail, ops, supply, print</div>
+          </div>
+          <div class="metric-label">Cross-industry</div>
+        </div>
+      </div>
+
+      <p class="hero-sub">Short demo of the Retail &amp; Logistics Intelligence Hub.</p>
+
+      <div class="hero-grid">
+        <!-- left: video + copy -->
+        <section aria-label="Retail & Logistics walkthrough">
+          <div class="hero-video-card">
+            <div class="hero-video-inner">
+              <video id="heroVideo" controls playsinline>
+                <source src="canva-R7YS5xjlsvA.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="hero-caption">
+              <div class="hero-caption-title">
+                Retail &amp; Logistics — walkthrough
+              </div>
+              <div>
+                End-to-end analytics hub for routing optimisation, forecasting, and operations insights.
+              </div>
+              <div class="hero-caption-tech">
+                Built using: SQL · Power BI · Azure · Python <br>
+                Inspired by internal Microsoft reporting patterns (demo only).
+              </div>
+            </div>
+            <div class="hero-actions">
+              <button class="btn" type="button">Open case study</button>
+              <button class="btn" type="button" onclick="document.getElementById('heroVideo').play()">Play</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- right: what I focus on -->
+        <aside class="hero-side">
+          <h3>What I focus on</h3>
+          <ul>
+            <li>Designing data products that feel like internal tools, not just dashboards.</li>
+            <li>Making promotion &amp; logistics decisions measurable and repeatable.</li>
+            <li>Bringing SQL, Python, Power BI, and Azure together in one narrative.</li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <!-- PLACEHOLDER SECTIONS (for nav anchors) -->
+  <section id="cases" class="section" style="padding:60px 0 10px;color:var(--muted);font-size:13px;">
+    Deep case studies go here…
+  </section>
+  <section id="about" class="section" style="padding:60px 0 10px;color:var(--muted);font-size:13px;">
+    About section goes here…
+  </section>
+  <section id="contact" class="section" style="padding:60px 0 10px;color:var(--muted);font-size:13px;">
+    Contact section goes here…
+  </section>
+</div>
+
+<script>
+// light/dark toggle
+const themeToggle = document.getElementById('themeToggle');
+function applyTheme(theme){
+  document.body.setAttribute('data-theme', theme);
+  localStorage.setItem('aa-theme', theme);
+  themeToggle.firstElementChild.textContent = theme === 'dark' ? '☀︎' : '☾';
+  themeToggle.lastElementChild.textContent  = theme === 'dark' ? 'Light mode' : 'Dark mode';
+}
+const savedTheme = localStorage.getItem('aa-theme') || 'light';
+applyTheme(savedTheme);
+
+themeToggle.addEventListener('click', ()=>{
+  const current = document.body.getAttribute('data-theme') || 'light';
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+});
+
+// nav scroll + active state
+const navLinks = document.querySelectorAll('.nav-link');
+navLinks.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const target = document.querySelector(btn.dataset.target);
+    if(target){
+      target.scrollIntoView({behavior:'smooth'});
+    }
+  });
+});
+
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      navLinks.forEach(l=>{
+        const hash = l.dataset.target;
+        l.classList.toggle('active', hash === '#'+entry.target.id);
+      });
+    }
+  });
+},{threshold:0.4});
+
+sections.forEach(sec=>observer.observe(sec));
+</script>
+</body>
+</html>
