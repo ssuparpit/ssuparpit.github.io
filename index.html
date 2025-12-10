@@ -309,6 +309,48 @@ body[data-theme="dark"] .btn:hover{
   color:var(--ink);
 }
 
+/* view mode switch */
+
+.view-switch{
+  margin-top:8px;
+  display:flex;
+  justify-content:flex-end;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.view-btn{
+  padding:4px 10px;
+  border-radius:999px;
+  border:1px solid transparent;
+  font-size:11px;
+  cursor:pointer;
+  color:var(--muted);
+  background:transparent;
+}
+
+.view-btn.active{
+  border-color:var(--accent);
+  background:var(--accent-soft);
+  color:var(--ink);
+}
+
+/* mode emphasis (subtle, not hiding everything) */
+
+body[data-mode="recruiter"] #skills,
+body[data-mode="recruiter"] #systems,
+body[data-mode="recruiter"] #about{
+  opacity:0.6;
+}
+
+body[data-mode="interactive"] #skills{
+  box-shadow:0 0 0 1px var(--accent-soft);
+}
+
+body[data-mode="deep"] .panel{
+  box-shadow:0 4px 18px rgba(0,0,0,0.08);
+}
+
 /* panels */
 
 .section-inner{
@@ -341,6 +383,23 @@ body[data-theme="dark"] .btn:hover{
   display:grid;
   grid-template-columns:minmax(280px, 2.1fr) 1.4fr;
   gap:16px;
+}
+
+/* executive strip */
+
+.exec-strip{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:10px;
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px dashed var(--border);
+  background:rgba(255,255,255,0.6);
+}
+
+body[data-theme="dark"] .exec-strip{
+  background:#020617;
 }
 
 /* metrics row */
@@ -487,10 +546,16 @@ body[data-theme="dark"] .hero-side{
   overflow:hidden;
   border:1px solid var(--border);
   background:#FFFFFF;
+  transform-origin:center;
+  transform-style:preserve-3d;
 }
 
 body[data-theme="dark"] .molecule-wrap{
   background:#020617;
+}
+
+body[data-mode="interactive"] .molecule-wrap{
+  transform:perspective(900px) rotateX(10deg) rotateY(-8deg);
 }
 
 canvas#moleculeCanvas{
@@ -640,6 +705,67 @@ body[data-theme="dark"] .ms-link a{
 }
 
 /* ===== Work / projects ===== */
+
+.work-controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:8px;
+  align-items:center;
+}
+
+.work-search{
+  flex:1;
+  min-width:180px;
+}
+
+.work-search input{
+  width:100%;
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:#FFFFFF;
+  font-size:12px;
+}
+
+body[data-theme="dark"] .work-search input{
+  background:#020617;
+  color:var(--ink);
+}
+
+.work-search input:focus{
+  outline:none;
+  border-color:var(--accent);
+  box-shadow:0 0 0 1px var(--accent-soft);
+}
+
+.persona-chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.persona-chip{
+  padding:4px 9px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:#FAFAFA;
+  font-size:11px;
+  cursor:pointer;
+  color:var(--muted);
+}
+
+body[data-theme="dark"] .persona-chip{
+  background:#020617;
+}
+
+.persona-chip.active{
+  border-color:var(--accent-alt);
+  background:var(--accent-alt-soft);
+  color:var(--ink);
+}
+
+/* filters */
 
 .filters{
   display:flex;
@@ -1005,7 +1131,7 @@ footer{
 }
 </style>
 </head>
-<body>
+<body data-mode="deep">
   <!-- Microsoft animated background -->
   <div id="ms-bg" aria-hidden="true">
     <div id="ms-bg-inner">
@@ -1057,6 +1183,11 @@ footer{
           <a href="#about" class="page-tab">About</a>
           <a href="#contact" class="page-tab">Contact</a>
         </nav>
+        <div class="view-switch">
+          <button class="view-btn" data-mode="recruiter">Recruiter view</button>
+          <button class="view-btn active" data-mode="deep">Deep case studies</button>
+          <button class="view-btn" data-mode="interactive">Interactive mode</button>
+        </div>
       </div>
     </header>
 
@@ -1064,6 +1195,18 @@ footer{
     <section id="overview" class="page-section section-inner visible">
       <div class="panel">
         <div class="section-title">Overview · Retail &amp; Ops Analytics</div>
+
+        <div class="exec-strip">
+          <div style="flex:1;min-width:180px;font-size:12px;">
+            <strong>Snapshot:</strong> I build analytics systems that cut reporting time, stabilise ops, and make promotions accountable.
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;font-size:11px;">
+            <button class="btn ghost" type="button" onclick="openCaseStudy(PROJECTS.find(p=>p.id==='promo'))">Promo ROI</button>
+            <button class="btn ghost" type="button" onclick="openCaseStudy(PROJECTS.find(p=>p.id==='retail'))">Logistics Hub</button>
+            <button class="btn ghost" type="button" onclick="openCaseStudy(PROJECTS.find(p=>p.id==='supply'))">Anomaly Radar</button>
+          </div>
+        </div>
+
         <div class="metric-row">
           <div class="metric-tile">
             <div>
@@ -1189,7 +1332,20 @@ footer{
     <section id="work" class="page-section section-inner">
       <div class="panel">
         <div class="section-title">Work · Project Gallery</div>
-        <p style="margin:0 0 8px 0;color:var(--muted)">Filter by tech or domain to explore case studies.</p>
+        <p style="margin:0 0 8px 0;color:var(--muted)">Use search, personas, or tags to explore case studies.</p>
+
+        <div class="work-controls">
+          <div class="work-search">
+            <input id="projectSearch" type="text" placeholder="Search by project, tech, domain, or keyword (e.g., promotion, anomaly, logistics)"/>
+          </div>
+          <div class="persona-chips" id="personaChips">
+            <button class="persona-chip active" data-persona="All">All personas</button>
+            <button class="persona-chip" data-persona="VP Ops">VP of Ops</button>
+            <button class="persona-chip" data-persona="Retail Lead">Retail Lead</button>
+            <button class="persona-chip" data-persona="Marketing">Marketing</button>
+          </div>
+        </div>
+
         <div class="filters" id="filters"></div>
         <div class="grid-projects" id="gallery"></div>
       </div>
@@ -1414,8 +1570,23 @@ const themeToggle = document.getElementById('themeToggle');
 const heroVideoShell = document.getElementById('heroVideoShell');
 const heroCopy    = document.getElementById('heroCopy');
 const metricMainEls = document.querySelectorAll('.metric-main');
+const viewButtons = document.querySelectorAll('.view-btn');
+const personaContainer = document.getElementById('personaChips');
+const searchInput = document.getElementById('projectSearch');
 
 let metricsAnimated = false;
+
+/* filters state */
+let activeTag = 'All';
+let activePersona = 'All';
+let searchTerm = '';
+
+/* persona -> projects mapping (simple) */
+const PERSONA_MAP = {
+  'VP Ops': ['retail','supply','print'],
+  'Retail Lead': ['retail','promo'],
+  'Marketing': ['promo']
+};
 
 /* ===== Filters + gallery ===== */
 function setupFilters(){
@@ -1424,23 +1595,49 @@ function setupFilters(){
   const all = document.createElement('button');
   all.className='chip active';
   all.textContent='All';
-  all.addEventListener('click', ()=>{
-    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-    all.classList.add('active');
-    renderGallery(PROJECTS);
-  });
+  all.dataset.tag = 'All';
   filtersEl.appendChild(all);
+
   tags.forEach(t=>{
     const b = document.createElement('button');
     b.className='chip';
     b.textContent = t;
-    b.addEventListener('click', ()=>{
-      document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-      b.classList.add('active');
-      renderGallery(PROJECTS.filter(p=>p.tags.includes(t)));
-    });
+    b.dataset.tag = t;
     filtersEl.appendChild(b);
   });
+
+  filtersEl.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.chip');
+    if(!btn) return;
+    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    btn.classList.add('active');
+    activeTag = btn.dataset.tag || 'All';
+    applyProjectFilters();
+  });
+}
+
+function personaMatches(project, persona){
+  if(persona === 'All') return true;
+  const list = PERSONA_MAP[persona] || [];
+  return list.includes(project.id);
+}
+
+function applyProjectFilters(){
+  let list = PROJECTS.slice();
+  if(activeTag !== 'All'){
+    list = list.filter(p=>p.tags.includes(activeTag));
+  }
+  if(activePersona !== 'All'){
+    list = list.filter(p=>personaMatches(p, activePersona));
+  }
+  if(searchTerm){
+    const q = searchTerm.toLowerCase();
+    list = list.filter(p=>{
+      const hay = (p.title + ' ' + p.blurb + ' ' + p.long + ' ' + p.tags.join(' ')).toLowerCase();
+      return hay.includes(q);
+    });
+  }
+  renderGallery(list);
 }
 
 function renderGallery(list){
@@ -1467,6 +1664,25 @@ function renderGallery(list){
     card.addEventListener('click', ()=> openCaseStudy(p));
     card.addEventListener('keydown',(e)=>{ if(e.key==='Enter') openCaseStudy(p); });
     galleryEl.appendChild(card);
+  });
+}
+
+/* search + personas */
+if(searchInput){
+  searchInput.addEventListener('input', (e)=>{
+    searchTerm = e.target.value.trim();
+    applyProjectFilters();
+  });
+}
+
+if(personaContainer){
+  personaContainer.addEventListener('click',(e)=>{
+    const btn = e.target.closest('.persona-chip');
+    if(!btn) return;
+    document.querySelectorAll('.persona-chip').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    activePersona = btn.dataset.persona || 'All';
+    applyProjectFilters();
   });
 }
 
@@ -1668,22 +1884,26 @@ document.getElementById('shuffleNodes').addEventListener('click', ()=>{
 
 document.getElementById('resetNodes').addEventListener('click', ()=>{
   placeAtoms();
-  renderGallery(PROJECTS);
+  activeTag = 'All';
+  activePersona = 'All';
+  searchTerm = '';
+  if(searchInput) searchInput.value = '';
   document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
   document.querySelector('.chip')?.classList.add('active');
+  document.querySelectorAll('.persona-chip').forEach(b=>b.classList.remove('active'));
+  document.querySelector('.persona-chip')?.classList.add('active');
   document.querySelectorAll('.node-pill').forEach(p=>{ p.style.opacity='1'; p.classList.remove('selected'); });
   skillDetailsEl.textContent = 'Click a node to see details.';
+  applyProjectFilters();
 });
 
 function selectSkill(id){
   const s = SKILLS.find(x=>x.id===id);
+  if(!s) return;
   skillDetailsEl.textContent = `${s.label} — ${s.desc || ''}`;
-  const filtered = PROJECTS.filter(p=>{
-    const hay = (p.title + ' ' + p.tags.join(' ') + ' ' + p.long).toLowerCase();
-    return hay.includes(s.label.toLowerCase()) ||
-      (p.tags||[]).some(t=>t.toLowerCase().includes(s.label.toLowerCase()));
-  });
-  renderGallery(filtered.length ? filtered : PROJECTS);
+  searchTerm = s.label;
+  if(searchInput) searchInput.value = s.label;
+  applyProjectFilters();
   document.querySelectorAll('.node-pill').forEach(p=>{
     const match = p.dataset.skill === id;
     p.style.opacity = match ? '1' : '0.35';
@@ -1768,13 +1988,28 @@ if(themeToggle){
 const savedTheme = localStorage.getItem('aa-theme') || 'light';
 applyTheme(savedTheme);
 
+/* ===== view mode switch ===== */
+function setMode(mode){
+  document.body.setAttribute('data-mode', mode);
+  viewButtons.forEach(b=>{
+    b.classList.toggle('active', b.dataset.mode === mode);
+  });
+}
+
+viewButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const mode = btn.dataset.mode || 'deep';
+    setMode(mode);
+  });
+});
+
 /* ===== init ===== */
 function init(){
   resizeM();
   placeAtoms();
   drawAtoms();
   setupFilters();
-  renderGallery(PROJECTS);
+  applyProjectFilters();
 }
 window.addEventListener('load', init);
 </script>
