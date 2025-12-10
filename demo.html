@@ -1,375 +1,2285 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Arpit Agrawal — Microsoft Portfolio</title>
-
-<!-- Typography -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght:600;800&display=swap" rel="stylesheet">
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Arpit Agrawal — Data Analyst at Microsoft</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* =========================
-   FLUENT MICROSOFT SYSTEM
-   ========================= */
 :root{
-  --bg:#F4F5F7;
+  --bg:#F3F2F1;
+  --bg-soft:#F7F8FD;
   --card:#FFFFFF;
-  --ink:#1A1A1A;
-  --muted:#666;
-  --border:#D9D9D9;
-  --ms-blue:#2560E0;
-  --ms-green:#00A650;
-  --ms-orange:#E28B2A;
-  --ms-red:#D83B01;
-  --tile-opacity:0.085;
-  --hero-h:82vh;
-  --radius:12px;
-  --soft-shadow:0 8px 40px rgba(0,0,0,0.06);
-  --dur:0.9s;
+  --muted:#605E5C;
+  --ink:#201F1E;
+
+  --accent:#2564CF;        /* Microsoft blue */
+  --accent-soft:#E8F2FF;
+
+  --accent-alt:#7C3AED;    /* secondary accent (designer) */
+  --accent-alt-soft:#F4E9FF;
+
+  --border:#E1DFDD;
+  --border-strong:#C8C6C4;
+  --glass:#E1DFDD;
+
+  --radius:8px;
+  --radius-lg:16px;
+  --maxw:1120px;
+  --soft-shadow:0 2px 8px rgba(0,0,0,0.06);
 }
 
-/* global reset */
-*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased;}
+*{
+  box-sizing:border-box;
+  transition:
+    background-color .16s ease,
+    border-color .16s ease,
+    box-shadow .16s ease,
+    color .16s ease,
+    transform .10s ease;
+}
+
+html{
+  height:100%;
+  scroll-behavior:smooth;
+}
 
 body{
-  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto;
-  background:var(--bg);
+  margin:0;
+  min-height:100%;
+  background:
+    radial-gradient(circle at 0 0,#F9FBFF 0,#F3F2F1 45%,#F1F0EE 100%);
   color:var(--ink);
-  overflow-x:hidden;
+  font-family: system-ui, -apple-system, "Segoe UI", Inter, Roboto;
+  font-size:14px;
+  -webkit-font-smoothing:antialiased;
 }
 
-/* ========== MICROSOFT WALLPAPER ========== */
-.bg-tiles{
-  position:fixed;inset:0;
-  background:
-    linear-gradient(90deg,rgba(255,255,255,0.9),rgba(255,255,255,0.92)),
-    url('ms-tiles.png');
-  background-size:340px;
-  background-attachment:fixed;
-  opacity:0.36;
-  z-index:-2;
-  filter:saturate(0.92);
+a{color:inherit;text-decoration:none}
+
+/* ===== Dark theme ===== */
+body[data-theme="dark"]{
+  --bg:#020617;
+  --bg-soft:#020617;
+  --card:#020617;
+  --muted:#9CA3AF;
+  --ink:#E5E7EB;
+
+  --accent:#60A5FA;
+  --accent-soft:#1D4ED8;
+
+  --accent-alt:#A855F7;
+  --accent-alt-soft:#1E1B4B;
+
+  --border:#1F2937;
+  --border-strong:#4B5563;
+  --glass:#1F2937;
+
+  --soft-shadow:0 2px 12px rgba(0,0,0,0.7);
+  background:#020617;
 }
 
-/* fallback pattern if tile img missing */
-.bg-tiles:after{
+/* ===== animated Microsoft background ===== */
+
+#ms-bg{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+  z-index:-1;
+}
+
+#ms-bg-inner{
+  width:360px;
+  height:360px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:18px;
+  opacity:0.14;
+  transform:translateY(0) scale(1);
+  filter:blur(0.5px);
+}
+
+#ms-bg-inner div{
+  border-radius:24px;
+}
+
+#ms-bg-red{background:#F25022;}
+#ms-bg-green{background:#7FBA00;}
+#ms-bg-blue{background:#00A4EF;}
+#ms-bg-yellow{background:#FFB900;}
+
+body[data-theme="dark"] #ms-bg-inner{
+  opacity:0.09;
+  filter:blur(0.7px);
+}
+
+/* optional subtle radial layer */
+body::before{
   content:"";
-  position:absolute;inset:0;
+  position:fixed;
+  inset:0;
   background:
-    repeating-linear-gradient(90deg,rgba(37,96,224,var(--tile-opacity)) 0 1px,transparent 1px 180px),
-    repeating-linear-gradient(180deg,rgba(226,139,42,var(--tile-opacity)) 0 1px,transparent 1px 180px),
-    repeating-linear-gradient(90deg,rgba(0,166,80,var(--tile-opacity)) 0 1px,transparent 1px 320px),
-    repeating-linear-gradient(180deg,rgba(216,59,1,var(--tile-opacity)) 0 1px,transparent 1px 320px);
-  mix-blend-mode:soft-light;
+    radial-gradient(circle at 80% 0, rgba(124,58,237,0.13), transparent 55%),
+    radial-gradient(circle at 0 100%, rgba(37,100,207,0.12), transparent 55%);
+  pointer-events:none;
+  z-index:-2;
 }
 
-/* ========================
-     TOP NAV
-======================== */
+/* ===== scroll reveal ===== */
+
+.page-section{
+  opacity:0;
+  transform:translateY(28px);
+  will-change:transform, opacity;
+  transition:opacity .45s ease-out, transform .45s ease-out;
+}
+
+.page-section.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ===== layout & sticky header ===== */
+
+.container{
+  max-width:var(--maxw);
+  margin:30px auto;
+  padding:0 22px 40px;
+}
+
 .topbar{
-  position:fixed;top:0;left:0;right:0;
-  backdrop-filter:blur(18px) saturate(1.1);
-  background:rgba(255,255,255,0.66);
+  position:sticky;
+  top:0;
+  z-index:20;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:20px;
+  padding:10px 0 12px;
   border-bottom:1px solid var(--border);
-  padding:14px 32px;
-  display:flex;align-items:center;justify-content:space-between;
-  z-index:999;
+  backdrop-filter:blur(16px);
+  background:rgba(243,242,241,0.92);
 }
 
-.brand{display:flex;align-items:center;gap:18px;}
-.avatar{width:58px;height:58px;border-radius:12px;overflow:hidden;}
-.avatar img{width:100%;height:100%;object-fit:cover;}
+body[data-theme="dark"] .topbar{
+  background:rgba(15,23,42,0.92);
+}
 
-.nameplate h1{font-size:20px;font-weight:700;}
+/* ===== brand block ===== */
+
+.brand{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+}
+
+.avatar{
+  width:64px;
+  height:64px;
+  border-radius:16px;
+  overflow:hidden;
+  background:#D0D0D0;
+  box-shadow:0 10px 26px rgba(0,0,0,0.16);
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.name-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.name-row h1{
+  margin:0;
+  font-size:22px;
+  font-weight:600;
+}
+
 .role-pill{
-  background:rgba(37,96,224,0.12);
-  padding:4px 10px;
+  padding:3px 9px;
   border-radius:999px;
+  background:var(--accent-soft);
+  color:var(--accent);
   font-size:11px;
-  font-weight:700;
-  color:var(--ms-blue);
+  font-weight:600;
 }
+
+.subtitle{
+  margin:2px 0 0 0;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.subtitle-small{
+  margin:4px 0 0 0;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.top-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+/* tiny MS mark */
+
+.ms-mark{
+  width:16px;
+  height:16px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:1px;
+  margin-left:4px;
+}
+.ms-mark span{display:block;width:100%;height:100%;}
+.ms-red{background:#F25022;}
+.ms-green{background:#7FBA00;}
+.ms-blue{background:#00A4EF;}
+.ms-yellow{background:#FFB900;}
+
+/* buttons */
 
 .btn{
-  padding:8px 16px;
-  border:1px solid var(--border);
-  border-radius:8px;
-  background:#fff;
-  font-weight:600;
+  padding:7px 12px;
+  border-radius:999px;
+  border:1px solid var(--border-strong);
+  background:#FFFFFF;
+  font-size:13px;
+  font-weight:500;
+  color:var(--ink);
   cursor:pointer;
-  transition:all 0.2s ease;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
 }
-.btn:hover{box-shadow:0 4px 12px rgba(0,0,0,0.08);}
-.btn.primary{background:var(--ms-blue);color:#fff;border:none;}
-.btn.primary:hover{background:#194bb8;}
 
-/* =========================
-   HERO CINEMATIC MOLECULE
-========================= */
-.hero{
-  height:var(--hero-h);
-  display:flex;align-items:center;justify-content:center;
+body[data-theme="dark"] .btn{
+  background:#020617;
+  color:var(--ink);
+  border-color:var(--border-strong);
+}
+
+.btn:hover{
+  background:#F3F2F1;
+  border-color:var(--border-strong);
+  box-shadow:0 1px 3px rgba(0,0,0,0.2);
+}
+
+body[data-theme="dark"] .btn:hover{
+  background:#020617;
+  box-shadow:0 1px 5px rgba(0,0,0,0.7);
+}
+
+.btn.primary{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:#FFFFFF;
+  box-shadow:0 2px 8px rgba(0,0,0,0.25);
+}
+
+.btn.primary:hover{
+  background:#1E4EB7;
+}
+
+.btn.ghost{
+  background:transparent;
+}
+
+/* nav tabs */
+
+.page-tabs{
+  margin-top:10px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  position:relative;
+}
+
+.page-tab{
+  padding:6px 12px;
+  border-radius:999px;
+  border:1px solid transparent;
+  font-size:12px;
+  cursor:pointer;
+  color:var(--muted);
+  position:relative;
+}
+
+.page-tab.active{
+  background:var(--accent-soft);
+  border-color:var(--accent);
+  color:var(--ink);
+}
+
+.page-tab.active::after{
+  content:"";
+  position:absolute;
+  left:10%;
+  right:10%;
+  bottom:-3px;
+  height:2px;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-alt));
+}
+
+/* view mode switch */
+
+.view-switch{
+  margin-top:8px;
+  display:flex;
+  justify-content:flex-end;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.view-btn{
+  padding:4px 10px;
+  border-radius:999px;
+  border:1px solid transparent;
+  font-size:11px;
+  cursor:pointer;
+  color:var(--muted);
+  background:transparent;
+}
+
+.view-btn.active{
+  border-color:var(--accent);
+  background:var(--accent-soft);
+  color:var(--ink);
+}
+
+/* mode emphasis (subtle, not hiding everything) */
+
+body[data-mode="recruiter"] #skills,
+body[data-mode="recruiter"] #systems,
+body[data-mode="recruiter"] #about{
+  opacity:0.6;
+}
+
+body[data-mode="interactive"] #skills{
+  box-shadow:0 0 0 1px var(--accent-soft);
+}
+
+body[data-mode="deep"] .panel{
+  box-shadow:0 4px 18px rgba(0,0,0,0.08);
+}
+
+/* panels */
+
+.section-inner{
+  margin-top:26px;
+}
+
+.panel{
+  background:var(--card);
+  border-radius:var(--radius-lg);
+  border:1px solid var(--border);
+  padding:18px 18px 16px;
+  box-shadow:var(--soft-shadow);
+}
+
+.panel h3{
+  margin:0 0 6px 0;
+  font-size:14px;
+  font-weight:600;
+}
+
+.section-title{
+  font-size:16px;
+  font-weight:600;
+  margin-bottom:8px;
+}
+
+/* ===== Overview / hero ===== */
+
+.hero-layout{
+  display:grid;
+  grid-template-columns:minmax(280px, 2.1fr) 1.4fr;
+  gap:16px;
+}
+
+/* executive strip */
+
+.exec-strip{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:10px;
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px dashed var(--border);
+  background:rgba(255,255,255,0.6);
+}
+
+body[data-theme="dark"] .exec-strip{
+  background:#020617;
+}
+
+/* metrics row */
+
+.metric-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+.metric-tile{
+  flex:1;
+  min-width:140px;
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:var(--bg-soft);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+body[data-theme="dark"] .metric-tile{
+  background:#020617;
+}
+
+.metric-main{
+  font-size:18px;
+  font-weight:700;
+}
+
+.metric-label{
+  font-size:11px;
+  color:var(--muted);
+}
+
+/* hero banner */
+
+.hero-banner{
+  border-radius:var(--radius-lg);
+  background:linear-gradient(135deg,#EDF3FF,#FFFFFF);
+  border:1px solid #CEDBFF;
+  padding:12px 14px 14px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
   position:relative;
   overflow:hidden;
 }
 
-#moleculeCanvas{
-  position:absolute;inset:0;
-  width:100%;height:100%;
+body[data-theme="dark"] .hero-banner{
+  background:linear-gradient(135deg,#020617,#020617);
+  border-color:#1D4ED8;
+}
+
+.hero-banner::before{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:
+    radial-gradient(circle at 0 0,rgba(37,100,207,0.25),transparent 55%);
+  opacity:0.8;
+  pointer-events:none;
+}
+
+/* extra designer glow */
+.hero-banner::after{
+  content:"";
+  position:absolute;
+  right:-40%;
+  top:-30%;
+  width:260px;
+  height:260px;
+  background:radial-gradient(circle, rgba(124,58,237,0.16), transparent 60%);
+  pointer-events:none;
+}
+
+body[data-theme="dark"] .hero-banner::before{
+  background:radial-gradient(circle at 0 0,rgba(37,100,207,0.35),transparent 55%);
+}
+
+.hero-banner-inner{
+  position:relative;
+  z-index:1;
+}
+
+.hero-video{
+  border-radius:10px;
+  overflow:hidden;
+  border:1px solid #CED8FF;
+  box-shadow:0 10px 25px rgba(38,84,180,0.17);
+  transform-origin:center;
+}
+
+body[data-theme="dark"] .hero-video{
+  border-color:#1D4ED8;
+  box-shadow:0 10px 30px rgba(0,0,0,0.8);
+}
+
+.hero-video video{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+.hero-copy h4{
+  margin:8px 0 4px 0;
+  font-size:14px;
+  font-weight:600;
+}
+
+.hero-tech{
+  margin-top:4px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* side panel */
+
+.hero-side{
+  border-radius:var(--radius-lg);
+  border:1px solid var(--border);
+  background:var(--bg-soft);
+  padding:12px 14px;
+}
+
+body[data-theme="dark"] .hero-side{
+  background:#020617;
+}
+
+.hero-side h4{
+  margin:0 0 6px 0;
+  font-size:14px;
+  font-weight:600;
+}
+
+.hero-side ul{
+  margin:6px 0 0 0;
+  padding-left:18px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* ===== skills section ===== */
+
+.skills-grid{
+  display:grid;
+  grid-template-columns: minmax(260px, 2fr) minmax(260px,1.4fr);
+  gap:16px;
+}
+
+.molecule-wrap{
+  position:relative;
+  height:420px;
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  border:1px solid var(--border);
+  background:#FFFFFF;
+  transform-origin:center;
+  transform-style:preserve-3d;
+}
+
+body[data-theme="dark"] .molecule-wrap{
+  background:#020617;
+}
+
+body[data-mode="interactive"] .molecule-wrap{
+  transform:perspective(900px) rotateX(10deg) rotateY(-8deg);
+}
+
+canvas#moleculeCanvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
   z-index:0;
 }
 
-#heroText{
-  position:relative;
-  text-align:center;
-  z-index:4;
+#moleculeNodes{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:auto;
+}
+
+.node-pill{
+  position:absolute;
+  padding:6px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,0.98);
+  border:1px solid var(--border);
+  font-weight:600;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+}
+
+body[data-theme="dark"] .node-pill{
+  background:#020617;
   color:var(--ink);
-  opacity:0;
-  transform:translateY(50px) scale(0.92);
-  animation:heroIn var(--dur) ease forwards;
-  animation-delay:0.4s;
 }
 
-#heroText h2{
-  font-size:42px;
-  font-weight:800;
-  background:linear-gradient(90deg,var(--ms-blue),var(--ms-orange));
-  -webkit-background-clip:text;
-  color:transparent;
-}
-
-#heroText p{
-  margin-top:10px;
+.node-pill .lvl{
+  font-size:10px;
   color:var(--muted);
-  font-size:16px;
+  font-weight:500;
 }
 
-@keyframes heroIn{
-  to{opacity:1;transform:translateY(0) scale(1);}
+.node-pill:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.12);
 }
 
-/* =========================
-   PAGE SECTIONS (4 pages feel)
-========================= */
-.section{
-  max-width:1080px;
-  margin:0 auto;
-  padding:120px 28px;
-  position:relative;
-  z-index:5;
+/* halo on selected skill */
+.node-pill.selected::after{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border-radius:999px;
+  border:2px solid rgba(37,100,207,0.3);
 }
 
-.section h3{
-  font-size:28px;
-  font-weight:700;
-  margin-bottom:26px;
+.skills-tip{
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:3;
+  font-size:12px;
+  color:var(--muted);
 }
 
-/* reveal on scroll */
-.reveal{
-  opacity:0;
-  transform:translateY(60px) scale(0.94);
-  transition:all 1s cubic-bezier(.16,.84,.44,1);
-}
-.reveal.visible{
-  opacity:1;
-  transform:translateY(0) scale(1);
+/* Microsoft experience card */
+
+.experience-panel{
+  border-radius:var(--radius-lg);
+  border:1px solid #CEDBFF;
+  background:#F3F7FF;
+  padding:12px 14px;
 }
 
-/* =========================
-   MICROSOFT EXPERIENCE CARD
-========================= */
-.ms-card{
-  background:rgba(255,255,255,0.96);
-  border-radius:var(--radius);
-  padding:24px;
-  box-shadow:var(--soft-shadow);
+body[data-theme="dark"] .experience-panel{
+  background:#020617;
+  border-color:#1D4ED8;
+}
+
+.experience-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+
+.experience-title{
+  font-size:14px;
+  font-weight:600;
+}
+
+.experience-meta{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.experience-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:4px 9px;
+  border-radius:999px;
+  background:#E6F0FF;
+  color:#20488F;
+  font-size:11px;
+  font-weight:600;
+}
+
+body[data-theme="dark"] .experience-badge{
+  background:#1D4ED8;
+  color:#E5E7EB;
+}
+
+.experience-list{
+  margin:8px 0 8px 0;
+  padding-left:18px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.ms-link{
+  margin-top:4px;
+  font-size:11px;
+}
+.ms-link a{
+  color:#2564CF;
+  text-decoration:underline;
+}
+.ms-link a:hover{
+  color:#1E4EB7;
+}
+body[data-theme="dark"] .ms-link a{
+  color:#93C5FD;
+}
+
+/* selected skill text */
+
+.skill-detail-text{
+  margin-top:10px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* ===== Work / projects ===== */
+
+.work-controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:8px;
+  align-items:center;
+}
+
+.work-search{
+  flex:1;
+  min-width:180px;
+}
+
+.work-search input{
+  width:100%;
+  padding:7px 10px;
+  border-radius:999px;
   border:1px solid var(--border);
+  background:#FFFFFF;
+  font-size:12px;
 }
 
-.ms-card ul{margin-top:14px;line-height:1.6;color:var(--muted);}
-
-/* =========================
-   PROJECT GRID
-========================= */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-  gap:20px;
+body[data-theme="dark"] .work-search input{
+  background:#020617;
+  color:var(--ink);
 }
-.project{
-  background:#fff;
-  border-radius:14px;
-  overflow:hidden;
+
+.work-search input:focus{
+  outline:none;
+  border-color:var(--accent);
+  box-shadow:0 0 0 1px var(--accent-soft);
+}
+
+.persona-chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.persona-chip{
+  padding:4px 9px;
+  border-radius:999px;
   border:1px solid var(--border);
-  transition:all .28s ease;
+  background:#FAFAFA;
+  font-size:11px;
+  cursor:pointer;
+  color:var(--muted);
+}
+
+body[data-theme="dark"] .persona-chip{
+  background:#020617;
+}
+
+.persona-chip.active{
+  border-color:var(--accent-alt);
+  background:var(--accent-alt-soft);
+  color:var(--ink);
+}
+
+/* filters */
+
+.filters{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:8px;
+}
+
+.chip{
+  padding:4px 10px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:#FAFAFA;
+  font-weight:500;
+  font-size:12px;
+  color:var(--muted);
   cursor:pointer;
 }
-.project:hover{transform:translateY(-6px);box-shadow:var(--soft-shadow);}
-.project img{width:100%;height:180px;object-fit:cover;}
-.project .p-info{padding:14px;}
-.project h4{margin:0 0 6px;font-size:17px;font-weight:700;}
-.project p{color:var(--muted);font-size:13px;}
 
-/* =========================
-   CONTACT
-========================= */
-.contact input, .contact textarea{
-  width:100%;
-  padding:10px;
-  border-radius:8px;
+body[data-theme="dark"] .chip{
+  background:#020617;
+  border-color:var(--border);
+}
+
+.chip.active{
+  background:var(--accent-soft);
+  color:var(--ink);
+  border-color:var(--accent);
+}
+
+body[data-theme="dark"] .chip.active{
+  background:#1D4ED8;
+  color:#E5E7EB;
+}
+
+.grid-projects{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:12px;
+  margin-top:12px;
+}
+
+.proj-card{
+  background:#FFFFFF;
+  border-radius:var(--radius-lg);
   border:1px solid var(--border);
-  margin-bottom:10px;
+  padding:10px 12px;
+  display:grid;
+  grid-template-columns:110px 1fr;
+  gap:10px;
+  align-items:center;
+  box-shadow:0 4px 14px rgba(0,0,0,0.04);
+  cursor:pointer;
+}
+
+body[data-theme="dark"] .proj-card{
+  background:#020617;
+  box-shadow:0 4px 20px rgba(0,0,0,0.7);
+}
+
+.proj-card:hover{
+  transform:translateY(-2px) scale(1.01);
+  box-shadow:0 8px 22px rgba(0,0,0,0.12);
+}
+
+body[data-theme="dark"] .proj-card:hover{
+  box-shadow:0 10px 28px rgba(0,0,0,0.9);
+}
+
+.proj-thumb{
+  height:72px;
+  border-radius:10px;
+  overflow:hidden;
+  background:#F3F2F1;
+}
+
+body[data-theme="dark"] .proj-thumb{
+  background:#020617;
+}
+
+.proj-thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.proj-info h4{
+  margin:0 0 4px 0;
+  font-size:13px;
+  font-weight:600;
+}
+
+.proj-meta{
+  margin:0;
+  font-size:12px;
+  color:var(--muted);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.proj-tags{
+  margin-top:6px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px;
+}
+
+.tag{
+  padding:2px 7px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  font-size:11px;
+  color:var(--muted);
+}
+
+/* ===== Systems & Playbooks ===== */
+
+.systems-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:12px;
+  margin-top:10px;
+}
+
+.system-card{
+  border-radius:var(--radius-lg);
+  border:1px solid var(--border);
+  padding:12px 14px;
+  background:var(--bg-soft);
+}
+
+body[data-theme="dark"] .system-card{
+  background:#020617;
+}
+
+.system-label{
+  font-size:11px;
+  font-weight:600;
+  color:var(--accent-alt);
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+}
+
+.system-card h4{
+  margin:4px 0 4px 0;
   font-size:14px;
 }
 
+.system-body{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.system-meta{
+  margin-top:8px;
+  font-size:11px;
+}
+
+/* ===== About: Principles, Timeline, Certs ===== */
+
+.about-grid{
+  display:grid;
+  grid-template-columns: minmax(260px,1.4fr) minmax(260px,1.6fr);
+  gap:16px;
+}
+
+.principles-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:10px;
+  margin-top:8px;
+}
+
+.principle-card{
+  border-radius:var(--radius-lg);
+  border:1px solid var(--border);
+  padding:10px 12px;
+  background:var(--card);
+}
+
+.principle-title{
+  font-size:13px;
+  font-weight:600;
+}
+
+.principle-body{
+  margin-top:4px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* timeline / certs */
+
+.timeline{
+  margin-top:6px;
+  padding-left:0;
+  list-style:none;
+  border-left:2px solid var(--border);
+}
+
+.timeline li{
+  padding-left:10px;
+  margin:6px 0;
+  position:relative;
+  font-size:12px;
+}
+
+.timeline li::before{
+  content:"";
+  position:absolute;
+  left:-6px;
+  top:6px;
+  width:8px;
+  height:8px;
+  border-radius:999px;
+  background:var(--accent);
+}
+
+.cert-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:8px;
+  margin-top:6px;
+}
+
+.cert-card{
+  border-radius:999px;
+  border:1px solid var(--border);
+  padding:6px 10px;
+  font-size:11px;
+}
+
+/* mini log */
+
+.log-card{
+  margin-top:10px;
+  border-radius:var(--radius-lg);
+  border:1px solid var(--border);
+  padding:10px 12px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* ===== Contact ===== */
+
+.contact-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+
+.input,
+textarea{
+  padding:8px 10px;
+  border-radius:6px;
+  border:1px solid var(--border);
+  font-size:13px;
+  background:#FFFFFF;
+}
+
+body[data-theme="dark"] .input,
+body[data-theme="dark"] textarea{
+  background:#020617;
+  color:var(--ink);
+}
+
+textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+.input:focus,
+textarea:focus{
+  outline:none;
+  border-color:var(--accent);
+  box-shadow:0 0 0 1px var(--accent-soft);
+}
+
+.contact-actions{
+  display:flex;
+  gap:8px;
+  justify-content:flex-end;
+  margin-top:10px;
+}
+
+/* ===== Modal & footer ===== */
+
+.backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(12,15,20,0.5);
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  z-index:999;
+  opacity:0;
+  transition:opacity .22s ease;
+}
+
+.backdrop.show{
+  opacity:1;
+}
+
+.modal{
+  width:min(880px,94%);
+  background:var(--card);
+  padding:18px;
+  border-radius:16px 16px 0 0;
+  border:1px solid var(--border);
+  max-height:86vh;
+  overflow:auto;
+  box-shadow:0 -12px 35px rgba(0,0,0,0.35);
+  transform:translateY(24px) scale(.98);
+  opacity:0;
+  transition:transform .22s ease,opacity .22s ease;
+}
+
+.backdrop.show .modal{
+  transform:translateY(0) scale(1);
+  opacity:1;
+}
+
+.modal .media-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+
+.modal img,
+.modal video{
+  width:100%;
+  border-radius:6px;
+}
+
 footer{
-  text-align:center;
-  padding:40px 0;
+  margin-top:30px;
   color:var(--muted);
   font-size:13px;
+  text-align:center;
+}
+
+/* ===== Command Palette ===== */
+
+.cmd-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,0.55);
+  display:none;
+  align-items:flex-start;
+  justify-content:center;
+  z-index:1100;
+  opacity:0;
+  transition:opacity .18s ease;
+}
+
+.cmd-backdrop.show{
+  display:flex;
+  opacity:1;
+}
+
+.cmd-palette{
+  margin-top:80px;
+  width:min(560px,92%);
+  background:var(--card);
+  border-radius:12px;
+  border:1px solid var(--border);
+  box-shadow:0 18px 60px rgba(0,0,0,0.35);
+  padding:10px 12px 10px;
+}
+
+.cmd-header{
+  font-size:12px;
+  font-weight:600;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+
+.cmd-input{
+  width:100%;
+  padding:7px 10px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:#FFFFFF;
+  font-size:13px;
+  margin-bottom:6px;
+}
+
+body[data-theme="dark"] .cmd-input{
+  background:#020617;
+  color:var(--ink);
+}
+
+.cmd-input:focus{
+  outline:none;
+  border-color:var(--accent);
+  box-shadow:0 0 0 1px var(--accent-soft);
+}
+
+.cmd-list{
+  list-style:none;
+  margin:4px 0 4px 0;
+  padding:0;
+  max-height:260px;
+  overflow:auto;
+}
+
+.cmd-item{
+  padding:6px 8px;
+  border-radius:6px;
+  font-size:13px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+}
+
+.cmd-item span{
+  font-size:11px;
+  color:var(--muted);
+}
+
+.cmd-item.active,
+.cmd-item:hover{
+  background:var(--accent-soft);
+  color:var(--ink);
+}
+
+.cmd-hint{
+  margin-top:6px;
+  font-size:11px;
+  color:var(--muted);
+  text-align:right;
+}
+
+/* ===== responsive ===== */
+
+@media (max-width:900px){
+  .hero-layout{
+    grid-template-columns:1fr;
+  }
+  .skills-grid{
+    grid-template-columns:1fr;
+  }
+  .about-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media (max-width:720px){
+  .contact-grid{grid-template-columns:1fr}
+  .grid-projects{grid-template-columns:1fr}
+  .metric-row{flex-direction:column;}
 }
 </style>
 </head>
-
-<body>
-<div class="bg-tiles"></div>
-
-<!-- TOP NAV -->
-<header class="topbar">
-  <div class="brand">
-    <div class="avatar">
-      <img src="me-image.jpg" alt="Arpit Photo"/>
-    </div>
-    <div class="nameplate">
-      <h1>Arpit Agrawal</h1>
-      <span class="role-pill">Data Analyst · Microsoft (Vendor)</span>
+<body data-mode="deep">
+  <!-- Microsoft animated background -->
+  <div id="ms-bg" aria-hidden="true">
+    <div id="ms-bg-inner">
+      <div id="ms-bg-red"></div>
+      <div id="ms-bg-green"></div>
+      <div id="ms-bg-blue"></div>
+      <div id="ms-bg-yellow"></div>
     </div>
   </div>
 
-  <nav>
-    <a id="resumeLink" href="Me-Resume.pdf" class="btn" target="_blank">Resume</a>
-    <button class="btn primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</button>
-  </nav>
-</header>
-
-<!-- HERO -->
-<section class="hero">
-  <canvas id="moleculeCanvas"></canvas>
-  <div id="heroText">
-    <h2>Analytics. Clarity. Impact.</h2>
-    <p>Turning enterprise data into crisp strategy with Microsoft-grade storytelling.</p>
-  </div>
-</section>
-
-<!-- MICROSOFT EXPERIENCE -->
-<section class="section reveal">
-  <h3>Microsoft — Experience</h3>
-  <div class="ms-card">
-    <strong>Data Analyst (Vendor, BlitzPath Innovation → Microsoft)</strong>
-    <ul>
-      <li>Building Power BI reporting hubs for cross-functional leadership</li>
-      <li>Automation of operational refresh cycles (SQL + DAX + Python)</li>
-      <li>Own end-to-end data certainty and executive insights delivery</li>
-      <li>Enterprise telemetry interpretation & KPI modeling</li>
-    </ul>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section class="section reveal">
-  <h3>Selected Casework</h3>
-  <div class="grid">
-    <div class="project">
-      <img src="SmartPromotionProfitabilityTracker.jpg">
-      <div class="p-info">
-        <h4>Smart Promotion Profitability Tracker</h4>
-        <p>Promo uplift modeling, ROI intelligence, Power BI command center.</p>
+  <div class="container">
+    <!-- HEADER / COMMAND BAR -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="avatar">
+          <!-- Make sure this file exists and name matches exactly -->
+          <img src="me image.jpg" alt="Arpit Agrawal">
+        </div>
+        <div>
+          <div class="name-row">
+            <h1>Arpit Agrawal</h1>
+            <span class="role-pill">Data Analyst · Microsoft</span>
+          </div>
+          <p class="subtitle">
+            Data Analyst · Data Engineer · Visual Storyteller
+          </p>
+          <p class="subtitle-small">
+            Currently: Analytics (Vendor) at Microsoft · Building data products with SQL, Python &amp; Power BI.
+          </p>
+        </div>
       </div>
-    </div>
-    <div class="project">
-      <img src="Retail&LogisticsIntelligenceHub.jpg">
-      <div class="p-info">
-        <h4>Retail & Logistics Intelligence Hub</h4>
-        <p>Route optimization, cloud forecasting, Snowflake + Tableau.</p>
+
+      <div>
+        <div class="top-actions">
+          <button class="btn ghost" id="themeToggle" type="button">☾ Dark</button>
+          <!-- Make sure Me Resume.pdf sits next to this HTML and name matches -->
+          <a id="resumeLink" href="Me Resume.pdf" class="btn" target="_blank" rel="noopener">Resume</a>
+          <label class="btn ghost">
+            <input id="resumeUploader" type="file" accept=".pdf,.doc,.docx" hidden />
+            Upload
+          </label>
+          <button class="btn primary" id="contactBtn" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</button>
+        </div>
+        <nav class="page-tabs" aria-label="Sections">
+          <a href="#overview" class="page-tab active">Overview</a>
+          <a href="#skills" class="page-tab">Skills</a>
+          <a href="#work" class="page-tab">Work</a>
+          <a href="#systems" class="page-tab">Systems</a>
+          <a href="#about" class="page-tab">About</a>
+          <a href="#contact" class="page-tab">Contact</a>
+        </nav>
+        <div class="view-switch">
+          <button class="view-btn" data-mode="recruiter">Recruiter view</button>
+          <button class="view-btn active" data-mode="deep">Deep case studies</button>
+          <button class="view-btn" data-mode="interactive">Interactive mode</button>
+        </div>
       </div>
+    </header>
+
+    <!-- OVERVIEW -->
+    <section id="overview" class="page-section section-inner visible">
+      <div class="panel">
+        <div class="section-title">Overview · Retail &amp; Ops Analytics</div>
+
+        <div class="exec-strip">
+          <div style="flex:1;min-width:180px;font-size:12px;">
+            <strong>Snapshot:</strong> I build analytics systems that cut reporting time, stabilise ops, and make promotions accountable.
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;font-size:11px;">
+            <button class="btn ghost" type="button" onclick="openCaseStudy(PROJECTS.find(p=>p.id==='promo'))">Promo ROI</button>
+            <button class="btn ghost" type="button" onclick="openCaseStudy(PROJECTS.find(p=>p.id==='retail'))">Logistics Hub</button>
+            <button class="btn ghost" type="button" onclick="openCaseStudy(PROJECTS.find(p=>p.id==='supply'))">Anomaly Radar</button>
+          </div>
+        </div>
+
+        <div class="metric-row">
+          <div class="metric-tile">
+            <div>
+              <div class="metric-main" data-target="6" data-suffix="+">0</div>
+              <div class="metric-label">End-to-end analytics projects</div>
+            </div>
+            <span style="font-size:11px;color:var(--muted);">SQL · Python · BI</span>
+          </div>
+          <div class="metric-tile">
+            <div>
+              <div class="metric-main" data-target="3" data-suffix="x">0</div>
+              <div class="metric-label">Reporting efficiency uplift</div>
+            </div>
+            <span style="font-size:11px;color:var(--muted);">Automation focus</span>
+          </div>
+          <div class="metric-tile">
+            <div>
+              <div class="metric-main" data-target="4" data-suffix="+">0</div>
+              <div class="metric-label">Domains: retail, ops, supply, print</div>
+            </div>
+            <span style="font-size:11px;color:var(--muted);">Cross-industry</span>
+          </div>
+        </div>
+
+        <p style="margin:0 0 10px 0;color:var(--muted)">Short demo of the Retail &amp; Logistics Intelligence Hub.</p>
+
+        <div class="hero-layout">
+          <div class="hero-banner">
+            <div class="hero-banner-inner">
+              <div class="hero-video" id="heroVideoShell">
+                <video id="featuredVideo" controls playsinline>
+                  <source src="canva-R7YS5xjlsvA.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="hero-copy" id="heroCopy">
+                <h4>Retail &amp; Logistics — walkthrough</h4>
+                <p style="margin:0;color:var(--muted);font-size:13px">
+                  End-to-end analytics hub for routing optimisation, forecasting, and operations insights.
+                </p>
+                <p class="hero-tech">
+                  Built using: SQL · Power BI · Azure · Python<br>
+                  Inspired by internal Microsoft reporting patterns (demo only).
+                </p>
+                <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+                  <button class="btn" type="button" onclick="openCaseStudy(PROJECTS.find(p=>p.id==='retail'))">
+                    Open case study
+                  </button>
+                  <button class="btn" type="button" onclick="document.getElementById('featuredVideo').play()">
+                    Play
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <aside class="hero-side">
+            <h4>What I focus on</h4>
+            <ul>
+              <li>Designing data products that feel like internal tools, not just dashboards.</li>
+              <li>Making promotion &amp; logistics decisions measurable and repeatable.</li>
+              <li>Bringing SQL, Python, Power BI, and Azure together in one narrative.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="page-section section-inner">
+      <div class="panel">
+        <div class="section-title">Skills &amp; Experience</div>
+        <div class="skills-grid">
+          <div>
+            <p style="margin:0 0 8px 0;color:var(--muted)">Interactive skill map — click a node to filter projects. Drag to pan.</p>
+            <div class="molecule-wrap">
+              <canvas id="moleculeCanvas" aria-hidden="true"></canvas>
+              <div id="moleculeNodes" aria-hidden="false"></div>
+              <div class="skills-tip">
+                <span>Tip: click a node to filter projects.</span>
+                <span style="display:flex;gap:6px">
+                  <button class="btn" id="shuffleNodes" type="button" style="padding:4px 10px;font-size:11px;">Shuffle</button>
+                  <button class="btn" id="resetNodes" type="button" style="padding:4px 10px;font-size:11px;">Reset</button>
+                </span>
+              </div>
+            </div>
+            <div class="skill-detail-text">
+              <strong>Selected skill:</strong>
+              <span id="skillDetails">Click a node to see details.</span>
+            </div>
+          </div>
+
+          <aside class="experience-panel" aria-label="Experience at Microsoft">
+            <div class="experience-header">
+              <div>
+                <div class="experience-title">Microsoft · Data Analyst</div>
+                <div class="experience-meta">Vendor – BlitzPath Innovation · 2025 — Present</div>
+              </div>
+              <span class="experience-badge" title="Vendor role via BlitzPath">
+                <span>Microsoft</span>
+                <span class="ms-mark">
+                  <span class="ms-red"></span>
+                  <span class="ms-green"></span>
+                  <span class="ms-blue"></span>
+                  <span class="ms-yellow"></span>
+                </span>
+              </span>
+            </div>
+            <ul class="experience-list">
+              <li>Building dashboards for operations and leadership teams.</li>
+              <li>Automating reporting in Power BI &amp; SQL to reduce manual work.</li>
+              <li>Owning KPIs around performance, reliability, and customer impact.</li>
+            </ul>
+            <div class="ms-link">
+              Official site: <a href="https://www.microsoft.com" target="_blank" rel="noopener">microsoft.com</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK / PROJECTS -->
+    <section id="work" class="page-section section-inner">
+      <div class="panel">
+        <div class="section-title">Work · Project Gallery</div>
+        <p style="margin:0 0 8px 0;color:var(--muted)">Use search, personas, or tags to explore case studies.</p>
+
+        <div class="work-controls">
+          <div class="work-search">
+            <input id="projectSearch" type="text" placeholder="Search by project, tech, domain, or keyword (e.g., promotion, anomaly, logistics)"/>
+          </div>
+          <div class="persona-chips" id="personaChips">
+            <button class="persona-chip active" data-persona="All">All personas</button>
+            <button class="persona-chip" data-persona="VP Ops">VP of Ops</button>
+            <button class="persona-chip" data-persona="Retail Lead">Retail Lead</button>
+            <button class="persona-chip" data-persona="Marketing">Marketing</button>
+          </div>
+        </div>
+
+        <div class="filters" id="filters"></div>
+        <div class="grid-projects" id="gallery"></div>
+      </div>
+    </section>
+
+    <!-- SYSTEMS & PLAYBOOKS -->
+    <section id="systems" class="page-section section-inner">
+      <div class="panel">
+        <div class="section-title">Systems &amp; Playbooks</div>
+        <p style="margin:0 0 8px 0;color:var(--muted)">Reusable analytics systems I keep reaching for.</p>
+        <div class="systems-grid">
+          <div class="system-card">
+            <div class="system-label">Playbook</div>
+            <h4>Promotion Profitability Engine</h4>
+            <div class="system-body">
+              End-to-end framework that combines promo flags, uplift modelling, and margin tracking to answer
+              “Did this promotion actually pay off?” in one place.
+            </div>
+            <div class="system-meta">
+              Inputs: POS + campaign data · Outputs: ROI view, cannibalisation risk · Stack: Python, SQL, Power BI
+            </div>
+          </div>
+          <div class="system-card">
+            <div class="system-label">System</div>
+            <h4>Logistics Ops Healthboard</h4>
+            <div class="system-body">
+              Route performance, SLAs, and exception management in a single hub designed around ops stand-ups,
+              not just pretty charts.
+            </div>
+            <div class="system-meta">
+              Inputs: telemetry, order logs · Outputs: daily health score · Stack: Snowflake, SQL, Tableau
+            </div>
+          </div>
+          <div class="system-card">
+            <div class="system-label">Playbook</div>
+            <h4>Anomaly Radar for Supply Events</h4>
+            <div class="system-body">
+              Streaming anomaly detection pipeline with clear thresholds, alerting rules, and dashboards that
+              separate “noise” from “drop everything” events.
+            </div>
+            <div class="system-meta">
+              Inputs: event streams · Outputs: alert feed + triage board · Stack: Spark, Azure, Power BI
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT / PRINCIPLES / TIMELINE -->
+    <section id="about" class="page-section section-inner">
+      <div class="panel">
+        <div class="section-title">About · How I Work</div>
+        <div class="about-grid">
+          <!-- Principles -->
+          <div>
+            <h3 style="margin:0 0 4px 0;font-size:14px;">Working principles</h3>
+            <p style="margin:0 0 6px 0;color:var(--muted);font-size:12px;">
+              A few rules I use to keep analytics useful, not just “interesting”.
+            </p>
+            <div class="principles-grid">
+              <div class="principle-card">
+                <div class="principle-title">Make it measurable</div>
+                <div class="principle-body">
+                  Every dashboard must answer a decision question and have an owner. No orphan visuals.
+                </div>
+              </div>
+              <div class="principle-card">
+                <div class="principle-title">Design for the meeting</div>
+                <div class="principle-body">
+                  I design views for weekly stand-ups and monthly reviews, not vague “exploration”.
+                </div>
+              </div>
+              <div class="principle-card">
+                <div class="principle-title">Automate the boring</div>
+                <div class="principle-body">
+                  Manual Excel steps are red flags. If it repeats, it gets scripted or modelled.
+                </div>
+              </div>
+              <div class="principle-card">
+                <div class="principle-title">Stay explainable</div>
+                <div class="principle-body">
+                  Models are only as good as the story stakeholders can tell with them in 2 minutes.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline / Certs / Log -->
+          <div>
+            <h3 style="margin:0 0 4px 0;font-size:14px;">Timeline &amp; credentials</h3>
+            <ul class="timeline">
+              <li><strong>2025 — Present</strong> · Data Analyst (Vendor) at Microsoft via BlitzPath Innovation.</li>
+              <li><strong>2023 — 2024</strong> · Data Analyst at ESVADHYAYA &amp; consulting projects.</li>
+              <li><strong>Before</strong> · Analytics across education, manufacturing, and ops.</li>
+            </ul>
+
+            <div style="margin-top:8px;font-size:12px;font-weight:600;">Selected certifications</div>
+            <div class="cert-grid">
+              <div class="cert-card">Machine Learning with Python — freeCodeCamp</div>
+              <div class="cert-card">Google Analytics (GA4) — Google Skillshop</div>
+              <div class="cert-card">SQL (Intermediate) — HackerRank</div>
+              <div class="cert-card">Programming Foundations with Python — CodeSignal / HackerRank</div>
+            </div>
+
+            <div class="log-card">
+              <strong>Notes from the field</strong><br>
+              I’m currently exploring how to bring promotion analytics, supply chain anomaly detection,
+              and geospatial delivery insights into one “ops command center” — with real-time-ish data and
+              less slideware.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="page-section section-inner">
+      <div class="panel contact-panel">
+        <div class="section-title">Contact</div>
+        <p style="margin:4px 0 12px 0;color:var(--muted)">Shoot a short note — demo submit only (replace with webhook in JS).</p>
+        <form id="contactForm" onsubmit="return false;">
+          <div class="contact-grid">
+            <input class="input" id="c_name" placeholder="Your name" />
+            <input class="input" id="c_email" placeholder="Email" />
+            <input class="input" id="c_role" placeholder="Role / short note" style="grid-column:1/3" />
+            <textarea id="c_msg" placeholder="Message — be brief, be human" style="grid-column:1/3"></textarea>
+          </div>
+          <div class="contact-actions">
+            <button class="btn" id="clearBtn" type="button">Clear</button>
+            <button class="btn primary" id="sendBtn" type="button">Send</button>
+          </div>
+          <div id="contactResult" style="margin-top:10px;color:var(--muted)"></div>
+        </form>
+      </div>
+      <footer>Built with care — Arpit’s interactive analytics portfolio.</footer>
+    </section>
+  </div>
+
+  <!-- Case-study overlay -->
+  <div class="backdrop" id="backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+        <h3 id="modalTitle" style="margin:0;font-size:15px;">Case study</h3>
+        <button class="btn" id="closeModal" type="button">Close</button>
+      </div>
+      <p id="modalBlurb" style="color:var(--muted);margin:8px 0 6px;"></p>
+      <div id="modalBody" class="modal-body"></div>
     </div>
   </div>
-</section>
 
-<!-- CONTACT -->
-<section class="section reveal" id="contact">
-  <h3>Contact</h3>
-  <div class="contact">
-    <input id="c_name" placeholder="Name"/>
-    <input id="c_email" placeholder="Email"/>
-    <textarea id="c_msg" placeholder="Message"></textarea>
-    <button class="btn primary" onclick="alert('Sent! (demo)')">Send</button>
+  <!-- Command Palette -->
+  <div class="cmd-backdrop" id="cmdBackdrop" aria-hidden="true">
+    <div class="cmd-palette" role="dialog" aria-modal="true" aria-label="Command palette">
+      <div class="cmd-header">Quick actions</div>
+      <input id="cmdInput" class="cmd-input" placeholder="Type: work, promo, retail, contact, resume, theme..." />
+      <ul id="cmdList" class="cmd-list"></ul>
+      <div class="cmd-hint">Ctrl+K to open · Esc to close · ↑/↓ to move · Enter to run</div>
+    </div>
   </div>
-</section>
-
-<footer>Designed with Fluent UI logic — Arpit @ Microsoft</footer>
 
 <script>
-/* =========================
-   Molecule Canvas Physics (kept, softened)
-========================= */
-const canvas=document.getElementById('moleculeCanvas');
-const ctx=canvas.getContext('2d');
-let W,H,DPR=window.devicePixelRatio||1;
-let atoms=[];
+/* ===== DATA: skills & projects ===== */
+const SKILLS = [
+  {id:'sql',label:'SQL',lvl:'Expert',desc:'Relational queries, window functions, MySQL Workbench'},
+  {id:'python',label:'Python',lvl:'Expert',desc:'Pandas, NumPy, scripting, ETL'},
+  {id:'pandas',label:'Pandas',lvl:'Expert',desc:'Dataframes, joins, cleaning'},
+  {id:'powerbi',label:'Power BI',lvl:'Advanced',desc:'Dashboards & measures'},
+  {id:'tableau',label:'Tableau',lvl:'Advanced',desc:'Viz & dashboards'},
+  {id:'excel',label:'Advanced Excel',lvl:'Advanced',desc:'Pivot tables and modeling'},
+  {id:'pivot',label:'Pivot Tables',lvl:'Advanced',desc:'Slicing & analysis'},
+  {id:'dataclean',label:'Data Cleaning',lvl:'Expert',desc:'Missing values, normalization'},
+  {id:'dataviz',label:'Data Visualization',lvl:'Advanced',desc:'Story-driven visuals'},
+  {id:'spss',label:'SPSS',lvl:'Advanced',desc:'Stat tests & regressions'},
+  {id:'brd',label:'BRD/FRD/SRS',lvl:'Intermediate',desc:'Requirements docs'},
+  {id:'datainterp',label:'Data Interpretation',lvl:'Advanced',desc:'Insights & recommendations'},
+  {id:'azure',label:'Azure',lvl:'Intermediate',desc:'Cloud & Databricks'},
+  {id:'git',label:'Git / GitHub',lvl:'Intermediate',desc:'Version control'}
+];
 
-function resize(){
-  W=canvas.clientWidth;
-  H=canvas.clientHeight;
-  canvas.width=W*DPR;
-  canvas.height=H*DPR;
-  ctx.scale(DPR,DPR);
+const PROJECTS = [
+  {
+    id:'promo',
+    title:'Smart Promotion Profitability Tracker',
+    tags:['ETL','SQL','Power BI'],
+    blurb:'Promo uplift modelling & profitability command center.',
+    long:'Built ETL pipelines in Python, A/B tests and uplift modeling, and created a Power BI command center to track promotion ROI and margin lift across campaigns.',
+    thumb:'SmartPromotionProfitabilityTracker.jpg',
+    media:[ {type:'img', src:'SmartPromotionProfitabilityTracker.jpg', caption:'Command center snapshot'} ]
+  },
+  {
+    id:'retail',
+    title:'Retail & Logistics Intelligence Hub',
+    tags:['Geo','SQL','Tableau'],
+    blurb:'Route optimisation & forecasting, Snowflake analytics.',
+    long:'End-to-end analytics for logistics—forecasting, route optimisation, and cloud analytics in Snowflake and Tableau. Focused on weekly ops reviews and route decisions, not just static reports.',
+    thumb:'Retail&LogisticsIntelligenceHub.jpg',
+    media:[ {type:'img', src:'Retail&LogisticsIntelligenceHub.jpg', caption:'Logistics dashboard'}, {type:'video', src:'canva-R7Y5xsjlsvA.mp4', caption:'Walkthrough (mp4)'} ]
+  },
+  {
+    id:'supply',
+    title:'Supply Chain Disruption Prediction',
+    tags:['Spark','Azure','Anomaly','SQL'],
+    blurb:'Realtime anomaly detection across 8M+ events.',
+    long:'Spark streaming + TensorFlow for anomaly detection, with an alerting layer and Power BI dashboards for ops. Designed to show “what broke, where, and who needs to jump in” in under 30 seconds.',
+    thumb:'SupplyChainDisruptionPrediction.jpg',
+    media:[ {type:'img', src:'SupplyChainDisruptionPrediction.jpg', caption:'Anomaly overview'} ]
+  },
+  {
+    id:'print',
+    title:'Print Production Analytics',
+    tags:['Power BI','Ops','Python'],
+    blurb:'Telemetry ingestion & defect analytics.',
+    long:'Telemetry ingestion, defect classification, and interactive dashboards that helped reduce defects in production lines and highlight bottlenecks for plant leadership.',
+    thumb:'PrintProductionAnalytics.jpg',
+    media:[ {type:'img', src:'PrintProductionAnalytics.jpg', caption:'Production KPIs'} ]
+  }
+];
+
+/* DOM refs */
+const galleryEl   = document.getElementById('gallery');
+const filtersEl   = document.getElementById('filters');
+const backdrop    = document.getElementById('backdrop');
+const modalTitle  = document.getElementById('modalTitle');
+const modalBlurb  = document.getElementById('modalBlurb');
+const modalBody   = document.getElementById('modalBody');
+const skillDetailsEl = document.getElementById('skillDetails');
+const resumeLink  = document.getElementById('resumeLink');
+const sections    = document.querySelectorAll('.page-section');
+const tabs        = document.querySelectorAll('.page-tab');
+const msBgInner   = document.getElementById('ms-bg-inner');
+const themeToggle = document.getElementById('themeToggle');
+const heroVideoShell = document.getElementById('heroVideoShell');
+const heroCopy    = document.getElementById('heroCopy');
+const metricMainEls = document.querySelectorAll('.metric-main');
+const viewButtons = document.querySelectorAll('.view-btn');
+const personaContainer = document.getElementById('personaChips');
+const searchInput = document.getElementById('projectSearch');
+
+/* command palette refs */
+const cmdBackdrop = document.getElementById('cmdBackdrop');
+const cmdInput    = document.getElementById('cmdInput');
+const cmdList     = document.getElementById('cmdList');
+
+let metricsAnimated = false;
+
+/* filters state */
+let activeTag = 'All';
+let activePersona = 'All';
+let searchTerm = '';
+
+/* persona -> projects mapping */
+const PERSONA_MAP = {
+  'VP Ops': ['retail','supply','print'],
+  'Retail Lead': ['retail','promo'],
+  'Marketing': ['promo']
+};
+
+/* ===== Filters + gallery ===== */
+function setupFilters(){
+  const tags = Array.from(new Set(PROJECTS.flatMap(p=>p.tags)));
+  filtersEl.innerHTML = '';
+  const all = document.createElement('button');
+  all.className='chip active';
+  all.textContent='All';
+  all.dataset.tag = 'All';
+  filtersEl.appendChild(all);
+
+  tags.forEach(t=>{
+    const b = document.createElement('button');
+    b.className='chip';
+    b.textContent = t;
+    b.dataset.tag = t;
+    filtersEl.appendChild(b);
+  });
+
+  filtersEl.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.chip');
+    if(!btn) return;
+    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    btn.classList.add('active');
+    activeTag = btn.dataset.tag || 'All';
+    applyProjectFilters();
+  });
 }
-window.addEventListener('resize',resize);
 
-function makeAtoms(){
-  atoms=[];
-  for(let i=0;i<16;i++){
+function personaMatches(project, persona){
+  if(persona === 'All') return true;
+  const list = PERSONA_MAP[persona] || [];
+  return list.includes(project.id);
+}
+
+function applyProjectFilters(){
+  let list = PROJECTS.slice();
+  if(activeTag !== 'All'){
+    list = list.filter(p=>p.tags.includes(activeTag));
+  }
+  if(activePersona !== 'All'){
+    list = list.filter(p=>personaMatches(p, activePersona));
+  }
+  if(searchTerm){
+    const q = searchTerm.toLowerCase();
+    list = list.filter(p=>{
+      const hay = (p.title + ' ' + p.blurb + ' ' + p.long + ' ' + p.tags.join(' ')).toLowerCase();
+      return hay.includes(q);
+    });
+  }
+  renderGallery(list);
+}
+
+function renderGallery(list){
+  galleryEl.innerHTML = '';
+  list.forEach(p=>{
+    const card = document.createElement('article');
+    card.className = 'proj-card';
+    card.tabIndex = 0;
+    const thumbHtml = p.thumb
+      ? `<div class="proj-thumb"><img src="${p.thumb}" alt="${p.title}"></div>`
+      : `<div class="proj-thumb">${p.tags.join(' • ')}</div>`;
+    card.innerHTML =
+      thumbHtml +
+      `<div class="proj-info">
+         <h4>${p.title}</h4>
+         <div class="proj-meta">
+           <div style="max-width:68%">${p.blurb}</div>
+           <div style="color:var(--muted);font-weight:700">${p.tags[0]||''}</div>
+         </div>
+         <div class="proj-tags">
+           ${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}
+         </div>
+       </div>`;
+    card.addEventListener('click', ()=> openCaseStudy(p));
+    card.addEventListener('keydown',(e)=>{ if(e.key==='Enter') openCaseStudy(p); });
+    galleryEl.appendChild(card);
+  });
+}
+
+/* search + personas */
+if(searchInput){
+  searchInput.addEventListener('input', (e)=>{
+    searchTerm = e.target.value.trim();
+    applyProjectFilters();
+  });
+}
+
+if(personaContainer){
+  personaContainer.addEventListener('click',(e)=>{
+    const btn = e.target.closest('.persona-chip');
+    if(!btn) return;
+    document.querySelectorAll('.persona-chip').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    activePersona = btn.dataset.persona || 'All';
+    applyProjectFilters();
+  });
+}
+
+/* ===== Case-study overlay ===== */
+function openCaseStudy(p){
+  modalTitle.textContent = p.title;
+  modalBlurb.textContent = p.blurb;
+  modalBody.innerHTML = `<p style="color:var(--muted)">${p.long}</p>`;
+  if(Array.isArray(p.media) && p.media.length){
+    const grid = document.createElement('div');
+    grid.className = 'media-grid';
+    p.media.forEach(m=>{
+      const box = document.createElement('div');
+      if(m.type === 'img'){
+        box.innerHTML =
+          `<img src="${m.src}" alt="${m.caption||p.title}">
+           <div style="color:var(--muted);font-size:13px;margin-top:6px">${m.caption||''}</div>`;
+      } else if(m.type === 'video'){
+        box.innerHTML =
+          `<video controls>
+             <source src="${m.src}" type="video/mp4">
+             Your browser doesn't support video.
+           </video>
+           <div style="color:var(--muted);font-size:13px;margin-top:6px">${m.caption||''}</div>`;
+      }
+      grid.appendChild(box);
+    });
+    modalBody.appendChild(grid);
+  }
+  backdrop.style.display = 'flex';
+  requestAnimationFrame(()=> backdrop.classList.add('show'));
+  backdrop.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+}
+
+document.getElementById('closeModal').addEventListener('click', closeModal);
+backdrop.addEventListener('click',(e)=>{ if(e.target === backdrop) closeModal(); });
+
+function closeModal(){
+  backdrop.classList.remove('show');
+  backdrop.setAttribute('aria-hidden','true');
+  document.body.style.overflow = 'auto';
+  setTimeout(()=>{ backdrop.style.display='none'; }, 220);
+}
+
+/* ===== Contact demo ===== */
+document.getElementById('sendBtn').addEventListener('click', ()=>{
+  const n = document.getElementById('c_name').value.trim();
+  const e = document.getElementById('c_email').value.trim();
+  const m = document.getElementById('c_msg').value.trim();
+  if(!n||!e||!m){
+    document.getElementById('contactResult').textContent =
+      'Please fill name, email & message.';
+    return;
+  }
+  document.getElementById('contactResult').textContent =
+    `Thanks ${n.split(' ')[0]} — message queued (demo).`;
+  document.getElementById('contactForm').reset();
+});
+
+document.getElementById('clearBtn').addEventListener('click', ()=>{
+  document.getElementById('contactForm').reset();
+  document.getElementById('contactResult').textContent = '';
+});
+
+/* ===== Resume upload (local only) ===== */
+document.getElementById('resumeUploader').addEventListener('change',(e)=>{
+  const f = e.target.files[0]; if(!f) return;
+  const url = URL.createObjectURL(f);
+  resumeLink.href = url;
+  alert('Local resume link updated in browser (demo). To make it permanent, place your final PDF as "Me Resume.pdf" next to this HTML and keep the same name.');
+});
+
+/* ===== Molecule engine ===== */
+const mcanvas = document.getElementById('moleculeCanvas');
+const mnodes = document.getElementById('moleculeNodes');
+const ctx     = mcanvas.getContext('2d');
+let W = 0, H = 0, DPR = window.devicePixelRatio || 1;
+let atoms = [];
+
+function resizeM(){
+  DPR = window.devicePixelRatio || 1;
+  W = mcanvas.clientWidth;
+  H = mcanvas.clientHeight;
+  mcanvas.width  = Math.max(1, Math.floor(W * DPR));
+  mcanvas.height = Math.max(1, Math.floor(H * DPR));
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+window.addEventListener('resize', ()=>{ resizeM(); placeAtoms(); });
+
+function placeAtoms(){
+  mnodes.innerHTML = '';
+  atoms = [];
+  const center = {x: W/2, y: H/2};
+  const angleStep = (Math.PI * 2) / SKILLS.length;
+  SKILLS.forEach((s,i)=>{
+    const angle  = i * angleStep + (Math.random()*0.6 - 0.3);
+    const radius = 90 + Math.random()*130;
+    const x = center.x + Math.cos(angle) * radius;
+    const y = center.y + Math.sin(angle) * radius;
+    const r = 10 + Math.random()*14;
+    const atom = {
+      x,
+      y,
+      vx:(Math.random()-0.5)*0.25,
+      vy:(Math.random()-0.5)*0.25,
+      r,
+      label: s.label,
+      id: s.id,
+      desc: s.desc || ''
+    };
+
+    const pill = document.createElement('button');
+    pill.className = 'node-pill';
+    pill.style.left = (x - 60) + 'px';
+    pill.style.top  = (y - 18) + 'px';
+    pill.innerHTML =
+      `<div style="font-weight:600">${s.label}</div>
+       <span class="lvl">${s.lvl||''}</span>`;
+    pill.dataset.skill = s.id;
+    pill.setAttribute('aria-label', `${s.label} — ${s.lvl||''}`);
+    pill.addEventListener('click', ()=>{ selectSkill(s.id); });
+    pill.addEventListener('keydown',(e)=>{ if(e.key==='Enter') selectSkill(s.id); });
+    mnodes.appendChild(pill);
+    atom.el = pill;
+    atoms.push(atom);
+  });
+
+  // decorative floaters
+  for(let k=0;k<18;k++){
     atoms.push({
-      x:Math.random()*W,
-      y:Math.random()*H,
-      vx:(Math.random()-0.5)*0.3,
-      vy:(Math.random()-0.5)*0.3,
-      r:6+Math.random()*10
+      x: Math.random()*W,
+      y: Math.random()*H,
+      vx:(Math.random()-0.5)*0.15,
+      vy:(Math.random()-0.5)*0.15,
+      r:2+Math.random()*6,
+      label:null
     });
   }
 }
-function draw(){
+
+function drawAtoms(){
   ctx.clearRect(0,0,W,H);
+
   atoms.forEach(a=>{
-    a.x+=a.vx; a.y+=a.vy;
-    if(a.x<0||a.x>W) a.vx*=-1;
-    if(a.y<0||a.y>H) a.vy*=-1;
+    a.x += a.vx;
+    a.y += a.vy;
+    if(a.x < 6 || a.x > W-6) a.vx *= -1;
+    if(a.y < 6 || a.y > H-6) a.vy *= -1;
+
     ctx.beginPath();
-    ctx.fillStyle='rgba(37,96,224,0.18)';
-    ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
-    ctx.fill();
+    if(a.label){
+      ctx.fillStyle   = 'rgba(255,255,255,0.98)';
+      ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+      ctx.lineWidth   = 1;
+      ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
+      ctx.fill();
+      ctx.stroke();
+    } else {
+      ctx.fillStyle = 'rgba(0,0,0,0.04)';
+      ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
+      ctx.fill();
+    }
+
+    if(a.el){
+      a.el.style.left = (a.x - 60) + 'px';
+      a.el.style.top  = (a.y - 18) + 'px';
+    }
   });
-  requestAnimationFrame(draw);
+
+  // links between labeled atoms
+  for(let i=0;i<atoms.length;i++){
+    for(let j=i+1;j<atoms.length;j++){
+      const A = atoms[i], B = atoms[j];
+      if(!A.label || !B.label) continue;
+      const dx = A.x - B.x, dy = A.y - B.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist < 200){
+        const alpha = 1 - (dist / 200);
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(37,96,224,${0.05 * alpha})`;
+        ctx.lineWidth   = 1 * alpha;
+        ctx.moveTo(A.x, A.y);
+        ctx.lineTo(B.x, B.y);
+        ctx.stroke();
+      }
+    }
+  }
+
+  requestAnimationFrame(drawAtoms);
 }
 
-resize(); makeAtoms(); draw();
+document.getElementById('shuffleNodes').addEventListener('click', ()=>{
+  atoms.forEach(a=>{
+    a.vx += (Math.random()-0.5)*0.8;
+    a.vy += (Math.random()-0.5)*0.8;
+  });
+});
 
-/* =========================
-   Scroll Reveal Logic
-========================= */
-const reveals=document.querySelectorAll('.reveal');
-function revealScroll(){
-  reveals.forEach(el=>{
-    const rect=el.getBoundingClientRect().top;
-    if(rect<window.innerHeight*0.82) el.classList.add('visible');
+document.getElementById('resetNodes').addEventListener('click', ()=>{
+  placeAtoms();
+  activeTag = 'All';
+  activePersona = 'All';
+  searchTerm = '';
+  if(searchInput) searchInput.value = '';
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  document.querySelector('.chip')?.classList.add('active');
+  document.querySelectorAll('.persona-chip').forEach(b=>b.classList.remove('active'));
+  document.querySelector('.persona-chip')?.classList.add('active');
+  document.querySelectorAll('.node-pill').forEach(p=>{ p.style.opacity='1'; p.classList.remove('selected'); });
+  skillDetailsEl.textContent = 'Click a node to see details.';
+  applyProjectFilters();
+});
+
+function selectSkill(id){
+  const s = SKILLS.find(x=>x.id===id);
+  if(!s) return;
+  skillDetailsEl.textContent = `${s.label} — ${s.desc || ''}`;
+  searchTerm = s.label;
+  if(searchInput) searchInput.value = s.label;
+  applyProjectFilters();
+  document.querySelectorAll('.node-pill').forEach(p=>{
+    const match = p.dataset.skill === id;
+    p.style.opacity = match ? '1' : '0.35';
+    p.classList.toggle('selected', match);
   });
 }
-window.addEventListener('scroll',revealScroll);
-revealScroll();
+
+/* ===== page tabs + scroll reveal / metrics ===== */
+const sectionObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      const id = entry.target.id;
+      tabs.forEach(t=>{
+        t.classList.toggle('active', t.getAttribute('href') === '#' + id);
+      });
+
+      if(id === 'overview' && !metricsAnimated){
+        animateMetrics();
+        metricsAnimated = true;
+      }
+    }
+  });
+},{threshold:0.25});
+
+sections.forEach(sec=>sectionObserver.observe(sec));
+
+/* metric counters */
+function animateMetrics(){
+  metricMainEls.forEach(el=>{
+    const target = Number(el.dataset.target || '0');
+    const suffix = el.dataset.suffix || '';
+    let current = 0;
+    const steps = 30;
+    const stepVal = target / steps;
+    let count = 0;
+    const interval = setInterval(()=>{
+      count++;
+      current += stepVal;
+      if(count >= steps){
+        current = target;
+        clearInterval(interval);
+      }
+      el.textContent = Math.round(current) + suffix;
+    }, 30);
+  });
+}
+
+/* ===== parallax MS logo + hero ===== */
+window.addEventListener('scroll', ()=>{
+  const y = window.scrollY || 0;
+  if(msBgInner){
+    const offset = y * -0.08;
+    const scale  = 1 + Math.min(y/2000, 0.08);
+    const opacity = 0.10 + Math.min(y/1500, 0.06);
+    msBgInner.style.transform = `translateY(${offset}px) scale(${scale})`;
+    msBgInner.style.opacity   = opacity.toString();
+  }
+  if(heroVideoShell && heroCopy){
+    const smallOffset = y * 0.02;
+    heroVideoShell.style.transform = `translateY(${smallOffset}px)`;
+    heroCopy.style.transform       = `translateY(${smallOffset * 0.6}px)`;
+  }
+});
+
+/* ===== theme toggle ===== */
+function applyTheme(theme){
+  document.body.setAttribute('data-theme', theme);
+  localStorage.setItem('aa-theme', theme);
+  if(themeToggle){
+    themeToggle.textContent = theme === 'dark' ? '☀︎ Light' : '☾ Dark';
+  }
+}
+
+if(themeToggle){
+  themeToggle.addEventListener('click', ()=>{
+    const current = document.body.getAttribute('data-theme') || 'light';
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+  });
+}
+
+const savedTheme = localStorage.getItem('aa-theme') || 'light';
+applyTheme(savedTheme);
+
+/* ===== view mode switch ===== */
+function setMode(mode){
+  document.body.setAttribute('data-mode', mode);
+  viewButtons.forEach(b=>{
+    b.classList.toggle('active', b.dataset.mode === mode);
+  });
+}
+
+viewButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const mode = btn.dataset.mode || 'deep';
+    setMode(mode);
+  });
+});
+
+/* ===== Command Palette ===== */
+const COMMANDS = [
+  { id:'go-overview', label:'Go to Overview', hint:'#overview', run:()=> scrollToSection('overview') },
+  { id:'go-skills', label:'Go to Skills', hint:'#skills', run:()=> scrollToSection('skills') },
+  { id:'go-work', label:'Go to Work / Projects', hint:'#work', run:()=> scrollToSection('work') },
+  { id:'go-systems', label:'Go to Systems & Playbooks', hint:'#systems', run:()=> scrollToSection('systems') },
+  { id:'go-about', label:'Go to About', hint:'#about', run:()=> scrollToSection('about') },
+  { id:'go-contact', label:'Go to Contact', hint:'#contact', run:()=> scrollToSection('contact') },
+  { id:'open-promo', label:'Open case study · Promotion Profitability', hint:'Smart Promotion Profitability Tracker', run:()=> openCaseStudy(PROJECTS.find(p=>p.id==='promo')) },
+  { id:'open-retail', label:'Open case study · Retail & Logistics Hub', hint:'Retail & Logistics Intelligence Hub', run:()=> openCaseStudy(PROJECTS.find(p=>p.id==='retail')) },
+  { id:'open-supply', label:'Open case study · Supply Chain Disruption', hint:'Supply Chain Disruption Prediction', run:()=> openCaseStudy(PROJECTS.find(p=>p.id==='supply')) },
+  { id:'open-print', label:'Open case study · Print Production Analytics', hint:'Print Production Analytics', run:()=> openCaseStudy(PROJECTS.find(p=>p.id==='print')) },
+  { id:'view-resume', label:'View Resume', hint:'Open Me Resume.pdf', run:()=> resumeLink && resumeLink.click() },
+  { id:'toggle-theme', label:'Toggle theme (Light/Dark)', hint:'Appearance', run:()=> themeToggle && themeToggle.click() },
+  { id:'focus-search', label:'Focus project search', hint:'Work section', run:()=> searchInput && searchInput.focus() },
+];
+
+let filteredCommands = COMMANDS.slice();
+let cmdActiveIndex = 0;
+
+function renderCommandList(){
+  cmdList.innerHTML = '';
+  filteredCommands.forEach((cmd, idx)=>{
+    const li = document.createElement('li');
+    li.className = 'cmd-item' + (idx === cmdActiveIndex ? ' active' : '');
+    li.dataset.index = idx;
+    li.innerHTML = `<div>${cmd.label}</div><span>${cmd.hint}</span>`;
+    li.addEventListener('click', ()=> runCommandAt(idx));
+    cmdList.appendChild(li);
+  });
+}
+
+function runCommandAt(index){
+  const cmd = filteredCommands[index];
+  if(!cmd) return;
+  closeCommandPalette();
+  cmd.run();
+}
+
+function openCommandPalette(){
+  cmdBackdrop.classList.add('show');
+  cmdBackdrop.setAttribute('aria-hidden','false');
+  cmdInput.value = '';
+  filteredCommands = COMMANDS.slice();
+  cmdActiveIndex = 0;
+  renderCommandList();
+  setTimeout(()=> cmdInput.focus(), 10);
+}
+
+function closeCommandPalette(){
+  cmdBackdrop.classList.remove('show');
+  cmdBackdrop.setAttribute('aria-hidden','true');
+}
+
+cmdInput.addEventListener('input', (e)=>{
+  const q = e.target.value.trim().toLowerCase();
+  if(!q){
+    filteredCommands = COMMANDS.slice();
+  } else {
+    filteredCommands = COMMANDS.filter(c=>
+      c.label.toLowerCase().includes(q) ||
+      c.hint.toLowerCase().includes(q)
+    );
+  }
+  cmdActiveIndex = 0;
+  renderCommandList();
+});
+
+cmdBackdrop.addEventListener('click',(e)=>{
+  if(e.target === cmdBackdrop) closeCommandPalette();
+});
+
+/* keyboard nav for command palette + modal */
+window.addEventListener('keydown',(e)=>{
+  // Ctrl+K toggles palette
+  if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){
+    e.preventDefault();
+    if(cmdBackdrop.classList.contains('show')){
+      closeCommandPalette();
+    } else {
+      openCommandPalette();
+    }
+    return;
+  }
+
+  // Esc closes modal or command palette
+  if(e.key === 'Escape'){
+    if(cmdBackdrop.classList.contains('show')){
+      closeCommandPalette();
+    } else if(backdrop.style.display === 'flex'){
+      closeModal();
+    }
+  }
+
+  // Up/down/enter navigation in command palette
+  if(cmdBackdrop.classList.contains('show')){
+    if(e.key === 'ArrowDown'){
+      e.preventDefault();
+      cmdActiveIndex = Math.min(cmdActiveIndex + 1, filteredCommands.length - 1);
+      renderCommandList();
+    } else if(e.key === 'ArrowUp'){
+      e.preventDefault();
+      cmdActiveIndex = Math.max(cmdActiveIndex - 1, 0);
+      renderCommandList();
+    } else if(e.key === 'Enter'){
+      e.preventDefault();
+      runCommandAt(cmdActiveIndex);
+    }
+  }
+});
+
+function scrollToSection(id){
+  const el = document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth'});
+}
+
+/* ===== init ===== */
+function init(){
+  resizeM();
+  placeAtoms();
+  drawAtoms();
+  setupFilters();
+  applyProjectFilters();
+  // mark first section as visible by default
+  document.getElementById('overview')?.classList.add('visible');
+  // initial command list render
+  renderCommandList();
+}
+window.addEventListener('load', init);
 </script>
-
 </body>
 </html>
