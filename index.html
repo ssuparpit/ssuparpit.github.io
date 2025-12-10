@@ -52,7 +52,26 @@ body{
 
 a{color:inherit;text-decoration:none}
 
-/* ===== animated Microsoft background (no image file) ===== */
+/* ===== Dark theme overrides (body[data-theme="dark"]) ===== */
+body[data-theme="dark"]{
+  --bg:#020617;
+  --bg-soft:#020617;
+  --card:#020617;
+  --muted:#9CA3AF;
+  --ink:#E5E7EB;
+
+  --accent:#60A5FA;
+  --accent-soft:#1D4ED8;
+
+  --border:#1F2937;
+  --border-strong:#4B5563;
+  --glass:#1F2937;
+
+  --soft-shadow:0 2px 12px rgba(0,0,0,0.7);
+  background:radial-gradient(circle at 0 0,#020617 0,#020617 45%,#020617 100%);
+}
+
+/* ===== animated Microsoft background (CSS-only) ===== */
 
 #ms-bg{
   position:fixed;
@@ -85,6 +104,11 @@ a{color:inherit;text-decoration:none}
 #ms-bg-blue{background:#00A4EF;}
 #ms-bg-yellow{background:#FFB900;}
 
+body[data-theme="dark"] #ms-bg-inner{
+  opacity:0.09;
+  filter:blur(0.7px);
+}
+
 /* ===== scroll reveal for sections ===== */
 
 .page-section{
@@ -98,7 +122,7 @@ a{color:inherit;text-decoration:none}
   transform:translateY(0);
 }
 
-/* ===== header ===== */
+/* ===== layout & sticky header ===== */
 
 .container{
   max-width:var(--maxw);
@@ -107,13 +131,24 @@ a{color:inherit;text-decoration:none}
 }
 
 .topbar{
+  position:sticky;
+  top:0;
+  z-index:20;
   display:flex;
   align-items:flex-start;
   justify-content:space-between;
   gap:20px;
-  padding-bottom:12px;
+  padding:10px 0 12px;
   border-bottom:1px solid var(--border);
+  backdrop-filter:blur(16px);
+  background:rgba(243,242,241,0.88);
 }
+
+body[data-theme="dark"] .topbar{
+  background:rgba(15,23,42,0.9);
+}
+
+/* ===== brand block ===== */
 
 .brand{
   display:flex;
@@ -210,10 +245,21 @@ a{color:inherit;text-decoration:none}
   gap:6px;
 }
 
+body[data-theme="dark"] .btn{
+  background:#020617;
+  color:var(--ink);
+  border-color:var(--border-strong);
+}
+
 .btn:hover{
   background:#F3F2F1;
   border-color:var(--border-strong);
   box-shadow:0 1px 3px rgba(0,0,0,0.2);
+}
+
+body[data-theme="dark"] .btn:hover{
+  background:#020617;
+  box-shadow:0 1px 5px rgba(0,0,0,0.7);
 }
 
 .btn.primary{
@@ -238,6 +284,7 @@ a{color:inherit;text-decoration:none}
   display:flex;
   gap:10px;
   flex-wrap:wrap;
+  justify-content:flex-end;
 }
 
 .page-tab{
@@ -258,14 +305,14 @@ a{color:inherit;text-decoration:none}
 /* generic panels */
 
 .section-inner{
-  margin-top:24px;
+  margin-top:26px;
 }
 
 .panel{
   background:var(--card);
   border-radius:var(--radius);
   border:1px solid var(--border);
-  padding:16px 18px;
+  padding:18px 18px 16px;
   box-shadow:var(--soft-shadow);
 }
 
@@ -276,7 +323,7 @@ a{color:inherit;text-decoration:none}
 }
 
 .section-title{
-  font-size:15px;
+  font-size:16px;
   font-weight:600;
   margin-bottom:8px;
 }
@@ -299,11 +346,21 @@ a{color:inherit;text-decoration:none}
   gap:10px;
 }
 
+body[data-theme="dark"] .hero-banner{
+  background:linear-gradient(135deg,#020617,#020617);
+  border-color:#1D4ED8;
+}
+
 .hero-video{
   border-radius:10px;
   overflow:hidden;
   border:1px solid #CED8FF;
   box-shadow:0 10px 25px rgba(38,84,180,0.17);
+}
+
+body[data-theme="dark"] .hero-video{
+  border-color:#1D4ED8;
+  box-shadow:0 10px 30px rgba(0,0,0,0.8);
 }
 
 .hero-video video{
@@ -331,6 +388,10 @@ a{color:inherit;text-decoration:none}
   border:1px solid var(--border);
   background:var(--bg-soft);
   padding:12px 14px;
+}
+
+body[data-theme="dark"] .hero-side{
+  background:#020617;
 }
 
 .hero-side h4{
@@ -363,6 +424,10 @@ a{color:inherit;text-decoration:none}
   background:#FFFFFF;
 }
 
+body[data-theme="dark"] .molecule-wrap{
+  background:#020617;
+}
+
 canvas#moleculeCanvas{
   position:absolute;
   inset:0;
@@ -393,6 +458,11 @@ canvas#moleculeCanvas{
   gap:4px;
 }
 
+body[data-theme="dark"] .node-pill{
+  background:#020617;
+  color:var(--ink);
+}
+
 .node-pill .lvl{
   font-size:10px;
   color:var(--muted);
@@ -401,7 +471,7 @@ canvas#moleculeCanvas{
 
 .node-pill:hover{
   transform:translateY(-3px);
-  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+  box-shadow:0 8px 20px rgba(0,0,0,0.12);
 }
 
 .skills-tip{
@@ -424,6 +494,11 @@ canvas#moleculeCanvas{
   border:1px solid #CEDBFF;
   background:#F3F7FF;
   padding:12px 14px;
+}
+
+body[data-theme="dark"] .experience-panel{
+  background:#020617;
+  border-color:#1D4ED8;
 }
 
 .experience-header{
@@ -455,6 +530,11 @@ canvas#moleculeCanvas{
   font-weight:600;
 }
 
+body[data-theme="dark"] .experience-badge{
+  background:#1D4ED8;
+  color:#E5E7EB;
+}
+
 .experience-list{
   margin:8px 0 8px 0;
   padding-left:18px;
@@ -472,6 +552,9 @@ canvas#moleculeCanvas{
 }
 .ms-link a:hover{
   color:#1E4EB7;
+}
+body[data-theme="dark"] .ms-link a{
+  color:#93C5FD;
 }
 
 /* selected skill text */
@@ -502,10 +585,21 @@ canvas#moleculeCanvas{
   cursor:pointer;
 }
 
+body[data-theme="dark"] .chip{
+  background:#020617;
+  border-color:var(--border);
+}
+
 .chip.active{
   background:var(--accent-soft);
   color:var(--ink);
   border-color:var(--accent);
+}
+
+/* dark mode chip override */
+body[data-theme="dark"] .chip.active{
+  background:#1D4ED8;
+  color:#E5E7EB;
 }
 
 .grid-projects{
@@ -528,9 +622,18 @@ canvas#moleculeCanvas{
   cursor:pointer;
 }
 
+body[data-theme="dark"] .proj-card{
+  background:#020617;
+  box-shadow:0 4px 20px rgba(0,0,0,0.7);
+}
+
 .proj-card:hover{
-  transform:translateY(-2px);
+  transform:translateY(-2px) scale(1.01);
   box-shadow:0 8px 22px rgba(0,0,0,0.12);
+}
+
+body[data-theme="dark"] .proj-card:hover{
+  box-shadow:0 10px 28px rgba(0,0,0,0.9);
 }
 
 .proj-thumb{
@@ -538,6 +641,10 @@ canvas#moleculeCanvas{
   border-radius:6px;
   overflow:hidden;
   background:#F3F2F1;
+}
+
+body[data-theme="dark"] .proj-thumb{
+  background:#020617;
 }
 
 .proj-thumb img{
@@ -594,6 +701,12 @@ textarea{
   background:#FFFFFF;
 }
 
+body[data-theme="dark"] .input,
+body[data-theme="dark"] textarea{
+  background:#020617;
+  color:var(--ink);
+}
+
 textarea{
   min-height:110px;
   resize:vertical;
@@ -620,20 +733,34 @@ textarea:focus{
   inset:0;
   background:rgba(12,15,20,0.5);
   display:none;
-  align-items:center;
+  align-items:flex-end;
   justify-content:center;
   z-index:999;
+  opacity:0;
+  transition:opacity .22s ease;
+}
+
+.backdrop.show{
+  opacity:1;
 }
 
 .modal{
   width:min(880px,94%);
   background:var(--card);
   padding:18px;
-  border-radius:8px;
+  border-radius:16px 16px 0 0;
   border:1px solid var(--border);
-  max-height:90vh;
+  max-height:86vh;
   overflow:auto;
-  box-shadow:0 12px 35px rgba(0,0,0,0.25);
+  box-shadow:0 -12px 35px rgba(0,0,0,0.35);
+  transform:translateY(24px);
+  opacity:0;
+  transition:transform .22s ease,opacity .22s ease;
+}
+
+.backdrop.show .modal{
+  transform:translateY(0);
+  opacity:1;
 }
 
 .modal .media-grid{
@@ -685,7 +812,7 @@ footer{
   </div>
 
   <div class="container">
-    <!-- HEADER -->
+    <!-- HEADER / COMMAND BAR -->
     <header class="topbar">
       <div class="brand">
         <div class="avatar">
@@ -708,13 +835,14 @@ footer{
 
       <div>
         <div class="top-actions">
+          <button class="btn ghost" id="themeToggle" type="button">☾ Dark</button>
           <!-- also make sure this file exists -->
           <a id="resumeLink" href="Me Resume.pdf" class="btn" target="_blank" rel="noopener">Resume</a>
           <label class="btn ghost">
             <input id="resumeUploader" type="file" accept=".pdf,.doc,.docx" hidden />
             Upload
           </label>
-          <button class="btn primary" id="contactBtn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</button>
+          <button class="btn primary" id="contactBtn" type="button" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</button>
         </div>
         <nav class="page-tabs" aria-label="Sections">
           <a href="#overview" class="page-tab active">Overview</a>
@@ -749,10 +877,10 @@ footer{
                 Inspired by internal Microsoft reporting patterns (demo only).
               </p>
               <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
-                <button class="btn" onclick="openCaseStudy(PROJECTS.find(p=>p.id==='retail'))">
+                <button class="btn" type="button" onclick="openCaseStudy(PROJECTS.find(p=>p.id==='retail'))">
                   Open case study
                 </button>
-                <button class="btn" onclick="document.getElementById('featuredVideo').play()">
+                <button class="btn" type="button" onclick="document.getElementById('featuredVideo').play()">
                   Play
                 </button>
               </div>
@@ -784,8 +912,8 @@ footer{
               <div class="skills-tip">
                 <span>Tip: click a node to filter projects.</span>
                 <span style="display:flex;gap:6px">
-                  <button class="btn" id="shuffleNodes" style="padding:4px 10px;font-size:11px;">Shuffle</button>
-                  <button class="btn" id="resetNodes" style="padding:4px 10px;font-size:11px;">Reset</button>
+                  <button class="btn" id="shuffleNodes" type="button" style="padding:4px 10px;font-size:11px;">Shuffle</button>
+                  <button class="btn" id="resetNodes" type="button" style="padding:4px 10px;font-size:11px;">Reset</button>
                 </span>
               </div>
             </div>
@@ -847,7 +975,7 @@ footer{
           </div>
           <div class="contact-actions">
             <button class="btn" id="clearBtn" type="button">Clear</button>
-            <button class="btn primary" id="sendBtn">Send</button>
+            <button class="btn primary" id="sendBtn" type="button">Send</button>
           </div>
           <div id="contactResult" style="margin-top:10px;color:var(--muted)"></div>
         </form>
@@ -856,14 +984,14 @@ footer{
     </section>
   </div>
 
-  <!-- Modal -->
+  <!-- Case-study overlay -->
   <div class="backdrop" id="backdrop" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <h3 id="modalTitle">Case study</h3>
-        <button class="btn" id="closeModal">Close</button>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+        <h3 id="modalTitle" style="margin:0;font-size:15px;">Case study</h3>
+        <button class="btn" id="closeModal" type="button">Close</button>
       </div>
-      <p id="modalBlurb" style="color:var(--muted)"></p>
+      <p id="modalBlurb" style="color:var(--muted);margin:8px 0 6px;"></p>
       <div id="modalBody" class="modal-body"></div>
     </div>
   </div>
@@ -927,19 +1055,20 @@ const PROJECTS = [
 ];
 
 /* DOM refs */
-const galleryEl = document.getElementById('gallery');
-const filtersEl = document.getElementById('filters');
-const backdrop = document.getElementById('backdrop');
-const modalTitle = document.getElementById('modalTitle');
-const modalBlurb = document.getElementById('modalBlurb');
-const modalBody = document.getElementById('modalBody');
+const galleryEl   = document.getElementById('gallery');
+const filtersEl   = document.getElementById('filters');
+const backdrop    = document.getElementById('backdrop');
+const modalTitle  = document.getElementById('modalTitle');
+const modalBlurb  = document.getElementById('modalBlurb');
+const modalBody   = document.getElementById('modalBody');
 const skillDetailsEl = document.getElementById('skillDetails');
-const resumeLink = document.getElementById('resumeLink');
-const sections = document.querySelectorAll('.page-section');
-const tabs = document.querySelectorAll('.page-tab');
-const msBgInner = document.getElementById('ms-bg-inner');
+const resumeLink  = document.getElementById('resumeLink');
+const sections    = document.querySelectorAll('.page-section');
+const tabs        = document.querySelectorAll('.page-tab');
+const msBgInner   = document.getElementById('ms-bg-inner');
+const themeToggle = document.getElementById('themeToggle');
 
-/* filters + gallery */
+/* ===== Filters + gallery ===== */
 function setupFilters(){
   const tags = Array.from(new Set(PROJECTS.flatMap(p=>p.tags)));
   filtersEl.innerHTML = '';
@@ -992,7 +1121,7 @@ function renderGallery(list){
   });
 }
 
-/* modal */
+/* ===== Case-study overlay ===== */
 function openCaseStudy(p){
   modalTitle.textContent = p.title;
   modalBlurb.textContent = p.blurb;
@@ -1019,6 +1148,7 @@ function openCaseStudy(p){
     modalBody.appendChild(grid);
   }
   backdrop.style.display = 'flex';
+  requestAnimationFrame(()=> backdrop.classList.add('show'));
   backdrop.setAttribute('aria-hidden','false');
   document.body.style.overflow = 'hidden';
 }
@@ -1027,12 +1157,13 @@ document.getElementById('closeModal').addEventListener('click', closeModal);
 backdrop.addEventListener('click',(e)=>{ if(e.target === backdrop) closeModal(); });
 
 function closeModal(){
-  backdrop.style.display='none';
+  backdrop.classList.remove('show');
   backdrop.setAttribute('aria-hidden','true');
   document.body.style.overflow = 'auto';
+  setTimeout(()=>{ backdrop.style.display='none'; }, 220);
 }
 
-/* contact demo */
+/* ===== Contact demo ===== */
 document.getElementById('sendBtn').addEventListener('click', ()=>{
   const n = document.getElementById('c_name').value.trim();
   const e = document.getElementById('c_email').value.trim();
@@ -1052,18 +1183,18 @@ document.getElementById('clearBtn').addEventListener('click', ()=>{
   document.getElementById('contactResult').textContent = '';
 });
 
-/* resume upload */
+/* ===== Resume upload (local only) ===== */
 document.getElementById('resumeUploader').addEventListener('change',(e)=>{
   const f = e.target.files[0]; if(!f) return;
   const url = URL.createObjectURL(f);
   resumeLink.href = url;
-  alert('Local resume link updated in browser (client-only). To make it permanent, replace Me Resume.pdf in your project.');
+  alert('Local resume link updated in browser (demo). To make it permanent, rename your file to "Me Resume.pdf" and keep it with this HTML.');
 });
 
-/* Molecule engine */
+/* ===== Molecule engine ===== */
 const mcanvas = document.getElementById('moleculeCanvas');
 const mnodes = document.getElementById('moleculeNodes');
-const ctx = mcanvas.getContext('2d');
+const ctx     = mcanvas.getContext('2d');
 let W = 0, H = 0, DPR = window.devicePixelRatio || 1;
 let atoms = [];
 
@@ -1071,7 +1202,7 @@ function resizeM(){
   DPR = window.devicePixelRatio || 1;
   W = mcanvas.clientWidth;
   H = mcanvas.clientHeight;
-  mcanvas.width = Math.max(1, Math.floor(W * DPR));
+  mcanvas.width  = Math.max(1, Math.floor(W * DPR));
   mcanvas.height = Math.max(1, Math.floor(H * DPR));
   ctx.setTransform(DPR,0,0,DPR,0,0);
 }
@@ -1083,7 +1214,7 @@ function placeAtoms(){
   const center = {x: W/2, y: H/2};
   const angleStep = (Math.PI * 2) / SKILLS.length;
   SKILLS.forEach((s,i)=>{
-    const angle = i * angleStep + (Math.random()*0.6 - 0.3);
+    const angle  = i * angleStep + (Math.random()*0.6 - 0.3);
     const radius = 90 + Math.random()*130;
     const x = center.x + Math.cos(angle) * radius;
     const y = center.y + Math.sin(angle) * radius;
@@ -1102,7 +1233,7 @@ function placeAtoms(){
     const pill = document.createElement('button');
     pill.className = 'node-pill';
     pill.style.left = (x - 60) + 'px';
-    pill.style.top = (y - 18) + 'px';
+    pill.style.top  = (y - 18) + 'px';
     pill.innerHTML =
       `<div style="font-weight:600">${s.label}</div>
        <span class="lvl">${s.lvl||''}</span>`;
@@ -1139,9 +1270,9 @@ function drawAtoms(){
 
     ctx.beginPath();
     if(a.label){
-      ctx.fillStyle = 'rgba(255,255,255,0.98)';
+      ctx.fillStyle   = 'rgba(255,255,255,0.98)';
       ctx.strokeStyle = 'rgba(0,0,0,0.06)';
-      ctx.lineWidth = 1;
+      ctx.lineWidth   = 1;
       ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
       ctx.fill();
       ctx.stroke();
@@ -1153,7 +1284,7 @@ function drawAtoms(){
 
     if(a.el){
       a.el.style.left = (a.x - 60) + 'px';
-      a.el.style.top = (a.y - 18) + 'px';
+      a.el.style.top  = (a.y - 18) + 'px';
     }
   });
 
@@ -1168,7 +1299,7 @@ function drawAtoms(){
         const alpha = 1 - (dist / 200);
         ctx.beginPath();
         ctx.strokeStyle = `rgba(37,96,224,${0.05 * alpha})`;
-        ctx.lineWidth = 1 * alpha;
+        ctx.lineWidth   = 1 * alpha;
         ctx.moveTo(A.x, A.y);
         ctx.lineTo(B.x, B.y);
         ctx.stroke();
@@ -1207,7 +1338,7 @@ function selectSkill(id){
   });
 }
 
-/* page tabs + scroll reveal */
+/* ===== page tabs + scroll reveal ===== */
 const sectionObserver = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
@@ -1222,18 +1353,38 @@ const sectionObserver = new IntersectionObserver((entries)=>{
 
 sections.forEach(sec=>sectionObserver.observe(sec));
 
-/* parallax Microsoft logo on scroll */
+/* ===== parallax Microsoft logo on scroll ===== */
 window.addEventListener('scroll', ()=>{
   if(!msBgInner) return;
   const y = window.scrollY || 0;
   const offset = y * -0.08;
-  const scale = 1 + Math.min(y/2000, 0.08);
+  const scale  = 1 + Math.min(y/2000, 0.08);
   const opacity = 0.10 + Math.min(y/1500, 0.06);
   msBgInner.style.transform = `translateY(${offset}px) scale(${scale})`;
-  msBgInner.style.opacity = opacity.toString();
+  msBgInner.style.opacity   = opacity.toString();
 });
 
-/* init */
+/* ===== theme toggle ===== */
+function applyTheme(theme){
+  document.body.setAttribute('data-theme', theme);
+  localStorage.setItem('aa-theme', theme);
+  if(themeToggle){
+    themeToggle.textContent = theme === 'dark' ? '☀︎ Light' : '☾ Dark';
+  }
+}
+
+if(themeToggle){
+  themeToggle.addEventListener('click', ()=>{
+    const current = document.body.getAttribute('data-theme') || 'light';
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+  });
+}
+
+/* on load, restore theme */
+const savedTheme = localStorage.getItem('aa-theme') || 'light';
+applyTheme(savedTheme);
+
+/* ===== init ===== */
 function init(){
   resizeM();
   placeAtoms();
