@@ -1,223 +1,374 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Arpit Agrawal — Microsoft Data Analyst</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Arpit Agrawal — Microsoft Portfolio</title>
+
+<!-- Typography -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght:600;800&display=swap" rel="stylesheet">
 
 <style>
+/* =========================
+   FLUENT MICROSOFT SYSTEM
+   ========================= */
 :root{
-  --bg: linear-gradient(135deg, #2560E0 0%, #5E5AD6 50%, #8A77FF 100%);
+  --bg:#F4F5F7;
   --card:#FFFFFF;
   --ink:#1A1A1A;
-  --muted:#6B7280;
-  --accent:#2560E0;
-  --accent-soft:#E1ECFF;
-  --radius:8px;
-  --border:#E1DFDD;
-  --maxw:1180px;
-  --shadow:0 4px 14px rgba(0,0,0,0.08);
+  --muted:#666;
+  --border:#D9D9D9;
+  --ms-blue:#2560E0;
+  --ms-green:#00A650;
+  --ms-orange:#E28B2A;
+  --ms-red:#D83B01;
+  --tile-opacity:0.085;
+  --hero-h:82vh;
+  --radius:12px;
+  --soft-shadow:0 8px 40px rgba(0,0,0,0.06);
+  --dur:0.9s;
 }
 
-/* reset + transitions */
-*{
-  box-sizing:border-box;
-  transition:
-    background-color .18s ease,
-    border-color .18s ease,
-    transform .18s ease,
-    color .18s ease;
+/* global reset */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased;}
+
+body{
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto;
+  background:var(--bg);
+  color:var(--ink);
+  overflow-x:hidden;
 }
 
-html,body{margin:0;height:100%;font-family:Inter,system-ui;}
-body{background:var(--bg);color:var(--ink);}
+/* ========== MICROSOFT WALLPAPER ========== */
+.bg-tiles{
+  position:fixed;inset:0;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,0.9),rgba(255,255,255,0.92)),
+    url('ms-tiles.png');
+  background-size:340px;
+  background-attachment:fixed;
+  opacity:0.36;
+  z-index:-2;
+  filter:saturate(0.92);
+}
 
-/* ===== HEADER ===== */
-.header-wrap{
-  position:sticky;
-  top:0;
-  backdrop-filter:blur(20px);
-  background:rgba(255,255,255,0.55);
-  border-bottom:1px solid #E1DFDD;
+/* fallback pattern if tile img missing */
+.bg-tiles:after{
+  content:"";
+  position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(90deg,rgba(37,96,224,var(--tile-opacity)) 0 1px,transparent 1px 180px),
+    repeating-linear-gradient(180deg,rgba(226,139,42,var(--tile-opacity)) 0 1px,transparent 1px 180px),
+    repeating-linear-gradient(90deg,rgba(0,166,80,var(--tile-opacity)) 0 1px,transparent 1px 320px),
+    repeating-linear-gradient(180deg,rgba(216,59,1,var(--tile-opacity)) 0 1px,transparent 1px 320px);
+  mix-blend-mode:soft-light;
+}
+
+/* ========================
+     TOP NAV
+======================== */
+.topbar{
+  position:fixed;top:0;left:0;right:0;
+  backdrop-filter:blur(18px) saturate(1.1);
+  background:rgba(255,255,255,0.66);
+  border-bottom:1px solid var(--border);
+  padding:14px 32px;
+  display:flex;align-items:center;justify-content:space-between;
   z-index:999;
 }
-.header-inner{
-  max-width:var(--maxw);
-  margin:auto;
-  padding:14px 30px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.nav-left{
-  display:flex;
-  align-items:center;
-  gap:14px;
-}
-.avatar-mask{
-  width:52px;height:52px;
-  border-radius:50%;
-  overflow:hidden;
-  box-shadow:0 2px 8px rgba(0,0,0,0.15);
-}
-.avatar-mask img{width:100%;height:100%;object-fit:cover;}
-.brand h1{margin:0;font-size:18px;font-weight:700;}
-.brand p{margin:0;font-size:12px;color:var(--muted);}
 
-.nav-links{display:flex;gap:18px;font-size:14px;}
-.nav-links a{color:var(--ink);font-weight:500;opacity:0.76;}
-.nav-links a:hover{opacity:1;}
+.brand{display:flex;align-items:center;gap:18px;}
+.avatar{width:58px;height:58px;border-radius:12px;overflow:hidden;}
+.avatar img{width:100%;height:100%;object-fit:cover;}
 
-.nav-actions{display:flex;gap:10px;}
-.btn{
-  padding:8px 14px;
-  border-radius:var(--radius);
-  border:1px solid var(--border);
-  background:#fff;
-  font-size:13px;
-  cursor:pointer;
-  box-shadow:0 2px 4px rgba(0,0,0,0.04);
-}
-.btn.primary{
-  background:var(--accent);
-  border:none;
-  color:#fff;
-}
-
-/* ===== HERO ===== */
-.hero{
-  max-width:var(--maxw);
-  margin:90px auto 120px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  text-align:center;
-  color:#fff;
-  padding:0 24px;
-}
-.hero h2{
-  font-size:48px;
-  font-weight:700;
-  line-height:1.2;
-  margin:0 0 14px;
-}
-.hero p{
-  font-size:18px;
-  margin:0 0 24px;
-  opacity:0.92;
-}
-.metric-bar{
-  display:flex;
-  gap:16px;
-  margin-top:24px;
-}
-.metric{
-  background:rgba(255,255,255,0.16);
-  padding:10px 18px;
+.nameplate h1{font-size:20px;font-weight:700;}
+.role-pill{
+  background:rgba(37,96,224,0.12);
+  padding:4px 10px;
   border-radius:999px;
-  backdrop-filter:blur(12px);
-  font-size:14px;
-  font-weight:600;
-  color:#fff;
+  font-size:11px;
+  font-weight:700;
+  color:var(--ms-blue);
 }
 
-/* subtle fade up entry */
-.fade-up{opacity:0;transform:translateY(14px);}
-.fade-up.show{opacity:1;transform:translateY(0);transition:all .6s ease;}
-
-/* ===== WORK SECTION ===== */
-.section{
+.btn{
+  padding:8px 16px;
+  border:1px solid var(--border);
+  border-radius:8px;
   background:#fff;
-  border-radius:var(--radius);
-  max-width:var(--maxw);
-  margin:0 auto 80px;
-  box-shadow:var(--shadow);
-  padding:32px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.2s ease;
 }
-.section h3{margin:0 0 10px;font-size:20px;}
-.section small{color:var(--muted);}
+.btn:hover{box-shadow:0 4px 12px rgba(0,0,0,0.08);}
+.btn.primary{background:var(--ms-blue);color:#fff;border:none;}
+.btn.primary:hover{background:#194bb8;}
 
-.video-wrap{
+/* =========================
+   HERO CINEMATIC MOLECULE
+========================= */
+.hero{
+  height:var(--hero-h);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  overflow:hidden;
+}
+
+#moleculeCanvas{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  z-index:0;
+}
+
+#heroText{
+  position:relative;
+  text-align:center;
+  z-index:4;
+  color:var(--ink);
+  opacity:0;
+  transform:translateY(50px) scale(0.92);
+  animation:heroIn var(--dur) ease forwards;
+  animation-delay:0.4s;
+}
+
+#heroText h2{
+  font-size:42px;
+  font-weight:800;
+  background:linear-gradient(90deg,var(--ms-blue),var(--ms-orange));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+#heroText p{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:16px;
+}
+
+@keyframes heroIn{
+  to{opacity:1;transform:translateY(0) scale(1);}
+}
+
+/* =========================
+   PAGE SECTIONS (4 pages feel)
+========================= */
+.section{
+  max-width:1080px;
+  margin:0 auto;
+  padding:120px 28px;
+  position:relative;
+  z-index:5;
+}
+
+.section h3{
+  font-size:28px;
+  font-weight:700;
+  margin-bottom:26px;
+}
+
+/* reveal on scroll */
+.reveal{
+  opacity:0;
+  transform:translateY(60px) scale(0.94);
+  transition:all 1s cubic-bezier(.16,.84,.44,1);
+}
+.reveal.visible{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+
+/* =========================
+   MICROSOFT EXPERIENCE CARD
+========================= */
+.ms-card{
+  background:rgba(255,255,255,0.96);
   border-radius:var(--radius);
+  padding:24px;
+  box-shadow:var(--soft-shadow);
+  border:1px solid var(--border);
+}
+
+.ms-card ul{margin-top:14px;line-height:1.6;color:var(--muted);}
+
+/* =========================
+   PROJECT GRID
+========================= */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:20px;
+}
+.project{
+  background:#fff;
+  border-radius:14px;
   overflow:hidden;
   border:1px solid var(--border);
-  margin-top:20px;
+  transition:all .28s ease;
+  cursor:pointer;
 }
-video{width:100%;}
+.project:hover{transform:translateY(-6px);box-shadow:var(--soft-shadow);}
+.project img{width:100%;height:180px;object-fit:cover;}
+.project .p-info{padding:14px;}
+.project h4{margin:0 0 6px;font-size:17px;font-weight:700;}
+.project p{color:var(--muted);font-size:13px;}
 
-/* ===== RESPONSIVE ===== */
-@media(max-width:800px){
-  .hero h2{font-size:36px;}
-  .metric-bar{flex-direction:column;align-items:center;}
-  .nav-links{display:none;}
+/* =========================
+   CONTACT
+========================= */
+.contact input, .contact textarea{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  margin-bottom:10px;
+  font-size:14px;
+}
+
+footer{
+  text-align:center;
+  padding:40px 0;
+  color:var(--muted);
+  font-size:13px;
 }
 </style>
 </head>
 
 <body>
+<div class="bg-tiles"></div>
 
-<!-- ===== HEADER ===== -->
-<div class="header-wrap">
-  <div class="header-inner">
-    <div class="nav-left">
-      <div class="avatar-mask">
-        <img src="me image.jpg" alt="Arpit">
-      </div>
-      <div class="brand">
-        <h1>Arpit Agrawal</h1>
-        <p>Data Analyst · Microsoft (Vendor)</p>
-      </div>
+<!-- TOP NAV -->
+<header class="topbar">
+  <div class="brand">
+    <div class="avatar">
+      <img src="me-image.jpg" alt="Arpit Photo"/>
     </div>
-
-    <div class="nav-links">
-      <a href="#overview">Overview</a>
-      <a href="#work">Work</a>
-      <a href="#skills">Skills</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </div>
-
-    <div class="nav-actions">
-      <a class="btn" href="Me Resume.pdf" target="_blank">Resume</a>
-      <button class="btn primary">Contact</button>
+    <div class="nameplate">
+      <h1>Arpit Agrawal</h1>
+      <span class="role-pill">Data Analyst · Microsoft (Vendor)</span>
     </div>
   </div>
-</div>
 
-<!-- ===== HERO ===== -->
-<section id="overview" class="hero fade-up">
-  <h2>Turning Raw Data Into Direction</h2>
-  <p>Real dashboards. Real ops impact. Real business clarity.</p>
+  <nav>
+    <a id="resumeLink" href="Me-Resume.pdf" class="btn" target="_blank">Resume</a>
+    <button class="btn primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</button>
+  </nav>
+</header>
 
-  <div class="metric-bar">
-    <div class="metric">6+ Enterprise Dashboards</div>
-    <div class="metric">3× Faster Reporting Cycles</div>
-    <div class="metric">4+ Ops / Retail Domains</div>
+<!-- HERO -->
+<section class="hero">
+  <canvas id="moleculeCanvas"></canvas>
+  <div id="heroText">
+    <h2>Analytics. Clarity. Impact.</h2>
+    <p>Turning enterprise data into crisp strategy with Microsoft-grade storytelling.</p>
   </div>
 </section>
 
-<!-- ===== WORK ===== -->
-<section id="work" class="section fade-up">
-  <h3>Work · Retail & Logistics Intelligence Hub</h3>
-  <small>Walkthrough demo below</small>
-
-  <div class="video-wrap">
-    <video controls>
-      <source src="canva-R7YS5xjlsvA.mp4" type="video/mp4">
-    </video>
+<!-- MICROSOFT EXPERIENCE -->
+<section class="section reveal">
+  <h3>Microsoft — Experience</h3>
+  <div class="ms-card">
+    <strong>Data Analyst (Vendor, BlitzPath Innovation → Microsoft)</strong>
+    <ul>
+      <li>Building Power BI reporting hubs for cross-functional leadership</li>
+      <li>Automation of operational refresh cycles (SQL + DAX + Python)</li>
+      <li>Own end-to-end data certainty and executive insights delivery</li>
+      <li>Enterprise telemetry interpretation & KPI modeling</li>
+    </ul>
   </div>
 </section>
+
+<!-- PROJECTS -->
+<section class="section reveal">
+  <h3>Selected Casework</h3>
+  <div class="grid">
+    <div class="project">
+      <img src="SmartPromotionProfitabilityTracker.jpg">
+      <div class="p-info">
+        <h4>Smart Promotion Profitability Tracker</h4>
+        <p>Promo uplift modeling, ROI intelligence, Power BI command center.</p>
+      </div>
+    </div>
+    <div class="project">
+      <img src="Retail&LogisticsIntelligenceHub.jpg">
+      <div class="p-info">
+        <h4>Retail & Logistics Intelligence Hub</h4>
+        <p>Route optimization, cloud forecasting, Snowflake + Tableau.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section reveal" id="contact">
+  <h3>Contact</h3>
+  <div class="contact">
+    <input id="c_name" placeholder="Name"/>
+    <input id="c_email" placeholder="Email"/>
+    <textarea id="c_msg" placeholder="Message"></textarea>
+    <button class="btn primary" onclick="alert('Sent! (demo)')">Send</button>
+  </div>
+</section>
+
+<footer>Designed with Fluent UI logic — Arpit @ Microsoft</footer>
 
 <script>
-/* scroll reveal observer */
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){ entry.target.classList.add('show'); }
-  })
-},{threshold:0.2});
+/* =========================
+   Molecule Canvas Physics (kept, softened)
+========================= */
+const canvas=document.getElementById('moleculeCanvas');
+const ctx=canvas.getContext('2d');
+let W,H,DPR=window.devicePixelRatio||1;
+let atoms=[];
 
-document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+function resize(){
+  W=canvas.clientWidth;
+  H=canvas.clientHeight;
+  canvas.width=W*DPR;
+  canvas.height=H*DPR;
+  ctx.scale(DPR,DPR);
+}
+window.addEventListener('resize',resize);
+
+function makeAtoms(){
+  atoms=[];
+  for(let i=0;i<16;i++){
+    atoms.push({
+      x:Math.random()*W,
+      y:Math.random()*H,
+      vx:(Math.random()-0.5)*0.3,
+      vy:(Math.random()-0.5)*0.3,
+      r:6+Math.random()*10
+    });
+  }
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  atoms.forEach(a=>{
+    a.x+=a.vx; a.y+=a.vy;
+    if(a.x<0||a.x>W) a.vx*=-1;
+    if(a.y<0||a.y>H) a.vy*=-1;
+    ctx.beginPath();
+    ctx.fillStyle='rgba(37,96,224,0.18)';
+    ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
+    ctx.fill();
+  });
+  requestAnimationFrame(draw);
+}
+
+resize(); makeAtoms(); draw();
+
+/* =========================
+   Scroll Reveal Logic
+========================= */
+const reveals=document.querySelectorAll('.reveal');
+function revealScroll(){
+  reveals.forEach(el=>{
+    const rect=el.getBoundingClientRect().top;
+    if(rect<window.innerHeight*0.82) el.classList.add('visible');
+  });
+}
+window.addEventListener('scroll',revealScroll);
+revealScroll();
 </script>
 
 </body>
